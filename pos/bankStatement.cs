@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -15,11 +11,13 @@ namespace pos
         {
             InitializeComponent();
         }
-        DataTable dt; DataSet ds;
-        SqlConnection sqlconn, conn2;
-        SqlDataReader reader, reader2;
-        DB db, db2, db3;
-        SqlConnection conn;
+
+        private DataTable dt; private DataSet ds;
+        private SqlConnection sqlconn, conn2;
+        private SqlDataReader reader, reader2;
+        private DB db, db2, db3;
+        private SqlConnection conn;
+
         private void bankStatement_Load(object sender, EventArgs e)
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -41,9 +39,10 @@ namespace pos
             {
                 comboBox1.SelectedIndex = 0;
             }
-
         }
-        double bf, recivedBf, depositbf, sendBf;
+
+        private double bf, recivedBf, depositbf, sendBf;
+
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
@@ -96,7 +95,7 @@ namespace pos
 
             bf = (recivedBf + depositbf) - sendBf;
 
-            dataGridView1.Rows.Add("B/F BALANCE", 0, 0, db.setAmountFormat(bf+""));
+            dataGridView1.Rows.Add("B/F BALANCE", 0, 0, db.setAmountFormat(bf + ""));
 
             try
             {
@@ -112,13 +111,12 @@ namespace pos
                     }
                     else if (reader.GetBoolean(2))
                     {
-                        bf = bf -reader.GetDouble(3);
+                        bf = bf - reader.GetDouble(3);
                         dataGridView1.Rows.Add(reader.GetDateTime(4).ToShortDateString(), 0, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(bf + ""));
-                 
-                    } 
+                    }
                 }
                 sqlconn.Close();
-                lastBalance.Text = db.setAmountFormat(bf+"");
+                lastBalance.Text = db.setAmountFormat(bf + "");
             }
             catch (Exception a)
             {
@@ -130,8 +128,7 @@ namespace pos
 
         private void button2_Click(object sender, EventArgs e)
         {
-          
-            new bankaccount(this,"").Visible = true;
+            new bankaccount(this, "").Visible = true;
         }
     }
 }
