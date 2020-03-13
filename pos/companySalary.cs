@@ -371,8 +371,6 @@ namespace pos
                         reader2 = new SqlCommand("select * from dayBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-                            //   sapm = TimeSpan.Parse(inTime) - (reader2.GetTimeSpan(1) + reader2.GetTimeSpan(3));
-
                             if (period == 1)
                             {
                                 if ((TimeSpan.Parse(outTime) - TimeSpan.Parse(inTime)).TotalHours < 0)
@@ -472,7 +470,6 @@ namespace pos
                         reader2 = new SqlCommand("select * from TimeBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-                            //   sapm = TimeSpan.Parse(inTime) - (reader2.GetTimeSpan(1) + reader2.GetTimeSpan(3));
                             if ((TimeSpan.Parse(outTime) - TimeSpan.Parse(inTime)).TotalHours < 0)
                             {
                                 sapm = TimeSpan.Parse("00:00");
@@ -570,8 +567,6 @@ namespace pos
             }
             return sapm;
         }
-
-        private string Ot;
 
         public TimeSpan getOt(string inTime, String outTime, string type, string id, string date)
         {
@@ -789,7 +784,5 @@ namespace pos
             }
             return sapm;
         }
-
-        private TimeSpan shiftValue;
     }
 }

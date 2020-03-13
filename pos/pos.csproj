@@ -2126,6 +2126,9 @@
     <EmbeddedResource Include="users.resx">
       <DependentUpon>users.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="packages.config" />
     <None Include="pos_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">

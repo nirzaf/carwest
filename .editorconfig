@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# S1871: Two branches in a conditional structure should not have exactly the same implementation
+dotnet_diagnostic.S1871.severity = none
