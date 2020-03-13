@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 using System.Windows.Forms;
+
 namespace pos
 {
-    class companySalary
+    internal class companySalary
     {
-        double ot;
-        DB db, db2, db3, db4, db5, db6;
-        SqlDataReader reader, reader2, reader5, reader4, reader6, reader3;
-        SqlConnection sqlconn, sqlconn2, sqlconn3, sqlconn5, sqlconn4, sqlconn6;
+        private double ot;
+        private DB db, db2, db3, db4, db5, db6;
+        private SqlDataReader reader, reader2, reader5, reader4, reader6, reader3;
+        private SqlConnection sqlconn, sqlconn2, sqlconn3, sqlconn5, sqlconn4, sqlconn6;
 
+        private DateTime dateTime1;
 
-
-        DateTime dateTime1;
-
-        bool stateus;
-        ArrayList dates = new ArrayList();
-
+        private bool stateus;
+        private ArrayList dates = new ArrayList();
 
         public string setTimeSheet(string id, string month, string year, string AttandanceType, string empID, string lastDate)
         {
@@ -37,11 +33,9 @@ namespace pos
                 reader4 = new SqlCommand("select * from deleteattandance ", sqlconn4).ExecuteReader();
                 while (reader4.Read())
                 {
-
                     sqlconn6.Open();
                     new SqlCommand("delete from checkinout where userid='" + reader4[1] + "' and checktime='" + reader4.GetDateTime(0) + "'", sqlconn6).ExecuteNonQuery();
                     sqlconn6.Close();
-
                 }
                 sqlconn4.Close();
 
@@ -57,12 +51,10 @@ namespace pos
                 if (AttandanceType.Equals("dayBased"))
                 {
                     reader = new SqlCommand("select lunch from dayBasedAttandance where empid='" + id + "'", sqlconn4).ExecuteReader();
-
                 }
                 else
                 {
                     reader = new SqlCommand("select lunch from TimeBasedAttandance where empid='" + id + "'", sqlconn4).ExecuteReader();
-
                 }
 
                 if (reader.Read())
@@ -71,7 +63,6 @@ namespace pos
                     {
                         reader.Close();
                         sqlconn4.Close();
-                        //++++++++timeBasedLunchStart
                         for (int i = 1; i <= Int32.Parse(lastDate); i++)
                         {
                             dates = new ArrayList();
@@ -80,7 +71,6 @@ namespace pos
                             new SqlCommand("delete from timesheet where empid='" + id + "' and date = '" + year + "-" + month + "-" + i + "' ", sqlconn2).ExecuteNonQuery();
 
                             sqlconn2.Close();
-
 
                             sqlconn6.Open();
                             reader6 = new SqlCommand("select checkTime from CheckInout  where userid= (select userid from userinfo where badgenumber='" + empID + "')  and checkTime between '" + year + "-" + month + "-" + i + " 00:00:00.000" + "' and '" + year + "-" + month + "-" + i + " 23:59:00.000" + "' order by checktime", sqlconn6).ExecuteReader();
@@ -93,7 +83,6 @@ namespace pos
                                 {
                                     dates.Add(reader6[0].ToString().Split(' ')[1]);
                                 }
-
                             }
 
                             sqlconn6.Close();
@@ -102,23 +91,18 @@ namespace pos
                             if (dates.Count == 0)
                             {
                                 new SqlCommand("insert into timesheet values ('" + id + "','" + "00:00" + "','" + "00:00" + "','" + year + "-" + month + "-" + i + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                             }
                             else if (dates.Count == 1)
                             {
                                 new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + "00:00" + "','" + year + "-" + month + "-" + i + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                             }
                             else if (dates.Count == 2)
                             {
-
                                 new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLate(dates[0].ToString(), dates[1].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + getOt(dates[0].ToString(), dates[1].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + workHours(dates[0].ToString(), dates[1].ToString()) + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                             }
                             else if (dates.Count == 3)
                             {
                                 new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLate(dates[0].ToString(), dates[1].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + getOt(dates[0].ToString(), dates[1].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + workHours(dates[0].ToString(), dates[1].ToString()) + "','" + dates[2] + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                             }
                             else if (dates.Count == 4)
                             {
@@ -128,7 +112,6 @@ namespace pos
                                     reader2.Close();
 
                                     new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[3].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLate(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + getOt(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + workHours(dates[0].ToString(), dates[3].ToString()) + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                 }
                                 else
                                 {
@@ -142,7 +125,6 @@ namespace pos
                                         t1 = t1 + (t2 - TimeSpan.Parse("03:00"));
                                     }
 
-
                                     t3 = getOt(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i);
                                     t4 = workHours(dates[1].ToString(), dates[2].ToString());
                                     if (t4 < TimeSpan.Parse("03:00"))
@@ -150,16 +132,12 @@ namespace pos
                                         t3 = t3 + (-t4 + TimeSpan.Parse("03:00"));
                                     }
 
-
                                     t2 = workHours(dates[0].ToString(), dates[3].ToString());
                                     t4 = workHours(dates[1].ToString(), dates[2].ToString());
-                                    t2 = t2 - t4;
+                                    t2 -= t4;
 
-                                    //         new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLateTimeBasedMultiCompany(dates[0].ToString(), dates[1].ToString(), "1", id) + getLateTimeBasedMultiCompany(dates[2].ToString(), dates[3].ToString(), "2", id) + "','" + getOtTimeBasedMultiCompany(dates[0].ToString(), dates[1].ToString(), "1", id) + getOtTimeBasedMultiCompany(dates[2].ToString(), dates[3].ToString(), "2", id) + "','" + workHours(dates[0].ToString(), dates[1].ToString()) + workHours(dates[2].ToString(), dates[3].ToString()) + "','" + dates[2] + "','" + dates[3] + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
                                     new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + t1 + "','" + t3 + "','" + t2 + "','" + dates[2] + "','" + dates[3] + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                 }
-                                //   reader5.Close();
                             }
                             else
                             {
@@ -169,7 +147,6 @@ namespace pos
                                     reader2.Close();
 
                                     new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[3].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLate(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + getOt(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i) + "','" + workHours(dates[0].ToString(), dates[3].ToString()) + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                 }
                                 else
                                 {
@@ -183,7 +160,6 @@ namespace pos
                                         t1 = t1 + (t2 - TimeSpan.Parse("03:00"));
                                     }
 
-
                                     t3 = getOt(dates[0].ToString(), dates[3].ToString(), AttandanceType, id, year + "-" + month + "-" + i);
                                     t4 = workHours(dates[1].ToString(), dates[2].ToString());
                                     if (t4 < TimeSpan.Parse("03:00"))
@@ -191,24 +167,15 @@ namespace pos
                                         t3 = t3 + (-t4 + TimeSpan.Parse("03:00"));
                                     }
 
-
                                     t2 = workHours(dates[0].ToString(), dates[3].ToString());
                                     t4 = workHours(dates[1].ToString(), dates[2].ToString());
-                                    t2 = t2 - t4;
+                                    t2 -= t4;
 
-                                    //         new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + getLateTimeBasedMultiCompany(dates[0].ToString(), dates[1].ToString(), "1", id) + getLateTimeBasedMultiCompany(dates[2].ToString(), dates[3].ToString(), "2", id) + "','" + getOtTimeBasedMultiCompany(dates[0].ToString(), dates[1].ToString(), "1", id) + getOtTimeBasedMultiCompany(dates[2].ToString(), dates[3].ToString(), "2", id) + "','" + workHours(dates[0].ToString(), dates[1].ToString()) + workHours(dates[2].ToString(), dates[3].ToString()) + "','" + dates[2] + "','" + dates[3] + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
                                     new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString() + "','" + dates[1].ToString() + "','" + year + "-" + month + "-" + i + "','" + t1 + "','" + t3 + "','" + t2 + "','" + dates[2] + "','" + dates[3] + "','" + "00:00" + "','" + "00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                 }
-
                             }
-
                             sqlconn2.Close();
                         }
-
-
-
-                        //++++++++timeBasedLunchEnd
                     }
                     else
                     {
@@ -224,33 +191,27 @@ namespace pos
 
                         if (reader.HasRows)
                         {
-
                             while (loop)
                             {
                                 loop = reader.Read();
                                 if (!loop)
                                 {
-
                                     sqlconn2.Open();
                                     if (dates.Count == 1)
                                     {
                                         new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString().Split(' ')[1] + "','" + "00:00" + "','" + dateTime1 + "','" + getLate("0", "0", AttandanceType, id, dateTime1 + "") + "','" + getOt("0", "0", AttandanceType, id, dateTime1 + "") + "','" + workHours("0", "0") + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                     }
                                     else
                                     {
                                         new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString().Split(' ')[1] + "','" + dates[dates.Count - 1].ToString().Split(' ')[1] + "','" + dateTime1 + "','" + getLate(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1], AttandanceType, id, dateTime1 + "") + "','" + getOt(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1], AttandanceType, id, dateTime1 + "") + "','" + workHours(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1]) + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "')", sqlconn2).ExecuteNonQuery();
-
                                     }
 
                                     sqlconn2.Close();
-
                                 }
                                 else
                                 {
                                     if (loop2)
                                     {
-
                                         dateTime1 = Convert.ToDateTime(reader.GetDateTime(0).ToString("d"));
                                         dates.Add(reader.GetDateTime(0));
 
@@ -258,45 +219,29 @@ namespace pos
                                     }
                                     else
                                     {
-
                                         if (dateTime1.Equals(Convert.ToDateTime(reader.GetDateTime(0).ToString("d"))))
                                         {
                                             dates.Add(reader.GetDateTime(0));
-
                                         }
                                         else
                                         {
-
-
                                             sqlconn2.Open();
                                             if (dates.Count == 1)
                                             {
-                                                // MessageBox.Show("z1");
                                                 new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString().Split(' ')[1] + "','" + "00:00" + "','" + dateTime1 + "','" + getLate("0", "0", AttandanceType, id, dateTime1 + "") + "','" + getOt("0", "0", AttandanceType, id, dateTime1 + "") + "','" + workHours("0", "0") + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "')", sqlconn2).ExecuteNonQuery();
-                                                // new SqlCommand("insert into timesheet2 values ('" + id + "','" + "" + "','" + "00:00" + "','" + DateTime.Now + "','" + "00:00" + "','" + "00:00" + "','" + "00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "')", sqlconn2).ExecuteNonQuery();
-
-                                                //    MessageBox.Show("z2");
                                             }
                                             else
                                             {
-                                                // MessageBox.Show(dateTime1+"");
                                                 new SqlCommand("insert into timesheet values ('" + id + "','" + dates[0].ToString().Split(' ')[1] + "','" + dates[dates.Count - 1].ToString().Split(' ')[1] + "','" + dateTime1 + "','" + getLate(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1], AttandanceType, id, dateTime1 + "") + "','" + getOt(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1], AttandanceType, id, dateTime1 + "") + "','" + workHours(dates[0].ToString().Split(' ')[1], dates[dates.Count - 1].ToString().Split(' ')[1]) + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "','" + "00:00:00" + "')", sqlconn2).ExecuteNonQuery();
-
-
-
                                             }
                                             sqlconn2.Close();
 
                                             dateTime1 = Convert.ToDateTime(reader.GetDateTime(0).ToString("d"));
                                             dates = new ArrayList();
                                             dates.Add(reader.GetDateTime(0));
-
                                         }
                                     }
                                 }
-
-
-
                             }
                         }
                         reader.Close();
@@ -313,9 +258,6 @@ namespace pos
                             reader.Close();
                         }
                         sqlconn2.Close();
-
-
-
                     }
 
                     sqlconn.Close();
@@ -324,24 +266,17 @@ namespace pos
                     try
                     {
                         new SqlCommand("insert into processDate values ('" + id + "','" + DateTime.Now + "')", sqlconn5).ExecuteNonQuery();
-
                     }
                     catch (Exception)
                     {
-
                         new SqlCommand("update processDate set date='" + DateTime.Now + "' where id='" + id + "'", sqlconn5).ExecuteNonQuery();
-
                     }
 
                     sqlconn5.Close();
-
-
                 }
                 sqlconn4.Close();
                 sqlconn.Close();
-
             }
-
             catch (Exception a)
             {
                 MessageBox.Show(a.Message + a.StackTrace);
@@ -349,13 +284,13 @@ namespace pos
                 sqlconn.Close();
             }
             return lastDate;
-
         }
-        TimeSpan sapm; Exception b;
-        Int32 period = 0;
+
+        private TimeSpan sapm; private Exception b;
+        private Int32 period = 0;
+
         public TimeSpan getLate(string inTime, String outTime, string type, string id, string date)
         {
-
             sapm = TimeSpan.Parse("00:00");
             if (inTime.Equals("0") | outTime.Equals("0") | TimeSpan.Parse(inTime).TotalMinutes == 0 | TimeSpan.Parse(outTime).TotalMinutes == 0)
             {
@@ -373,7 +308,6 @@ namespace pos
 
                     if (type.Equals("timeBased"))
                     {
-
                         sqlconn.Open();
                         reader2 = new SqlCommand("select * from TimeBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
@@ -428,11 +362,8 @@ namespace pos
                                     sapm = (reader2.GetTimeSpan(20) - (reader2.GetTimeSpan(19) + reader2.GetTimeSpan(21)));
                                 }
                             }
-
-
                         }
                         sqlconn.Close();
-
                     }
                     else if (type.Equals("dayBased"))
                     {
@@ -440,7 +371,6 @@ namespace pos
                         reader2 = new SqlCommand("select * from dayBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-
                             //   sapm = TimeSpan.Parse(inTime) - (reader2.GetTimeSpan(1) + reader2.GetTimeSpan(3));
 
                             if (period == 1)
@@ -493,10 +423,8 @@ namespace pos
                                     sapm = (reader2.GetTimeSpan(19) - (reader2.GetTimeSpan(18) + reader2.GetTimeSpan(20)));
                                 }
                             }
-
                         }
                         sqlconn.Close();
-
                     }
                     else if (type.Equals("shiftBased"))
                     {
@@ -505,7 +433,6 @@ namespace pos
                         reader2 = new SqlCommand("select * from shiftBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-
                             sapm = TimeSpan.Parse(outTime) - TimeSpan.Parse(inTime);
                             if (reader2.GetTimeSpan(11) < sapm)
                             {
@@ -515,12 +442,8 @@ namespace pos
                             {
                                 sapm = (reader2.GetTimeSpan(11) - sapm);
                             }
-
-
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBasedShift"))
                     {
@@ -539,20 +462,16 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                 }
                 else
                 {
-
                     if (type.Equals("timeBased"))
                     {
                         sqlconn.Open();
                         reader2 = new SqlCommand("select * from TimeBasedAttandance  where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-
                             //   sapm = TimeSpan.Parse(inTime) - (reader2.GetTimeSpan(1) + reader2.GetTimeSpan(3));
                             if ((TimeSpan.Parse(outTime) - TimeSpan.Parse(inTime)).TotalHours < 0)
                             {
@@ -578,7 +497,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
                     }
                     else if (type.Equals("dayBased"))
                     {
@@ -610,7 +528,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
                     }
                     else if (type.Equals("shiftBased"))
                     {
@@ -629,8 +546,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBasedShift"))
                     {
@@ -649,16 +564,14 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
-
                 }
                 sqlconn5.Close();
             }
             return sapm;
         }
-        string Ot;
+
+        private string Ot;
 
         public TimeSpan getOt(string inTime, String outTime, string type, string id, string date)
         {
@@ -677,7 +590,6 @@ namespace pos
                     period = reader5.GetInt32(0);
                     if (type.Equals("timeBased"))
                     {
-
                         sqlconn.Open();
                         reader2 = new SqlCommand("select * from TimeBasedAttandance where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
@@ -689,8 +601,6 @@ namespace pos
                                 {
                                     sapm = TimeSpan.Parse("00:00");
                                 }
-
-
 
                                 if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(16) + reader2.GetTimeSpan(18))) > TimeSpan.Parse("00:00"))
                                 {
@@ -705,19 +615,13 @@ namespace pos
                                     sapm = TimeSpan.Parse("00:00");
                                 }
 
-
-
                                 if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(16) + reader2.GetTimeSpan(18))) > TimeSpan.Parse("00:00"))
                                 {
                                     sapm = (sapm + (TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(16) + reader2.GetTimeSpan(18))));
                                 }
                             }
-
-
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBased"))
                     {
@@ -733,8 +637,6 @@ namespace pos
                                     sapm = TimeSpan.Parse("00:00");
                                 }
 
-
-
                                 if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(15) + reader2.GetTimeSpan(17))) > TimeSpan.Parse("00:00"))
                                 {
                                     sapm = (sapm + (TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(15) + reader2.GetTimeSpan(17))));
@@ -748,19 +650,13 @@ namespace pos
                                     sapm = TimeSpan.Parse("00:00");
                                 }
 
-
-
                                 if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(19) + reader2.GetTimeSpan(21))) > TimeSpan.Parse("00:00"))
                                 {
                                     sapm = (sapm + (TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(19) + reader2.GetTimeSpan(21))));
                                 }
                             }
-
-
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("shiftBased"))
                     {
@@ -772,7 +668,6 @@ namespace pos
                             if (reader2.GetTimeSpan(11) < sapm)
                             {
                                 sapm = (sapm - reader2.GetTimeSpan(11));
-
                             }
                             else
                             {
@@ -780,8 +675,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBasedShift"))
                     {
@@ -793,7 +686,6 @@ namespace pos
                             if (reader2.GetTimeSpan(10) < sapm)
                             {
                                 sapm = (sapm - reader2.GetTimeSpan(10));
-
                             }
                             else
                             {
@@ -801,8 +693,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                 }
                 else
@@ -813,24 +703,18 @@ namespace pos
                         reader2 = new SqlCommand("select * from TimeBasedAttandance where empid='" + id + "'", sqlconn).ExecuteReader();
                         if (reader2.Read())
                         {
-
                             sapm = (reader2.GetTimeSpan(1)) - TimeSpan.Parse(inTime);
                             if (sapm < TimeSpan.Parse("00:00"))
                             {
                                 sapm = TimeSpan.Parse("00:00");
                             }
 
-
-
                             if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(2) + reader2.GetTimeSpan(4))) > TimeSpan.Parse("00:00"))
                             {
                                 sapm = (sapm + (TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(2) + reader2.GetTimeSpan(4))));
                             }
-
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBased"))
                     {
@@ -844,17 +728,12 @@ namespace pos
                                 sapm = TimeSpan.Parse("00:00");
                             }
 
-
-
                             if ((TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(2) + reader2.GetTimeSpan(3))) > TimeSpan.Parse("00:00"))
                             {
                                 sapm = (sapm + (TimeSpan.Parse(outTime) - (reader2.GetTimeSpan(2) + reader2.GetTimeSpan(3))));
                             }
-
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("shiftBased"))
                     {
@@ -866,7 +745,6 @@ namespace pos
                             if (reader2.GetTimeSpan(1) < sapm)
                             {
                                 sapm = (sapm - reader2.GetTimeSpan(1));
-
                             }
                             else
                             {
@@ -874,8 +752,6 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                     else if (type.Equals("dayBasedShift"))
                     {
@@ -887,7 +763,6 @@ namespace pos
                             if (reader2.GetTimeSpan(1) < sapm)
                             {
                                 sapm = (sapm - reader2.GetTimeSpan(1));
-
                             }
                             else
                             {
@@ -895,16 +770,13 @@ namespace pos
                             }
                         }
                         sqlconn.Close();
-
-
                     }
                 }
                 sqlconn5.Close();
-
-
             }
             return sapm;
         }
+
         public TimeSpan workHours(string inTime, String outTime)
         {
             if (inTime.Equals("0") | outTime.Equals("0") | TimeSpan.Parse(inTime).TotalMinutes == 0 | TimeSpan.Parse(outTime).TotalMinutes == 0)
@@ -917,7 +789,7 @@ namespace pos
             }
             return sapm;
         }
-        TimeSpan shiftValue;
 
+        private TimeSpan shiftValue;
     }
 }

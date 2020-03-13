@@ -287,14 +287,12 @@
     <Compile Include="ChequeView.Designer.cs">
       <DependentUpon>ChequeView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="cashSummeryH.cs">
       <DependentUpon>cashSummeryH.rpt</DependentUpon>
       <AutoGen>True</AutoGen>
       <SubType>Component</SubType>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Class2.cs" />
     <Compile Include="companySalary.cs" />
     <Compile Include="chequeReportNewACPay.cs">
       <DependentUpon>chequeReportNewACPay.rpt</DependentUpon>
