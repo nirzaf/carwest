@@ -7,9 +7,8 @@ namespace pos
 {
     internal class companySalary
     {
-        private double ot;
         private DB db, db2, db3, db4, db5, db6;
-        private SqlDataReader reader, reader2, reader5, reader4, reader6, reader3;
+        private SqlDataReader reader, reader2, reader5, reader4, reader6;
         private SqlConnection sqlconn, sqlconn2, sqlconn3, sqlconn5, sqlconn4, sqlconn6;
 
         private DateTime dateTime1;
