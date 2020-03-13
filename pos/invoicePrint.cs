@@ -4,25 +4,25 @@ using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
-    class invoicePrint
+    internal class invoicePrint
     {
-        string states = "", cusName, cusCompany, cusAddress, comName, comAddres, comcontact, cusMobile, cusFax, cusCode, desc, customer, user, subTotal, balance, paid, payType;
-        invoiceReportPOS pp;
-        invoiceFormatHalf pp4;
-        char[] charArray;
-        ArrayList array;
-        string wCode, userH;
-        SqlDataReader reader2;
-        SqlConnection conn2;
-        DB db2;
-        Int32 warenty, count;
-        invoiceReportunpiad pp2;
-        string setAmountFormat(string amount)
+        private string states = "", cusName, cusCompany, cusAddress, comName, comAddres, comcontact, cusMobile, cusFax, cusCode, desc, customer, user, subTotal, balance, paid, payType;
+        private invoiceReportPOS pp;
+        private invoiceFormatHalf pp4;
+        private char[] charArray;
+        private ArrayList array;
+        private string wCode, userH;
+        private SqlDataReader reader2;
+        private SqlConnection conn2;
+        private DB db2;
+        private Int32 warenty, count;
+        private invoiceReportunpiad pp2;
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -83,10 +83,11 @@ namespace pos
 
             return amount;
         }
-        DataTable dt; DataSet ds;
+
+        private DataTable dt; private DataSet ds;
+
         public void setprintCheque(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -102,7 +103,6 @@ namespace pos
 
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -112,7 +112,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -130,7 +129,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -150,7 +148,6 @@ namespace pos
                     {
                         cusName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower());
                         cusCode = "[" + customer + "]";
-
                     }
                     else
                     {
@@ -188,7 +185,6 @@ namespace pos
                     else
                     {
                         rate = "(" + setAmountFormat(dataGridView.Rows[i].Cells[4].Value.ToString()) + "  -  " + dataGridView.Rows[i].Cells[5].Value.ToString() + ")*" + dataGridView.Rows[i].Cells[6].Value.ToString();
-
                     }
 
                     dt.Rows.Add(dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + wCode, dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), rate, setAmountFormat(dataGridView.Rows[i].Cells[7].Value.ToString()));
@@ -202,7 +198,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -237,11 +232,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintChequeUnPay(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -269,7 +263,6 @@ namespace pos
                     {
                         cusName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower());
                         cusCode = "[" + customer + "]";
-
                     }
                     else
                     {
@@ -316,7 +309,6 @@ namespace pos
                     else
                     {
                         rate = "(" + setAmountFormat(dataGridView.Rows[i].Cells[4].Value.ToString()) + "  -  " + dataGridView.Rows[i].Cells[5].Value.ToString() + ")*" + dataGridView.Rows[i].Cells[6].Value.ToString();
-
                     }
 
                     dt.Rows.Add(dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + wCode, dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), rate, setAmountFormat(dataGridView.Rows[i].Cells[7].Value.ToString()));
@@ -329,7 +321,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -362,12 +353,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setprintCheque2(string invoiceNo, SqlConnection conn, SqlDataReader reader)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -407,7 +396,6 @@ namespace pos
                     {
                         cusName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower());
                         cusCode = "[" + customer + "]";
-
                     }
                     else
                     {
@@ -459,7 +447,6 @@ namespace pos
                     else
                     {
                         rate = "(" + setAmountFormat(reader[3].ToString()) + "  -  " + reader[7].ToString() + ")*" + reader[2].ToString();
-
                     }
 
                     dt.Rows.Add(reader[10].ToString().ToUpper() + wCode, reader[1].ToString().ToUpper(), rate, setAmountFormat(reader[4].ToString()));
@@ -473,7 +460,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -504,11 +490,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprint(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -525,7 +510,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -535,7 +519,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -546,11 +529,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -562,7 +543,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -573,11 +553,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -637,8 +615,6 @@ namespace pos
                         wCode = "[" + dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + "]";
                     }
 
-
-
                     dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString(), dataGridView.Rows[i].Cells[7].Value.ToString());
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -650,7 +626,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -673,7 +648,6 @@ namespace pos
 
                 pp.SetParameterValue("invoiceID", invoiceNo);
 
-
                 // MessageBox.Show("2");
                 // pp.PrintToPrinter(1, false, 0, 0);
                 // new test(pp).Visible = true;
@@ -685,11 +659,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintExpenses(SqlConnection conn, SqlDataReader reader, string dateTo, string dateFrom)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -707,7 +680,6 @@ namespace pos
 
                 try
                 {
-
                     conn.Open();
                     reader = new SqlCommand("select * from cashSummery where date between '" + dateFrom + "' and  '" + dateTo + "' and remark='" + "EXPENCES-MANUAL" + "'", conn).ExecuteReader();
                     while (reader.Read())
@@ -715,13 +687,10 @@ namespace pos
                         dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader[0] + "", reader[2] + "", 0, 0, 0);
                     }
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
-
                 }
-
 
                 ds.Tables.Add(dt);
 
@@ -729,8 +698,6 @@ namespace pos
                 invoiceReportEx pp = new invoiceReportEx();
                 pp.SetDataSource(ds);
                 pp.SetParameterValue("comName", "From " + dateFrom + " To " + dateTo);
-
-
 
                 // MessageBox.Show("2");
                 // pp.PrintToPrinter(1, false, 0, 0);
@@ -743,11 +710,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintCasOut(SqlConnection conn, SqlDataReader reader, string dateTo, string dateFrom)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -765,7 +731,6 @@ namespace pos
 
                 try
                 {
-
                     conn.Open();
                     reader = new SqlCommand("select * from cashSummery where date between '" + dateFrom + "' and  '" + dateTo + "' and remark='" + "CASH OUT" + "'", conn).ExecuteReader();
                     while (reader.Read())
@@ -773,13 +738,10 @@ namespace pos
                         dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader[0] + "", reader[2] + "", 0, 0, 0);
                     }
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
-
                 }
-
 
                 ds.Tables.Add(dt);
 
@@ -787,8 +749,6 @@ namespace pos
                 invoiceReportCashout pp = new invoiceReportCashout();
                 pp.SetDataSource(ds);
                 pp.SetParameterValue("comName", "From " + dateFrom + " To " + dateTo);
-
-
 
                 // MessageBox.Show("2");
                 // pp.PrintToPrinter(1, false, 0, 0);
@@ -801,12 +761,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setprintHalfInvoiceService(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string vehcileNO, string vehcileDesc, string meterNow, string MeterNext)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -823,7 +781,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -833,7 +790,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -851,7 +807,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -892,7 +847,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -904,16 +858,13 @@ namespace pos
                 var qty = 0.0;
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-
                     conn.Open();
                     reader = new SqlCommand("select categorey,description from item where code='" + dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper() + "'", conn).ExecuteReader();
                     if (reader.Read())
                     {
                         dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), reader[0].ToString().ToUpper() + " " + reader[1].ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString(), dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString());
-
                     }
                     conn.Close();
-
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
                 string dateH = "", timeH = "", serviceBy = "";
@@ -956,7 +907,6 @@ namespace pos
 
                 //    pp4.SetParameterValue("invoiceNo", invoiceNo);
 
-
                 //    pp4.SetParameterValue("term", payType.ToUpper());
 
                 //    //   MessageBox.Show(comName);
@@ -989,7 +939,6 @@ namespace pos
 
                     pp4.SetParameterValue("invoiceNo", invoiceNo);
 
-
                     pp4.SetParameterValue("term", payType.ToUpper());
                     pp4.SetParameterValue("cashier", user);
 
@@ -997,9 +946,6 @@ namespace pos
                     pp4.PrintToPrinter(1, false, 0, 0);
                 }
                 //    ds.WriteXmlSchema("invoiceHalf.xml");
-
-
-
 
                 //crystalReportViewer1.ReportSource = pp;
             }
@@ -1009,11 +955,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintHalfInvoiceServiceSaveasPDF(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string vehcileNO, string vehcileDesc, string meterNow, string MeterNext)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -1030,7 +975,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1040,7 +984,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1058,7 +1001,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1099,7 +1041,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1111,16 +1052,13 @@ namespace pos
                 var qty = 0.0;
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-
                     conn.Open();
                     reader = new SqlCommand("select categorey,description from item where code='" + dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper() + "'", conn).ExecuteReader();
                     if (reader.Read())
                     {
                         dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), reader[0].ToString().ToUpper() + " " + reader[1].ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString(), dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString());
-
                     }
                     conn.Close();
-
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
                 string dateH = "", timeH = "";
@@ -1131,7 +1069,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -1189,12 +1126,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setqut(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string vehcileNO, string vehcileDesc, string meterNow, string MeterNext)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -1211,7 +1146,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1221,7 +1155,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1239,7 +1172,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1280,7 +1212,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1292,9 +1223,6 @@ namespace pos
                 var qty = 0.0;
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-
-
-
                     dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[3].Value.ToString(), dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString());
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -1305,7 +1233,6 @@ namespace pos
                 if (reader.Read())
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
-
                 }
                 conn.Close();
 
@@ -1340,7 +1267,6 @@ namespace pos
                 //   MessageBox.Show(comName);
                 pp4.PrintToPrinter(1, false, 0, 0);
 
-
                 //new test(pp4).Visible = true;
                 //crystalReportViewer1.ReportSource = pp;
             }
@@ -1350,11 +1276,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setqutSaveAsPdf(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string vehcileNO, string vehcileDesc, string meterNow, string MeterNext)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -1371,7 +1296,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1381,7 +1305,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1399,7 +1322,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1440,7 +1362,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1452,9 +1373,6 @@ namespace pos
                 var qty = 0.0;
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-
-
-
                     dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[3].Value.ToString(), dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString());
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -1465,7 +1383,6 @@ namespace pos
                 if (reader.Read())
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
-
                 }
                 conn.Close();
 
@@ -1523,12 +1440,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setprintHalfInvoiceServiceRE(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string paid, string balance, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string vehcileNO, string vehcileDesc, string meterNow, string MeterNext)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -1546,7 +1461,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1556,7 +1470,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1574,7 +1487,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1616,7 +1528,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -1628,7 +1539,6 @@ namespace pos
                 var qty = 0.0;
                 for (int i = 0; i < dataGridView.Rows.Count; i++)
                 {
-
                     dt.Rows.Add("0", "0", "0", "0", "0", "0");
 
                     //dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[3].Value.ToString(), dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString());
@@ -1641,7 +1551,6 @@ namespace pos
                 if (reader.Read())
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
-
                 }
                 conn.Close();
 
@@ -1676,7 +1585,6 @@ namespace pos
                 //   MessageBox.Show(comName);
                 pp4.PrintToPrinter(1, false, 0, 0);
 
-
                 //new test(pp4).Visible = true;
                 //crystalReportViewer1.ReportSource = pp;
             }
@@ -1686,12 +1594,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setprintReceiprt(string id, SqlConnection conn, SqlDataReader reader, string user)
         {
-
             try
             {
                 // MessageBox.Show(paid+"/"+balance);
@@ -1709,7 +1615,6 @@ namespace pos
                 dt.Columns.Add("date", typeof(string));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1719,7 +1624,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1730,11 +1634,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -1746,7 +1648,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1757,11 +1658,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -1775,7 +1674,6 @@ namespace pos
                 dt.Rows.Add("0", "0", "0", "0", "0", "0", "0");
                 dt.Rows.Add("0", "0", "0", "0", "0", "0", "0");
                 //  MessageBox.Show("2");
-
 
                 ds.Tables.Add(dt);
 
@@ -1804,7 +1702,6 @@ namespace pos
 
                     pp.SetParameterValue("amount2", setAmountFormat(reader[5] + ""));
 
-
                     pp.SetParameterValue("term", reader[8]);
                     pp.SetParameterValue("reason", reader[6]);
                     try
@@ -1822,7 +1719,6 @@ namespace pos
                         {
                             cusName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader2[1].ToString().ToLower());
                             cusCode = "[" + a + "]";
-
                         }
                         else
                         {
@@ -1841,11 +1737,8 @@ namespace pos
                         conn.Close();
                     }
                     pp.SetParameterValue("customer", "RECEVIED WITH THANKS , " + cusName.ToUpper() + " " + reader[8].ToString().ToUpper() + " FOR THE SUM OF RUPEES" + reader[4].ToString().ToUpper() + " FOR " + reader[6]);
-
                 }
                 conn.Close();
-
-
 
                 // MessageBox.Show("2");
                 pp.PrintToPrinter(1, false, 0, 0);
@@ -1858,11 +1751,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintReceiprtREturn(string id, SqlConnection conn, SqlDataReader reader, string user)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -1880,7 +1772,6 @@ namespace pos
                 dt.Columns.Add("date", typeof(string));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -1890,7 +1781,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1901,11 +1791,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -1917,7 +1805,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -1928,11 +1815,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -1941,10 +1826,7 @@ namespace pos
 
                 var qty = 0.0;
 
-
                 dt.Rows.Add("0", "0", "0", "0", "0", "0", "0");
-
-
 
                 ds.Tables.Add(dt);
 
@@ -1973,7 +1855,6 @@ namespace pos
 
                     pp.SetParameterValue("amount2", setAmountFormat(reader[5] + ""));
 
-
                     pp.SetParameterValue("term", reader[8]);
                     pp.SetParameterValue("reason", reader[6]);
                     try
@@ -1991,7 +1872,6 @@ namespace pos
                         {
                             cusName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader2[1].ToString().ToLower());
                             cusCode = "[" + a + "]";
-
                         }
                         else
                         {
@@ -2011,11 +1891,8 @@ namespace pos
                     }
                     pp.SetParameterValue("customer", reader[8].ToString().ToUpper() + " RETURN FOR  " + cusName.ToUpper() + " FOR THE SUM OF RUPEES " + reader[4].ToString().ToUpper().ToUpper());
                     // pp.SetParameterValue("customer", "RECEVIED WITH THANKS FROM " + cusName.ToUpper() + " " + reader[8].ToString().ToUpper() + " FOR THE SUM OF RUPEES" + reader[4].ToString().ToUpper() + " IN SETTELMENT OF INVOICE " + reader[2]);
-
                 }
                 conn.Close();
-
-
 
                 // MessageBox.Show("2");
                 pp.PrintToPrinter(1, false, 0, 0);
@@ -2028,12 +1905,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
 
         public void setprintHalfInvoiceDBService(string invoiceNo, SqlConnection conn, SqlDataReader reader)
         {
-
             try
             {
                 string vehcileNO = "", vehcileDesc = "", meterNow = "", MeterNext = "";
@@ -2051,7 +1926,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -2061,7 +1935,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2072,11 +1945,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -2088,7 +1959,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2099,11 +1969,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -2118,7 +1986,6 @@ namespace pos
                         customer = reader[0] + "";
                         paid = reader[1] + "";
                         balance = reader[2] + "";
-
                     }
                     conn.Close();
                 }
@@ -2136,7 +2003,6 @@ namespace pos
                         vehcileDesc = reader[1] + "";
                         meterNow = reader[2] + "";
                         MeterNext = reader[2] + "";
-
                     }
                     conn.Close();
                 }
@@ -2202,10 +2068,7 @@ namespace pos
                             wCode = "[" + reader[9].ToString().ToUpper() + "]";
                         }
 
-
-
                         dt.Rows.Add(reader[1].ToString().ToString().ToUpper(), reader[10].ToString().ToUpper() + " " + wCode, reader[3].ToString(), reader[7].ToString(), reader[2].ToString(), reader[4].ToString());
-
                     }
                     conn.Close();
                 }
@@ -2222,7 +2085,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -2251,8 +2113,6 @@ namespace pos
 
                 pp4.SetParameterValue("invoiceNo", invoiceNo);
 
-
-
                 // MessageBox.Show("2");
                 pp4.PrintToPrinter(1, false, 0, 0);
                 //new test(pp4).Visible = true;
@@ -2264,11 +2124,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintqUATE(string invoiceNo, string customer, DataGridView dataGridView, DateTime date, SqlConnection conn, SqlDataReader reader, string user, DateTime expireDate)
         {
-
             try
             {
                 //   MessageBox.Show(paid+"/"+balance);
@@ -2285,7 +2144,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -2295,7 +2153,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2306,11 +2163,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -2322,7 +2177,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2333,11 +2187,9 @@ namespace pos
                         {
                             comcontact = comcontact + "Fax : " + reader[3];
                         }
-
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception)
                 {
@@ -2397,8 +2249,6 @@ namespace pos
                         wCode = "[" + dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + "]";
                     }
 
-
-
                     dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString(), dataGridView.Rows[i].Cells[7].Value.ToString());
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -2409,8 +2259,6 @@ namespace pos
                 if (reader.Read())
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
-
-
                 }
                 conn.Close();
 
@@ -2431,7 +2279,6 @@ namespace pos
                 pp4.SetParameterValue("invoiceNo", invoiceNo);
                 pp4.SetParameterValue("vehicleDesc", expireDate.ToShortDateString());
 
-
                 // MessageBox.Show("2");
                 pp4.PrintToPrinter(1, false, 0, 0);
                 //new test(pp4).Visible = true;
@@ -2443,11 +2290,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintHalfInvoice(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string discount, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string refre, string po, string nbt, string vat, string nbtPre, string vatPre, string payble)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -2464,7 +2310,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -2474,7 +2319,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2492,7 +2336,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -2535,7 +2378,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -2556,8 +2398,6 @@ namespace pos
                         wCode = "[" + dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + "]";
                     }
 
-
-
                     dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString() + " " + dataGridView.Rows[i].Cells[8].Value.ToString(), dataGridView.Rows[i].Cells[7].Value.ToString());
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -2569,7 +2409,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -2616,11 +2455,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintHalfInvoiceReturn(string invoiceNo, string customer, string payType, DataGridView dataGridView, string subTotal, string discount, DateTime date, SqlConnection conn, SqlDataReader reader, string user, string refre, string po, string nbt, string vat, string nbtPre, string vatPre, string payble)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -2637,7 +2475,6 @@ namespace pos
                 dt.Columns.Add("tPrice", typeof(double));
                 //  MessageBox.Show(s);
 
-
                 try
                 {
                     comName = "";
@@ -2647,7 +2484,6 @@ namespace pos
                     reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                     if (reader.Read())
                     {
-
                         comName = reader.GetString(0).ToUpper();
                         comAddres = reader.GetString(1).ToUpper();
                         if (!reader.GetString(2).Equals(""))
@@ -2665,7 +2501,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -2706,7 +2541,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
                 catch (Exception a)
                 {
@@ -2727,11 +2561,9 @@ namespace pos
                         wCode = "[" + dataGridView.Rows[i].Cells[2].Value.ToString().ToUpper() + "]";
                     }
 
-
                     if (dataGridView.Rows[i].Cells[8].Value.ToString().ToUpper().Equals("TRUE"))
                     {
                         dt.Rows.Add(dataGridView.Rows[i].Cells[1].Value.ToString().ToUpper(), dataGridView.Rows[i].Cells[3].Value.ToString().ToUpper() + " " + wCode, dataGridView.Rows[i].Cells[4].Value.ToString(), dataGridView.Rows[i].Cells[5].Value.ToString(), dataGridView.Rows[i].Cells[6].Value.ToString(), dataGridView.Rows[i].Cells[7].Value.ToString());
-
                     }
                 }
                 // dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
@@ -2743,7 +2575,6 @@ namespace pos
                 {
                     dateH = reader.GetDateTime(0).ToShortDateString();
                     timeH = reader.GetTimeSpan(1).ToString();
-
                 }
                 conn.Close();
 
@@ -2790,11 +2621,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintSalary(string MOnth, string Year, SqlConnection conn, SqlDataReader reader)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -2822,8 +2652,6 @@ namespace pos
                 dt.Columns.Add("03", typeof(double));
                 dt.Columns.Add("04Y", typeof(double));
                 //  MessageBox.Show(s);
-
-
 
                 conn.Open();
                 reader = new SqlCommand("select b.name,a.* from paysheet as a,emp as b where a.month='" + Year + "/" + MOnth + "' and a.empid=b.empid ORDER BY B.EMPID", conn).ExecuteReader();
@@ -2864,7 +2692,6 @@ namespace pos
                 //   MessageBox.Show(comName);
                 //  pp4.PrintToPrinter(1, false, 0, 0);
 
-
                 new test2(pp4).Visible = true;
                 //  crystalReportViewer1.ReportSource = pp;
             }
@@ -2874,11 +2701,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintSalaryAudit(string MOnth, string Year, SqlConnection conn, SqlDataReader reader)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -2910,8 +2736,6 @@ namespace pos
                 dt.Columns.Add("TOTAL DEDUCTION", typeof(double));
                 dt.Columns.Add("NET PAY", typeof(double));
                 //  MessageBox.Show(s);
-
-
 
                 conn.Open();
                 reader = new SqlCommand("select b.name,a.* from paysheetaUDIT as a,emp as b where a.month='" + Year + "/" + MOnth + "' and a.empid=b.empid and b.isepf='" + true + "' and b.isExecutive='" + true + "' ORDER BY B.EMPID", conn).ExecuteReader();
@@ -2931,8 +2755,6 @@ namespace pos
                 pp4.SetParameterValue("month", "SALARY SUMMRY " + Year + "/" + MOnth.ToUpper());
                 pp4.SetParameterValue("line", "EXECUTIVE PAYROLL");
 
-
-
                 new test2_(pp4).Visible = true;
                 //  crystalReportViewer1.ReportSource = pp;
             }
@@ -2974,8 +2796,6 @@ namespace pos
                 dt.Columns.Add("NET PAY", typeof(double));
                 //  MessageBox.Show(s);
 
-
-
                 conn.Open();
                 reader = new SqlCommand("select b.name,a.* from paysheetaUDIT as a,emp as b where a.month='" + Year + "/" + MOnth + "' and a.empid=b.empid and b.isepf='" + true + "' and b.isExecutive='" + false + "' ORDER BY B.EMPID", conn).ExecuteReader();
                 while (reader.Read())
@@ -2994,8 +2814,6 @@ namespace pos
                 pp4.SetParameterValue("month", "SALARY SUMMRY " + Year + "/" + MOnth.ToUpper());
                 pp4.SetParameterValue("line", "NON-EXECUTIVE PAYROLL");
 
-
-
                 new test2_(pp4).Visible = true;
                 //  crystalReportViewer1.ReportSource = pp;
             }
@@ -3005,11 +2823,10 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
+
         public void setprintSalarySlip(string MOnth, string Year, SqlConnection conn, SqlDataReader reader)
         {
-
             try
             {
                 // MessageBox.Show(customer);
@@ -3037,8 +2854,6 @@ namespace pos
                 dt.Columns.Add("03", typeof(double));
                 dt.Columns.Add("04Y", typeof(double));
                 //  MessageBox.Show(s);
-
-
 
                 conn.Open();
                 reader = new SqlCommand("select b.name,a.* from paysheet as a,emp as b where a.month='" + Year + "/" + MOnth + "' and a.empid=b.empid ORDER BY B.EMPID", conn).ExecuteReader();
@@ -3079,7 +2894,6 @@ namespace pos
                 //   MessageBox.Show(comName);
                 //  pp4.PrintToPrinter(1, false, 0, 0);
 
-
                 new test2_2(pp4).Visible = true;
                 //  crystalReportViewer1.ReportSource = pp;
             }
@@ -3089,10 +2903,6 @@ namespace pos
                 states = s.StackTrace;
                 // throw;
             }
-
         }
-
     }
-
-
 }

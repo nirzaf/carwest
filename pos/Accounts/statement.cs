@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
@@ -16,23 +13,23 @@ namespace pos
         public statement()
         {
             InitializeComponent();
-
         }
 
-       // accountList homeH;
+        // accountList homeH;
         // My Variable Start
 
-        DB db, db2, db3, db4;
-        Form home;
-        SqlConnection conn, conn2, conn3, conn4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        Double openingBalance, amount, cre, debi;
-        string date, credit, debit, idB, userH;
+        private DB db, db2, db3, db4;
+        private Form home;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private Double openingBalance, amount, cre, debi;
+        private string date, credit, debit, idB, userH;
         public bool states, loadBankBool = false, loadFixedAsset = false, loadEQUITY = false, loadLibilityBool = false;
-        ArrayList arrayLst;
-        string[] array;
-        Int32 yearB, monthB;
-        DateTime dateSearchB;
+        private ArrayList arrayLst;
+        private string[] array;
+        private Int32 yearB, monthB;
+        private DateTime dateSearchB;
+
         public void loadRevenue(string id, DateTime dateFrom, DateTime dateTo, string acName)
         {
             ArrayList monthList = new ArrayList();
@@ -60,7 +57,6 @@ namespace pos
             dt.Columns.Add("DATE", typeof(string));
             dt.Columns.Add("REF-", typeof(string));
 
-
             dt.Columns.Add("DESCRIPTION", typeof(string));
             dt.Columns.Add("CREDIT", typeof(double));
             dt.Columns.Add("DEBIT", typeof(double));
@@ -76,21 +72,14 @@ namespace pos
                     {
                         if (id.Equals("01"))
                         {
-
                             if (!reader.GetString(2).Equals("CASH -"))
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", reader2.GetDouble(0), 0);
-
                             }
                             else
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", 0, reader2.GetDouble(0));
-
                             }
-
-
-
-
                         }
                         else if (id.Equals(" 01.01"))
                         {
@@ -103,30 +92,23 @@ namespace pos
                                     if (!reader.GetString(2).Equals("CASH -"))
                                     {
                                         dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", reader2.GetDouble(0), 0);
-
                                     }
                                     else
                                     {
                                         dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", 0, reader2.GetDouble(0));
-
                                     }
-
                                 }
-
                             }
                             else
                             {
                                 if (!reader.GetString(2).Equals("CASH -"))
                                 {
                                     dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", reader2.GetDouble(0), 0);
-
                                 }
                                 else
                                 {
                                     dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", 0, reader2.GetDouble(0));
-
                                 }
-
                             }
                             conn3.Close();
                         }
@@ -141,26 +123,17 @@ namespace pos
                                     if (!reader.GetString(2).Equals("CASH -"))
                                     {
                                         dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", reader2.GetDouble(0), 0);
-
                                     }
                                     else
                                     {
                                         dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), "R-" + reader[0], reader[2] + " INVOICE", 0, reader2.GetDouble(0));
-
                                     }
-
                                 }
-
                             }
                             conn3.Close();
-
                         }
-
-
-
                     }
                     conn2.Close();
-
                 }
                 conn.Close();
             }
@@ -168,14 +141,13 @@ namespace pos
             {
                 if (id.Equals(" 02.01"))
                 {
-
                     double epf12 = 0, etf3 = 0;
                     for (int i = 0; i < monthList.Count; i++)
                     {
                         try
                         {
                             conn.Open();
-                            reader = new SqlCommand("select a.grossSalary,b.name,a.empid from paySheetAudit as a,emp as b where a.month = '" + monthList[i] + "' and a.empid=b.empid and b.isExecutive='"+false+"'", conn).ExecuteReader();
+                            reader = new SqlCommand("select a.grossSalary,b.name,a.empid from paySheetAudit as a,emp as b where a.month = '" + monthList[i] + "' and a.empid=b.empid and b.isExecutive='" + false + "'", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add("", reader[2], reader[1], 0, db.setAmountFormat(reader[0] + ""));
@@ -189,8 +161,6 @@ namespace pos
                             conn.Close();
                         }
                     }
-
-
                 }
                 else if (id.Equals(" 02.02"))
                 {
@@ -242,8 +212,6 @@ namespace pos
                 {
                     double credit = 0, debit = 0, purchasing = 0, bfStock = 0, lastStock = 0; ;
 
-
-
                     credit = 0;
                     debit = 0;
 
@@ -263,12 +231,8 @@ namespace pos
                         if (debit != 0)
                         {
                             dt.Rows.Add("", "", reader4[3], 0, (debit));
-
                         }
                     }
-
-
-
                 }
                 else if (id.Equals(" 02.05") || id.Equals(" 03.01"))
                 {
@@ -278,19 +242,15 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "' and id='" + acName.Split('.')[0] + "'", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-
                         {
                             conn.Open();
                             reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3], 0, (reader[0]));
-
                             }
                             conn.Close();
-
                         }
-
                     }
                     conn4.Close();
                 }
@@ -309,22 +269,16 @@ namespace pos
                                 reader = new SqlCommand("select sum(grossSalary) from paySheetAudit where month = '" + monthList[i] + "' and empid='" + reader2[0] + "'", conn).ExecuteReader();
                                 if (reader.Read())
                                 {
-
                                     dt.Rows.Add("", reader2[0], reader2[1], 0, (reader[0]));
                                 }
                                 conn.Close();
-
                             }
                             conn2.Close();
-
                         }
                         catch (Exception)
                         {
                             conn.Close();
                         }
-
-
-
                     }
                 }
                 else if (id.Equals(" 04.02"))
@@ -333,19 +287,15 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "' and id='" + "102" + "'", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-
                         conn.Open();
                         reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3] + " " + electricityRate + "%", 0, (reader.GetDouble(0) / 100) * electricityRate);
-
                         }
                         conn.Close();
-
                     }
                     conn4.Close();
-
                 }
                 else if (id.Equals(" 04.03"))
                 {
@@ -353,46 +303,38 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "' and id='" + "101" + "'", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-
                         conn.Open();
                         reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                         while (reader.Read())
                         {
                             dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3] + " " + waterRate + "%", 0, (reader.GetDouble(0) / 100) * waterRate);
-
                         }
                         conn.Close();
-
                     }
                     conn4.Close();
-
                 }
                 else if (id.Equals(" 04.04"))
                 {
                     conn4.Open();
-                  //  reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "' ", conn4).ExecuteReader();
-                  //  while (reader4.Read())
+                    //  reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "' ", conn4).ExecuteReader();
+                    //  while (reader4.Read())
                     {
                         //if (reader4.GetInt32(0) == 101 || reader4.GetInt32(0) == 102 || reader4.GetInt32(0) == 103 || reader4.GetInt32(0) == 104 || reader4.GetInt32(0) == 105 || reader4.GetInt32(0) == 106 || reader4.GetInt32(0) == 121 || reader4.GetInt32(0) == 122 || reader4.GetInt32(0) == 123)
                         //{
-
                         //}
                         //else
                         {
-                         //   MessageBox.Show(acName.Split('.')[0].ToString().Split(' ')[1].ToString());
+                            //   MessageBox.Show(acName.Split('.')[0].ToString().Split(' ')[1].ToString());
                             conn.Open();
-                            reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + acName.Split('.') [0].ToString().Split(' ')[1]+ "' order by date", conn).ExecuteReader();
+                            reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + acName.Split('.')[0].ToString().Split(' ')[1] + "' order by date", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3], 0, (reader.GetDouble(0)));
-
                             }
                             conn.Close();
-
                         }
                     }
                     conn4.Close();
-
                 }
                 else if (id.Equals(" 05.01"))
                 {
@@ -400,21 +342,17 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "DEPRECIATION" + "' ", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-                       
                         {
                             conn.Open();
                             reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3], 0, (reader.GetDouble(0)));
-
                             }
                             conn.Close();
-
                         }
                     }
                     conn4.Close();
-
                 }
                 else if (id.Equals(" 06.01"))
                 {
@@ -422,21 +360,17 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "'  and id='" + "121" + "'", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-
                         {
                             conn.Open();
                             reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3], 0, (reader.GetDouble(0)));
-
                             }
                             conn.Close();
-
                         }
                     }
                     conn4.Close();
-
                 }
                 else if (id.Equals(" 07.01"))
                 {
@@ -444,26 +378,19 @@ namespace pos
                     reader4 = new SqlCommand("select id,name from accounts where type='" + "EXPENSES" + "'  and id='" + "122" + "'", conn4).ExecuteReader();
                     while (reader4.Read())
                     {
-
                         {
                             conn.Open();
                             reader = new SqlCommand("select amount2,date,ref,reason from receipt where date between '" + dateFrom + "' and '" + dateTo + "' and customer='" + reader4[0] + "' order by date", conn).ExecuteReader();
                             while (reader.Read())
                             {
                                 dt.Rows.Add(reader.GetDateTime(1).ToShortDateString(), reader[2], reader[3], 0, (reader.GetDouble(0)));
-
                             }
                             conn.Close();
-
                         }
                     }
                     conn4.Close();
-
                 }
             }
-
-
-
 
             ds.Tables.Add(dt);
 
@@ -483,7 +410,6 @@ namespace pos
             //pp4.SetParameterValue("totalexpences", db.setAmountFormat(expenses + ""));
             //pp4.SetParameterValue("netprofit", db.setAmountFormat(sale - (expenses + ((costOfPurchasing + investEx + bfStock) - stockValue) + investEx) + ""));
             crystalReportViewer1.ReportSource = pp4;
-
         }
 
         public void loadCostOfSale(string id, DateTime dateFrom, DateTime dateTo, string acName)
@@ -503,15 +429,12 @@ namespace pos
             dt.Columns.Add("DATE", typeof(DateTime));
             dt.Columns.Add("REF-", typeof(string));
 
-
             dt.Columns.Add("DESCRIPTION", typeof(string));
             dt.Columns.Add("CREDIT", typeof(double));
             dt.Columns.Add("DEBIT", typeof(double));
 
-
             if (id.Equals("02.01"))
             {
-
                 double epf12 = 0, etf3 = 0;
                 for (int i = 0; i < monthList.Count; i++)
                 {
@@ -532,8 +455,6 @@ namespace pos
                         conn.Close();
                     }
                 }
-
-
             }
             else if (id.Equals("02.02"))
             {
@@ -600,10 +521,10 @@ namespace pos
             //pp4.SetParameterValue("totalexpences", db.setAmountFormat(expenses + ""));
             //pp4.SetParameterValue("netprofit", db.setAmountFormat(sale - (expenses + ((costOfPurchasing + investEx + bfStock) - stockValue) + investEx) + ""));
             crystalReportViewer1.ReportSource = pp4;
-
         }
 
-        Point p;
+        private Point p;
+
         private void accountList_Load(object sender, EventArgs e)
         {
             //   this.Textstatement = "hy";
@@ -646,7 +567,6 @@ namespace pos
             //year.Format = DateTimePickerFormat.Custom;
             //year.CustomFormat = "yyyy";
             //  load();
-
         }
 
         private void accountList_FormClosing(object sender, FormClosingEventArgs e)
@@ -659,12 +579,10 @@ namespace pos
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -675,58 +593,46 @@ namespace pos
         private void dataGridView3_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //   MessageBox.Show("a");
-
         }
 
         private void dataGridView3_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_DropDownClosed(object sender, EventArgs e)
         {
-
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void year_CloseUp(object sender, EventArgs e)
         {
-
         }
 
         private void year_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

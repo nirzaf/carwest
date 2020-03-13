@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 
@@ -16,33 +13,31 @@ namespace pos
         public statement3()
         {
             InitializeComponent();
-
         }
 
-     //   accountList homeH;
+        //   accountList homeH;
         // My Variable Start
 
-        DB db, db2, db3, db4;
-        Form home;
-        SqlConnection conn, conn2, conn3, conn4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        Double openingBalance, amount, cre, debi;
-        string date, credit, debit, idB, userH;
+        private DB db, db2, db3, db4;
+        private Form home;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private Double openingBalance, amount, cre, debi;
+        private string date, credit, debit, idB, userH;
         public bool states, loadBankBool = false, loadFixedAsset = false, loadEQUITY = false, loadLibilityBool = false;
-        ArrayList arrayLst;
-        string[] array;
-        Int32 yearB, monthB;
-        DateTime dateSearchB;
+        private ArrayList arrayLst;
+        private string[] array;
+        private Int32 yearB, monthB;
+        private DateTime dateSearchB;
+
         public void loadRevenue(DataGridView dgv, DateTime dateFrom, DateTime dateTo, string acName)
         {
             ArrayList monthList = new ArrayList();
-
 
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             dt.Columns.Add("DATE", typeof(string));
             dt.Columns.Add("REF-", typeof(string));
-
 
             dt.Columns.Add("DESCRIPTION", typeof(string));
             dt.Columns.Add("CREDIT", typeof(string));
@@ -52,7 +47,6 @@ namespace pos
             {
                 dt.Rows.Add(dgv.Rows[i].Cells[0].Value, dgv.Rows[i].Cells[1].Value, dgv.Rows[i].Cells[2].Value);
             }
-
 
             ds.Tables.Add(dt);
 
@@ -72,7 +66,6 @@ namespace pos
             //pp4.SetParameterValue("totalexpences", db.setAmountFormat(expenses + ""));
             //pp4.SetParameterValue("netprofit", db.setAmountFormat(sale - (expenses + ((costOfPurchasing + investEx + bfStock) - stockValue) + investEx) + ""));
             crystalReportViewer1.ReportSource = pp4;
-
         }
 
         public void loadCostOfSale(string id, DateTime dateFrom, DateTime dateTo, string acName)
@@ -92,15 +85,12 @@ namespace pos
             dt.Columns.Add("DATE", typeof(DateTime));
             dt.Columns.Add("REF-", typeof(string));
 
-
             dt.Columns.Add("DESCRIPTION", typeof(string));
             dt.Columns.Add("CREDIT", typeof(double));
             dt.Columns.Add("DEBIT", typeof(double));
 
-
             if (id.Equals("02.01"))
             {
-
                 double epf12 = 0, etf3 = 0;
                 for (int i = 0; i < monthList.Count; i++)
                 {
@@ -121,8 +111,6 @@ namespace pos
                         conn.Close();
                     }
                 }
-
-
             }
             else if (id.Equals("02.02"))
             {
@@ -189,10 +177,10 @@ namespace pos
             //pp4.SetParameterValue("totalexpences", db.setAmountFormat(expenses + ""));
             //pp4.SetParameterValue("netprofit", db.setAmountFormat(sale - (expenses + ((costOfPurchasing + investEx + bfStock) - stockValue) + investEx) + ""));
             crystalReportViewer1.ReportSource = pp4;
-
         }
 
-        Point p;
+        private Point p;
+
         private void accountList_Load(object sender, EventArgs e)
         {
             //   this.Text = "hy";
@@ -235,7 +223,6 @@ namespace pos
             //year.Format = DateTimePickerFormat.Custom;
             //year.CustomFormat = "yyyy";
             //  load();
-
         }
 
         private void accountList_FormClosing(object sender, FormClosingEventArgs e)
@@ -248,12 +235,10 @@ namespace pos
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -264,58 +249,46 @@ namespace pos
         private void dataGridView3_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //   MessageBox.Show("a");
-
         }
 
         private void dataGridView3_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_DropDownClosed(object sender, EventArgs e)
         {
-
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void year_CloseUp(object sender, EventArgs e)
         {
-
         }
 
         private void year_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

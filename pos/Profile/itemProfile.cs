@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -21,16 +17,16 @@ namespace pos
         }
 
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader;
-        ArrayList arrayList;
-        Boolean check, checkListBox;
-        string user, listBoxType;
-        String[] idArray;
-        // my Variable End
+        private DB db, db2;
 
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader;
+        private ArrayList arrayList;
+        private Boolean check, checkListBox;
+        private string user, listBoxType;
+        private String[] idArray;
+        // my Variable End
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
@@ -56,17 +52,16 @@ namespace pos
                 }
                 else
                 {
-
                 }
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -86,16 +81,14 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
+
         private void itemProfile_Activated(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_Deactivate(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
@@ -117,22 +110,18 @@ namespace pos
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             saveItem();
-
-
         }
 
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select brand from item ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -140,7 +129,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -153,7 +141,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -166,7 +153,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -179,7 +165,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -193,7 +178,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -204,11 +188,10 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
         }
 
-        void refresh()
+        private void refresh()
         {
             try
             {
@@ -220,10 +203,10 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
-        void saveItem()
+
+        private void saveItem()
         {
             try
             {
@@ -282,13 +265,13 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             catch (Exception a)
             {
-
                 MessageBox.Show("Item Detail Value Empty or Invalied Characters." + a.StackTrace);
                 conn.Close();
                 conn2.Close();
             }
         }
-        void UpdateItem()
+
+        private void UpdateItem()
         {
             try
             {
@@ -355,7 +338,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 MessageBox.Show("Item Detail Value Empty or Invalied Characters." + a.Message + "/ " + a.StackTrace);
             }
         }
-        void deleteItem()
+
+        private void deleteItem()
         {
             try
             {
@@ -394,11 +378,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         if (reader.Read())
                         {
                             //   new SqlCommand("insert into auditItem values('" + reader[0] + "','" + reader[1] + "','" + reader[2] + "','" + reader[3] + "','" + reader[4] + "','" + reader[5] + "','" + reader[6] + "','" + reader[7] + "','" + reader[8] + "','" + reader[9] + "','" + reader[10] + "','" + user + "','" + "delete" + "','" + DateTime.Now + "')", conn2).ExecuteNonQuery();
-
                         }
                         reader.Close();
                         new SqlCommand("delete from item  where code='" + code.Text + "'", conn).ExecuteNonQuery();
-
 
                         db.setCursoerDefault();
 
@@ -421,10 +403,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         public void loadItem(string id)
         {
-
             try
             {
-
                 listBox1.Visible = false;
                 conn.Open();
                 db.setCursoerWait();
@@ -496,12 +476,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 conn.Close();
                 MessageBox.Show("You Have Enterd Invalied Charactores " + e.StackTrace + e.Message);
             }
-
         }
+
         //++++++ My Method End++++
         private void code_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void code_KeyUp(object sender, KeyEventArgs e)
@@ -542,7 +521,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void brand_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void category_KeyUp(object sender, KeyEventArgs e)
@@ -551,17 +529,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void description_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void remark_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void rate_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -572,7 +547,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void code_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 check = true;
@@ -595,7 +569,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -608,7 +581,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void category_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(brand, description, description, e.KeyValue);
-
         }
 
         private void description_KeyDown(object sender, KeyEventArgs e)
@@ -618,12 +590,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void remark_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void remark_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void rate_KeyDown(object sender, KeyEventArgs e)
@@ -653,7 +623,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     button1_Click(sender, e);
                 }
-
             }
         }
 
@@ -712,29 +681,23 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 code.SelectionLength = code.MaxLength;
                 loadItem(code.Text);
             }
-
         }
 
         private void code_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseClick(object sender, MouseEventArgs e)
         {
-
             listBox1.Visible = false;
-
         }
 
         private void itemProfile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-
         }
 
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -753,12 +716,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
         }
 
         private void label7_Click(object sender, EventArgs e)
         {
-
         }
 
         private void valueByDis_KeyPress(object sender, KeyPressEventArgs e)
@@ -810,7 +771,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     }
                     for (int i = 0; i < readfromAddress.Length; i++)
                     {
-
                         conn.Open();
                         conn2.Open();
                         reader = new SqlCommand("select code from item where code='" + readfromAddress[i] + "-" + des[y] + code.Text + "'", conn).ExecuteReader();
@@ -829,7 +789,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                             db.setCursoerDefault();
 
                             code.Focus();
-
                         }
                         reader.Close();
                         conn.Close();
@@ -847,12 +806,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void button5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void brand_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void SUB_CheckedChanged(object sender, EventArgs e)
@@ -905,12 +862,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             db.setTextBoxPath(description, rate, rate, e.KeyValue);
         }
-        string splitOne;
-        string[] a,a2;
+
+        private string splitOne;
+        private string[] a, a2;
+
         private void button5_Click_1(object sender, EventArgs e)
         {
-         
         }
-
     }
 }

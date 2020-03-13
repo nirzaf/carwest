@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -17,26 +14,26 @@ namespace pos
             InitializeComponent();
             homeH = form;
             userH = user;
-
         }
 
-        Form homeH;
+        private Form homeH;
         // My Variable Start
 
-        DB db, db2, db3, db4, db5;
-        SqlConnection conn, conn2, conn3, conn4, conn5;
-        SqlDataReader reader, reader2, reader3, reader4, reader5;
-        Double cashBf, invest, amount, total, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
-        string idB, userH, nameB;
+        private DB db, db2, db3, db4, db5;
+        private SqlConnection conn, conn2, conn3, conn4, conn5;
+        private SqlDataReader reader, reader2, reader3, reader4, reader5;
+        private Double cashBf, invest, amount, total, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
+        private string idB, userH, nameB;
         public bool statese, isLoadSaleAll, isLoadSale;
-        Int32 yearB, monthB, index;
-        DateTime dateSearchB;
+        private Int32 yearB, monthB, index;
+        private DateTime dateSearchB;
 
-        string cus = "";
-        string[] array;
+        private string cus = "";
+        private string[] array;
 
-        DataSet ds;
-        DataTable dt;
+        private DataSet ds;
+        private DataTable dt;
+
         public void loadIncome(string id, string name)
         {
             try
@@ -84,7 +81,6 @@ namespace pos
                         cashBf = reader.GetDouble(1);
                         amount = amount + reader.GetDouble(1);
                         dt.Rows.Add(" ", "", "B/F", "", "", 0, 0, 0, 0, cashBf);
-
                     }
                     conn.Close();
                     conn.Open();
@@ -94,7 +90,6 @@ namespace pos
                         amount = amount + reader.GetDouble(2);
                         invest = invest + reader.GetDouble(2);
                         dt.Rows.Add("INVEST", "", reader[0].ToString().ToUpper() + "", "", "", 0, 0, reader[2] + "", 0, amount);
-
                     }
                     conn.Close();
 
@@ -138,15 +133,12 @@ namespace pos
                                                     if (reader5.Read())
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CHEQUE INVOICE (" + reader4.GetString(0).ToUpper() + "/ VEHICLE NO :" + reader5[0] + " )" + " ,AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], reader5[0], 0, reader2[0], 0, reader[2], amount);
-
                                                     }
                                                     else
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CHEQUE INVOICE (" + reader4.GetString(0).ToUpper() + " )" + " ,AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], "", 0, reader2[0], 0, reader[2], amount);
-
                                                     }
                                                     conn5.Close();
-
                                                 }
                                                 conn4.Close();
                                             }
@@ -163,7 +155,6 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-
                                                     tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
                                                     tempCardSale = tempCardSale + reader2.GetDouble(0);
                                                     tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
@@ -174,13 +165,10 @@ namespace pos
                                                     if (reader5.Read())
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CARD INVOICE (" + reader4.GetString(0).ToUpper() + "/ VEHICLE NO :" + reader5[0] + " )" + ", AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], reader5[0], reader2[0], 0, 0, reader[2], amount);
-
-
                                                     }
                                                     else
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CARD INVOICE (" + reader4.GetString(0).ToUpper() + " )" + ", AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], "", reader2[0], 0, 0, reader[2], amount);
-
                                                     }
                                                     conn5.Close();
                                                 }
@@ -199,7 +187,6 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-
                                                     tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
                                                     tempCredistSale = tempCredistSale + reader2.GetDouble(0);
                                                     tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
@@ -210,12 +197,10 @@ namespace pos
                                                     if (reader5.Read())
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CREDIT INVOICE (" + reader4.GetString(0).ToUpper() + "/ VEHICLE NO :" + reader5[0] + " )" + ", AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], reader5[0], 0, 0, reader2[0], reader[2], amount);
-
                                                     }
                                                     else
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CREDIT INVOICE (" + reader4.GetString(0).ToUpper() + " )" + ", AMOUNT-" + reader2[1] + "", reader[1].ToString().Split('-')[1], reader4[0], "", 0, 0, reader2[0], reader[2], amount);
-
                                                     }
                                                     conn5.Close();
                                                 }
@@ -230,7 +215,6 @@ namespace pos
                                             reader2 = new SqlCommand("select amount,amount,cutomerID from cashInvoiceRetail where invoiceid='" + reader[1].ToString().Split('-')[1] + "'", conn2).ExecuteReader();
                                             if (reader2.Read())
                                             {
-
                                                 conn4.Open();
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
@@ -243,12 +227,10 @@ namespace pos
                                                     if (reader5.Read())
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE " + "/ VEHICLE NO :" + reader5[0], reader[1].ToString().Split('-')[1], reader4[0], reader5[0], 0, 0, 0, reader[2], amount);
-
                                                     }
                                                     else
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE", reader[1].ToString().Split('-')[1], "", reader4[0], "0", 0, 0, reader[2], amount);
-
                                                     }
                                                     conn5.Close();
                                                 }
@@ -262,12 +244,10 @@ namespace pos
                                                     if (reader5.Read())
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE " + "/ VEHICLE NO :" + reader5[0], reader[1].ToString().Split('-')[1], "", reader5[0], 0, 0, 0, reader[2], amount);
-
                                                     }
                                                     else
                                                     {
                                                         dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE", reader[1].ToString().Split('-')[1], "", "", 0, 0, 0, reader[2], amount);
-
                                                     }
                                                     conn5.Close();
                                                 }
@@ -276,10 +256,7 @@ namespace pos
                                             conn2.Close();
                                         }
                                         conn3.Close();
-
                                     }
-
-
                                 }
                                 catch (Exception a)
                                 {
@@ -289,20 +266,13 @@ namespace pos
                                     conn2.Close();
                                     dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE", reader[1].ToString().Split('-')[1], "", "", 0, 0, 0, reader[2], amount);
                                 }
-
-
                             }
                             else if (reader.GetString(0).Equals("Cansel Invoice"))
                             {
                                 dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE-CANSEL", reader[1].ToString().Split('-')[1], "", "", 0, 0, 0, 0, 0);
-
                             }
-
-
                         }
                         conn3.Close();
-
-
                     }
                     conn.Close();
                     conn.Open();
@@ -316,21 +286,16 @@ namespace pos
                                 amount = amount + reader.GetDouble(2);
                                 tempCashRecevied = tempCashRecevied + reader.GetDouble(2);
                                 dt.Rows.Add("CREDIT SETTELEMNT (CASH)", "", reader[1].ToString().ToUpper() + "", "", "", 0, 0, 0, reader[2], amount);
-
-
                             }
                             else if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid Card"))
                             {
                                 amount = amount + reader.GetDouble(2);
 
                                 dt.Rows.Add("CREDIT SETTELEMNT (CARD)", "", reader[1].ToString().ToUpper() + "", "", "", 0, 0, 0, reader[2], amount);
-
                             }
                         }
                         catch (Exception)
                         {
-
-
                         }
                     }
                     conn.Close();
@@ -345,14 +310,10 @@ namespace pos
                                 amount = amount + reader.GetDouble(2);
                                 // tempCashRecevied = tempCashRecevied + reader.GetDouble(2);
                                 dt.Rows.Add("CREDIT SETTELEMNT CHEQUE", "", reader[1].ToString().ToUpper() + "", "", "", 0, reader[2], 0, 0, amount);
-
-
                             }
                         }
                         catch (Exception)
                         {
-
-
                         }
                     }
                     conn.Close();
@@ -367,16 +328,12 @@ namespace pos
                                 amount = amount - reader.GetDouble(2);
                                 tempCashGiven = tempCashGiven + reader.GetDouble(2);
                                 dt.Rows.Add("CREDIT SETTELEMNT", "", reader[1].ToString().ToUpper() + "", "", "", 0, 0, reader[2], 0, amount);
-
-
                             }
                         }
                         catch (Exception A)
                         {
-                          //  MessageBox.Show(A.Message);
-
+                            //  MessageBox.Show(A.Message);
                         }
-
                     }
                     conn.Close();
                     var exACCOUNT = "";
@@ -396,14 +353,13 @@ namespace pos
                         }
                         catch (Exception A)
                         {
-                         //   MessageBox.Show(A.Message);
+                            //   MessageBox.Show(A.Message);
                             conn2.Close();
                         }
 
                         amount = amount - reader.GetDouble(2);
                         tempExpen = tempExpen + reader.GetDouble(2);
                         dt.Rows.Add("EXPENSES " + exACCOUNT.ToUpper(), "", reader[0].ToString().ToUpper() + "", "", "", 0, 0, reader[2] + "", 0, amount);
-
                     }
                     conn.Close();
                     conn.Open();
@@ -413,7 +369,6 @@ namespace pos
                         amount = amount - reader.GetDouble(2);
                         cashOut = cashOut + reader.GetDouble(2);
                         dt.Rows.Add("CASH OUT", "", reader[0].ToString().ToUpper() + "", "", "", 0, 0, reader[2] + "", 0, amount);
-
                     }
                     conn.Close();
 
@@ -424,7 +379,6 @@ namespace pos
                         amount = amount - reader.GetDouble(2);
                         tempCashPaidReturn = tempCashPaidReturn + reader.GetDouble(2);
                         dt.Rows.Add("CASH PAID-RETURN INVOICE", "", reader[1].ToString().ToUpper() + "", "", "", 0, 0, reader[2] + "", 0, amount);
-
                     }
                     conn.Close();
                     //  conn.Open();
@@ -438,7 +392,6 @@ namespace pos
                 }
 
                 //  MessageBox.Show("3");
-
 
                 ds.Tables.Add(dt);
 
@@ -485,10 +438,10 @@ namespace pos
                 MessageBox.Show("aaaaaaaaaaaaaaaaaa " + s.StackTrace + "//" + s.Message);
                 // throw;
             }
-
-
         }
-        double cashOut = 0.0;
+
+        private double cashOut = 0.0;
+
         public void loadIncome2(string id, string name)
         {
             try
@@ -512,7 +465,6 @@ namespace pos
                 dt.Columns.Add("account", typeof(string));
                 dt.Columns.Add("desc", typeof(string));
 
-
                 dt.Columns.Add("CARD", typeof(double));
                 dt.Columns.Add("CHEQUE", typeof(double));
                 dt.Columns.Add("CREDIT", typeof(double));
@@ -525,7 +477,6 @@ namespace pos
                 {
                     amount = 0;
                     db.setCursoerWait();
-
 
                     conn.Open();
                     reader = new SqlCommand("select * from cashSummery where date='" + dateFrom.Value.ToShortDateString() + "' order by remark", conn).ExecuteReader();
@@ -563,7 +514,6 @@ namespace pos
                                                     tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
 
                                                     dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CHEQUE INVOICE (" + reader4.GetString(0).ToUpper() + " )" + " ,AMOUNT-" + reader2[1] + "", 0, reader2[0], 0, reader[2], amount);
-
                                                 }
                                                 conn4.Close();
                                             }
@@ -580,13 +530,11 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-
                                                     tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
                                                     tempCardSale = tempCardSale + reader2.GetDouble(0);
                                                     tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
                                                     //  MessageBox.Show((reader2.GetDouble(1) - reader2.GetDouble(0))+"");
                                                     dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CARD INVOICE (" + reader4.GetString(0).ToUpper() + " )" + ", AMOUNT-" + reader2[1] + "", reader2[0], 0, 0, reader[2], amount);
-
                                                 }
                                                 conn4.Close();
                                             }
@@ -603,7 +551,6 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-
                                                     tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
                                                     tempCredistSale = tempCredistSale + reader2.GetDouble(0);
                                                     tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
@@ -615,18 +562,14 @@ namespace pos
 
                                             conn2.Close();
                                         }
-
                                         else
                                         {
                                             tempTOtalSale = tempTOtalSale + reader.GetDouble(2);
                                             tempCashSale = tempCashSale + reader.GetDouble(2);
                                             dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE", 0, 0, 0, reader[2], amount);
-
                                         }
                                     }
                                     conn3.Close();
-
-
                                 }
                                 catch (Exception a)
                                 {
@@ -636,25 +579,15 @@ namespace pos
                                     conn2.Close();
                                     dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE", 0, 0, 0, reader[2], amount);
                                 }
-
-
                             }
                             else if (reader.GetString(0).Equals("Cansel Invoice"))
                             {
                                 dt.Rows.Add("MAIN-SALE", reader[1].ToString().ToUpper() + " CASH INVOICE-CANSEL", 0, 0, 0, 0, 0);
-
                             }
-
-
                         }
                         conn3.Close();
-
-
                     }
                     conn.Close();
-
-
-
 
                     db.setCursoerDefault();
                 }
@@ -665,7 +598,6 @@ namespace pos
                 }
 
                 //  MessageBox.Show("3");
-
 
                 ds.Tables.Add(dt);
 
@@ -701,14 +633,12 @@ namespace pos
                 MessageBox.Show("aaaaaaaaaaaaaaaaaa " + s.StackTrace + "//" + s.Message);
                 // throw;
             }
-
-
         }
 
-        Point p;
+        private Point p;
+
         private void accountList_Load(object sender, EventArgs e)
         {
-
             this.TopMost = true;
             this.WindowState = FormWindowState.Normal;
             //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -721,8 +651,6 @@ namespace pos
             crystalReportViewer1.Height = height - 130;
             //  dataGridView1.Columns[0].Width = dataGridView1.Width - 470;
 
-
-
             p = crystalReportViewer1.Location;
             //   MessageBox.Show((width - dataGridView1.Width) / 2+"");
             p.X = (width - crystalReportViewer1.Width) / 2;
@@ -734,7 +662,6 @@ namespace pos
             db2 = new DB();
             conn2 = db2.createSqlConnection2();
 
-
             db3 = new DB();
             conn3 = db3.createSqlConnection2();
             db4 = new DB();
@@ -744,8 +671,6 @@ namespace pos
             //  load();
             yearB = dateSearchB.Year;
             monthB = dateSearchB.Month;
-
-
         }
 
         private void accountList_FormClosing(object sender, FormClosingEventArgs e)
@@ -762,7 +687,6 @@ namespace pos
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -773,35 +697,28 @@ namespace pos
         private void dataGridView3_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //   MessageBox.Show("a");
-
         }
 
         private void dataGridView3_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_DropDownClosed(object sender, EventArgs e)
         {
             // loadSale(idB, dateFrom.Value);
-
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void year_CloseUp(object sender, EventArgs e)
         {
             loadIncome(idB, "");
-
-
         }
 
         private void year_KeyDown(object sender, KeyEventArgs e)
@@ -809,28 +726,23 @@ namespace pos
             if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 loadIncome(idB, "");
-
             }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -845,13 +757,11 @@ namespace pos
 
         private void dateTo_Validating(object sender, CancelEventArgs e)
         {
-
         }
 
         private void dateTo_ValueChanged(object sender, EventArgs e)
         {
             //   MessageBox.Show("1");
-
         }
 
         private void dateTo_CloseUp(object sender, EventArgs e)
@@ -865,8 +775,6 @@ namespace pos
             //{
             //    loadIncome2(idB, "");
             //}
-
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -874,29 +782,24 @@ namespace pos
             this.Enabled = true;
 
             // new addIncome(this, idB, true, false).Visible = true;
-
         }
 
         private void dataGridView1_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
         {
             this.Enabled = true;
             //new addIncomeEdit(this, idB, dateSearchB + "", dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(), dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString()).Visible = true;
-
         }
 
         private void PRINT_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dateFrom_ContextMenuStripChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

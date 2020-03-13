@@ -1,12 +1,8 @@
 ﻿using System;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -18,15 +14,18 @@ namespace pos
             InitializeComponent();
             formH = form;
         }
-        Form formH;
+
+        private Form formH;
+
         private void button1_Click(object sender, EventArgs e)
         {
-
         }
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
+
+        private DB db, db2;
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+
         private void barcode_Load(object sender, EventArgs e)
         {
             db = new DB();
@@ -37,19 +36,21 @@ namespace pos
             new SqlCommand("delete from im", conn).ExecuteNonQuery();
 
             conn.Close();
-
         }
-        Int32 i = 0;
+
+        private Int32 i = 0;
+
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        OpenFileDialog openFileDialog12;
-        string price, name, code;
+
+        private OpenFileDialog openFileDialog12;
+        private string price, name, code;
+
         private void button3_Click(object sender, EventArgs e)
         {
             db.setCursoerWait();
-            
+
             conn.Open();
             reader = new SqlCommand("select billingPrice,remark,brand,categorey,description,code from item where code='" + itemCode.Text + "'", conn).ExecuteReader();
             if (reader.Read())
@@ -61,12 +62,11 @@ namespace pos
                 {
                     try
                     {
-                       // MessageBox.Show(openFileDialog12.FileName);
+                        // MessageBox.Show(openFileDialog12.FileName);
 
                         pictureBox1.Image = new Bitmap("C:\\2.jpg");  // imageFullPath = System.IO.Path.GetDirectoryName(openFileDialog12.FileName);
 
                         //imagePath = System.IO.Path.GetFileName(openFileDialog12.FileName);
-
                     }
                     catch (Exception ex)
                     {
@@ -112,7 +112,6 @@ namespace pos
                         com.ExecuteNonQuery();
                         conn.Close();
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -122,7 +121,6 @@ namespace pos
                 {
                     conn.Close();
                 }
-
 
                 {
                     payslip3 emp = new payslip3();
@@ -147,13 +145,10 @@ namespace pos
                         MessageBox.Show(v.Message);
                     }
 
-
-
                     crystalReportViewer1.ReportSource = emp;
                 }
                 itemCode.Focus();
                 itemCode.Text = "";
-
             }
             else
             {
@@ -164,19 +159,14 @@ namespace pos
 
             // crystalReportViewer1.ReportSource = emp;
             //   Cursor.Current = Cursors.WaitCursor;
-
-
-
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
@@ -222,34 +212,28 @@ namespace pos
             formH.Enabled = true;
             formH.TopMost = true;
         }
-        string cutomerID;
-        void loadItem(string codeValue)
+
+        private string cutomerID;
+
+        private void loadItem(string codeValue)
         {
             try
             {
-
-
                 cutomerID = "";
                 conn.Open();
                 reader = new SqlCommand("select retailPrice from item where code='" + codeValue + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     unitPrice.Text = reader.GetDouble(0) + "";
 
                     qty.Focus();
                     conn.Close();
-
                 }
                 else
                 {
-                   
                 }
                 reader.Close();
                 conn.Close();
-
-
-
             }
             catch (Exception a)
             {
@@ -259,7 +243,6 @@ namespace pos
                 MessageBox.Show(a.Message);
             }
         }
-
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
         {
@@ -276,7 +259,6 @@ namespace pos
                     loadItem(itemCode.Text);
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -293,16 +275,16 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
-        bool states;
+
+        private bool states;
+
         private void itemCode_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | itemCode.Text.Equals("")))
             {
-                
                 {
                     db.setList(listBox1, itemCode, itemCode.Width * 2);
 
@@ -312,13 +294,12 @@ namespace pos
                         listBox1.Visible = true;
                         conn.Open();
                         reader = new SqlCommand("select code,detail from item where detail like '%" + itemCode.Text + "%' ", conn).ExecuteReader();
-                        
+
                         states = true;
                         while (reader.Read())
                         {
                             listBox1.Items.Add(reader[1].ToString().ToUpper());
                             states = false;
-
                         }
                         reader.Close();
                         conn.Close();

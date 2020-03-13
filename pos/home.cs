@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -18,13 +12,16 @@ namespace pos
             formH = form;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        DB db, db2, db3;
-        string userH;
-        SqlConnection conn, conn2, conn3;
-        SqlDataReader reader, reader2, reader3;
-        void loadUser()
+        private Form formH;
+
+        private DB db, db2, db3;
+        private string userH;
+        private SqlConnection conn, conn2, conn3;
+        private SqlDataReader reader, reader2, reader3;
+
+        private void loadUser()
         {
             try
             {
@@ -39,7 +36,6 @@ namespace pos
                     // nEWINVOICEToolStripMenuItem1.Enabled = reader.GetBoolean(12);
                     // button5.Enabled = reader.GetBoolean(15);
                     // sEARCHEDITRETURNINVOICEToolStripMenuItem.Enabled = reader.GetBoolean(15);
-
 
                     // button2.Enabled = reader.GetBoolean(16);
                     // nEWGRNToolStripMenuItem.Enabled = reader.GetBoolean(16);
@@ -58,8 +54,8 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
+
         private void home_Load(object sender, EventArgs e)
         {
             //  MessageBox.Show("1");
@@ -105,8 +101,6 @@ namespace pos
                     //   buttonClearInvoice.Visible = false;
                 }
                 conn.Close();
-
-
             }
             catch (Exception)
             {
@@ -116,16 +110,13 @@ namespace pos
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             this.Enabled = true;
             new customerProfile(this, userH).Visible = true;
-
         }
-
 
         private void home_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -135,17 +126,15 @@ namespace pos
         private void button3_Click(object sender, EventArgs e)
         {
             //this.Enabled = true;
-            new invoiceNew(this, userH,"CASH").Visible = true;
+            new invoiceNew(this, userH, "CASH").Visible = true;
         }
 
         private void newItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void stockPriceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -171,7 +160,6 @@ namespace pos
 
         private void newInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -190,13 +178,10 @@ namespace pos
         {
             this.Enabled = true;
             new barcode(this).Visible = true;
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
-
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -206,23 +191,18 @@ namespace pos
 
         private void searchEditInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void payInvoiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void barcodeGeneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -233,17 +213,14 @@ namespace pos
 
         private void grnNewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void quickPanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void searchEditGRNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -269,14 +246,11 @@ namespace pos
 
         private void bARCODEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
         }
 
         private void nEWINVOICEToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             new invoiceNew(this, userH, "CASH").Visible = true;
-
         }
 
         private void sEARCHEDITRETURNINVOICEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -290,7 +264,6 @@ namespace pos
 
         private void pAYINVOICEToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void sTOCKPRICEToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -315,7 +288,6 @@ namespace pos
         {
             this.Enabled = true;
             new grnSearch(this, userH).Visible = true;
-
         }
 
         private void pROFILEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -349,12 +321,10 @@ namespace pos
 
         private void cUSTOMERREPORTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void sUPPLIERREPORTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void iNVOICECREDITPAYToolStripMenuItem_Click(object sender, EventArgs e)
@@ -371,12 +341,10 @@ namespace pos
 
         private void iNVOICECREDITPAYMENTSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void iNVOICECREDITPAYMENTSToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cUSTOMERSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -453,7 +421,6 @@ namespace pos
 
         private void aCCOUNTLISTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cVToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,7 +431,6 @@ namespace pos
 
         private void sALESREFToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void iNCOMEACCOUNTSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -494,7 +460,7 @@ namespace pos
         private void aCCOUNTLISTToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.Enabled = true;
-           // new accountList(this, userH).Visible = true;
+            // new accountList(this, userH).Visible = true;
         }
 
         private void sALESREFToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -517,7 +483,6 @@ namespace pos
 
         private void mYOPENINGBALANCEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cASHBALANCEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -593,14 +558,12 @@ namespace pos
         {
             this.Enabled = true;
             new grnSearchCredit(this, userH).Visible = true;
-
         }
 
         private void button6_Click_1(object sender, EventArgs e)
         {
             this.Enabled = true;
             new grnSearchCredit(this, userH).Visible = true;
-
         }
 
         private void button2_Click_2(object sender, EventArgs e)
@@ -611,7 +574,6 @@ namespace pos
 
         private void cASHBOOKToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button9_Click_1(object sender, EventArgs e)
@@ -639,7 +601,6 @@ namespace pos
 
         private void oUTSTANDINGToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cUSTOMERToolStripMenuItem_Click(object sender, EventArgs e)
@@ -662,7 +623,6 @@ namespace pos
 
         private void cHEQUESPAYMENTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -690,23 +650,17 @@ namespace pos
                     new SqlCommand("insert into receipt values('" + i + "','" + reader[6] + "','" + "" + "','" + cus + "','" + new amountByName().setAmountName(reader[3] + "") + "','" + reader[3] + "','" + "" + "','" + cus + "','" + "CASH" + "','" + userH + "','" + DateTime.Now + "')", conn2).ExecuteNonQuery();
                     conn2.Close();
 
-
                     conn2.Open();
                     new SqlCommand("insert into customerStatement values('" + "SETTELE-" + i + "','" + "Settelemnt for Invoice " + reader[1] + "','" + 0 + "','" + reader[3] + "','" + true + "','" + reader[6] + "','" + cus + "')", conn2).ExecuteNonQuery();
                     conn2.Close();
-
-
-
                 }
                 conn.Close();
                 db.setCursoerDefault();
                 MessageBox.Show("COMPLTED");
-
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
-
             }
         }
 
@@ -732,16 +686,16 @@ namespace pos
         {
             this.Enabled = true;
             new ChequeView().Visible = true;
-
         }
 
         private void bARCODEToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             this.Enabled = true;
             new barcode(this).Visible = true;
-
         }
-        Int32 serverID, LocalID;
+
+        private Int32 serverID, LocalID;
+
         private void button10_Click_1(object sender, EventArgs e)
         {
             try
@@ -768,7 +722,6 @@ namespace pos
                     {
                         MessageBox.Show(a.Message);
                     }
-
                 }
                 conn3.Close();
                 bool matchInvoiceID = true;
@@ -790,7 +743,6 @@ namespace pos
                         invoiceMaxNo = serverID;
                         if (invoiceMaxNo != 0)
                         {
-
                             conn2.Open();
                             reader2 = new SqlCommand("select * from invoiceRetail where id='" + invoiceMaxNo + "'", conn2).ExecuteReader();
                             if (reader2.Read())
@@ -910,9 +862,6 @@ namespace pos
                                 conn3.Open();
                                 new SqlCommand("insert into invoiceRetail values('" + invoiceMaxNo + "','" + "" + "','" + true + "','" + 0 + "','" + DateTime.Now + "','" + true + "','" + "" + "','" + DateTime.Now + "','" + 0 + "','" + 0 + "','" + 0 + "','" + "" + "','" + 0 + "','" + 0 + "','" + "" + "')", conn3).ExecuteNonQuery();
                                 conn3.Close();
-
-
-
                             }
                             conn2.Close();
                         }
@@ -926,7 +875,6 @@ namespace pos
                             conn3.Open();
                             new SqlCommand("insert into cashSummery values('" + reader2[0] + "','" + reader2[1] + "','" + reader2[2] + "','" + reader2[3] + "','" + reader2[3] + "')", conn3).ExecuteNonQuery();
                             conn3.Close();
-
                         }
                         conn2.Close();
                     }
@@ -934,7 +882,6 @@ namespace pos
                     {
                         matchInvoiceID = false;
                     }
-
                 }
                 db.setCursoerDefault();
                 MessageBox.Show("ok");
@@ -944,10 +891,12 @@ namespace pos
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
         }
-        Int32 invoiceMaxNo;
-        bool checkDuplicate = false;
-        string invoiceNo;
-        void loadInvoiceNoRetailFromServer()
+
+        private Int32 invoiceMaxNo;
+        private bool checkDuplicate = false;
+        private string invoiceNo;
+
+        private void loadInvoiceNoRetailFromServer()
         {
             try
             {
@@ -963,7 +912,6 @@ namespace pos
 
                 reader3.Close();
                 conn3.Close();
-
             }
             catch (Exception)
             {
@@ -973,7 +921,8 @@ namespace pos
                 conn3.Close();
             }
         }
-        void loadInvoiceNoRetailFromLocal()
+
+        private void loadInvoiceNoRetailFromLocal()
         {
             try
             {
@@ -989,7 +938,6 @@ namespace pos
 
                 reader2.Close();
                 conn2.Close();
-
             }
             catch (Exception)
             {
@@ -999,7 +947,9 @@ namespace pos
                 conn2.Close();
             }
         }
-        bool creditDetailB, chequeDetailB, cardDetailB, cashDetailB;
+
+        private bool creditDetailB, chequeDetailB, cardDetailB, cashDetailB;
+
         public void loadInvoice(string id)
         {
             try
@@ -1015,8 +965,6 @@ namespace pos
                     creditDetailB = true;
                 }
                 conn2.Close();
-
-
 
                 conn2.Open();
                 reader2 = new SqlCommand("select * from chequeInvoiceRetail where invoiceID='" + id + "' ", conn2).ExecuteReader();
@@ -1034,7 +982,6 @@ namespace pos
                     cardDetailB = true;
                 }
                 conn2.Close();
-
             }
             catch (Exception a)
             {
@@ -1042,6 +989,7 @@ namespace pos
                 conn2.Close();
             }
         }
+
         private void button10_Click_2(object sender, EventArgs e)
         {
             button10_Click_1(null, null);
@@ -1087,7 +1035,6 @@ namespace pos
 
         private void button19_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

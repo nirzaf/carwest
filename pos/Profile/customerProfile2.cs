@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -23,18 +17,18 @@ namespace pos
         }
 
         // My Variable Start
-        DB db, db2;
-        invoiceNew home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        ArrayList arrayList;
-        string[] mobileNoArray, LandNoArray, emailArray, companyArray;
+        private DB db, db2;
 
-        Boolean states;
-        string user, codeC;
+        private invoiceNew home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private ArrayList arrayList;
+        private string[] mobileNoArray, LandNoArray, emailArray, companyArray;
+
+        private Boolean states;
+        private string user, codeC;
 
         // my Variable End
-
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
@@ -100,7 +94,8 @@ namespace pos
             //}
             getStaff();
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -120,12 +115,12 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
-        string tempCustomer;
+
+        private string tempCustomer;
+
         public Boolean loadCustomer(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -168,9 +163,9 @@ namespace pos
             }
             return states;
         }
+
         public Boolean loadCompany(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -209,7 +204,6 @@ namespace pos
 
         public Boolean loadStaff(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -219,7 +213,6 @@ namespace pos
                 reader = new SqlCommand("select empid,name,residentialAddress,mobileNUmber,type,epfbasic,bankingAmount,epf,etf,epf12,resgin,incentive,allowances,meal,gross,resgin,bouns,punish,holiday,advanced,NIC,isEpf,isExecutive,epfNO from emp where empid='" + id + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     states = true;
                     // codeC = id;
                     companyS.Text = reader.GetString(1);
@@ -250,9 +243,6 @@ namespace pos
                     //  nicName.Text=reader[22]+"";
                     //addressC.SelectionLength = addressC.TextLength;
                     db.ToTitleCase(new TextBox[] { companyS, addressS, mobileS });
-
-
-
                 }
                 else
                 {
@@ -271,9 +261,9 @@ namespace pos
             }
             return states;
         }
+
         public Boolean loadItem(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -312,8 +302,9 @@ namespace pos
             return states;
         }
 
-        string cutomerID = "";
-        void save()
+        private string cutomerID = "";
+
+        private void save()
         {
             try
             {
@@ -336,11 +327,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         new SqlCommand("delete from customer where id='" + "C-" + ID.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
 
-
                         conn.Open();
                         new SqlCommand("insert into customer values ('" + "C-" + ID.Text + "','" + "" + "','" + companyC.Text + "','" + addressC.Text + "','" + mobileNumberC.Text + "','" + "" + "','" + companyC.Text + " " + mobileNumberC.Text + "','" + "" + "','" + "" + "','" + checkBoxEpfPay.Checked + "','" + checkBoxeXCECUTIVE.Checked + "','" + epfNo.Text + "','" + contat1Name.Text + "','" + contact2Name.Text + "','" + contact3Name.Text + "','" + contact2.Text + "','" + contact3.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
 
                         ID.Focus();
                         cutomerID = "C-" + ID.Text;
@@ -359,16 +348,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
-
                         new SqlCommand("delete from emp where empid='" + attendanceNo.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
-
 
                         conn.Open();
                         new SqlCommand("insert into emp values ('" + companyS.Text + "','" + addressS.Text + "','" + mobileS.Text + "','" + attendanceNo.Text + "','" + salary.Text + "','" + bankingAmount.Text + "','" + epf.Text + "','" + etf.Text + "','" + "" + "','" + epf_.Text + "','" + fixedIncntive.Text + "','" + allowances.Text + "','" + mealAllowance.Text + "','" + grossSalary.Text + "','" + checkBox1.Checked + "','" + bonus.Text + "','" + punish.Text + "','" + comboHoliday.SelectedItem + "','" + advanced.Text + "','" + loan.Text + "','" + nic.Text + "','" + checkBoxEpfPay.Checked + "','" + checkBoxeXCECUTIVE.Checked + "','" + epfNo.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
 
                         ID.Focus();
                     }
@@ -384,15 +369,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
                         new SqlCommand("delete from supplier where id='" + "S-" + IDS.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
-
 
                         conn.Open();
                         new SqlCommand("insert into supplier values ('" + "S-" + IDS.Text + "','" + "" + "','" + companyCo.Text + "','" + addressCo.Text + "','" + mobileCo.Text + "','" + "" + "','" + companyCo.Text + "','" + "" + "','" + "" + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
 
                         IDS.Focus();
                         getID2();
@@ -409,11 +391,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
                         reader = new SqlCommand("select * from item where code='" + code.Text + "'", conn).ExecuteReader();
                         if (reader.Read())
                         {
-
                             conn.Close();
                             conn.Open();
                             new SqlCommand("update item set sparePart='" + isSparePart.Checked + "',remark='" + remark.Text + "',brand='" + brand.Text + "',categorey='" + category.Text + "',description='" + description.Text + "',purchasingPrice='" + costPrice.Text + "',retailPrice='" + sellingPrice.Text + "',detail='" + db.setItemDescriptionName(new TextBox[] { code, brand, category, description, remark }) + "',isItem='" + isItem.Checked + "' where code='" + code.Text + "'", conn).ExecuteNonQuery();
@@ -421,12 +401,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         }
                         else
                         {
-
                             conn.Close();
                             conn.Open();
                             new SqlCommand("insert into item values ('" + code.Text + "','" + brand.Text + "','" + category.Text + "','" + description.Text + "','" + remark.Text + "','" + "" + "','" + costPrice.Text + "','" + sellingPrice.Text + "','" + 0 + "','" + 0 + "','" + "" + "','" + db.setItemDescriptionName(new TextBox[] { code, brand, category, description, remark }) + "','" + 0 + "','" + isItem.Checked + "','" + isSparePart.Checked + "')", conn).ExecuteNonQuery();
                             conn.Close();
-
                         }
                         code.Focus();
                     }
@@ -443,11 +421,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
                         reader = new SqlCommand("select * from bank where bankCode='" + accountNumber.Text + "'", conn).ExecuteReader();
                         if (reader.Read())
                         {
-
                             conn.Close();
                             conn.Open();
                             new SqlCommand("update bank set BANKNAME='" + bankName.Text + "',dayLimit='" + dayLimit.Text + "' where bankCode='" + accountNumber.Text + "'", conn).ExecuteNonQuery();
@@ -455,12 +431,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         }
                         else
                         {
-
                             conn.Close();
                             conn.Open();
                             new SqlCommand("insert into bank values ('" + bankName.Text + "','" + accountNumber.Text + "','" + dayLimit.Text + "')", conn).ExecuteNonQuery();
                             conn.Close();
-
                         }
                         code.Focus();
                     }
@@ -472,13 +446,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
                         conn.Close();
                         conn.Open();
                         new SqlCommand("insert into bank values ('" + bankNormal.Text + "','" + 0 + "','" + 0 + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
-
                     }
                 }
                 conn.Close();
@@ -490,16 +461,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 MessageBox.Show(a.Message);
                 conn.Close();
             }
-
         }
+
         private void itemProfile_Activated(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_Deactivate(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
@@ -523,12 +492,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-
         }
-        Int32 idTemp = 0;
-        void getID()
-        {
 
+        private Int32 idTemp = 0;
+
+        private void getID()
+        {
             try
             {
                 conn2.Open();
@@ -549,9 +518,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 conn2.Close();
             }
         }
-        void getStaff()
-        {
 
+        private void getStaff()
+        {
             try
             {
                 conn2.Open();
@@ -572,9 +541,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 conn2.Close();
             }
         }
-        void getID2()
-        {
 
+        private void getID2()
+        {
             try
             {
                 conn2.Open();
@@ -603,7 +572,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 MessageBox.Show("Sorry, company Name Cant Be Empty Value");
                 companyC.Focus();
             }
-
             else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
  MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
@@ -632,12 +600,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         }
 
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
-
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select id from customer ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -646,13 +612,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     // MessageBox.Show("3");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 // MessageBox.Show("2");
                 reader.Close();
                 conn.Close();
-
-
 
                 conn.Open();
                 reader = new SqlCommand("select description from item ", conn).ExecuteReader();
@@ -660,7 +623,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 while (reader.Read())
                 {
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 reader.Close();
                 conn.Close();
@@ -673,13 +635,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 while (reader.Read())
                 {
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 reader.Close();
                 conn.Close();
                 mobileNoArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(category, mobileNoArray);
-
             }
             catch (Exception)
             {
@@ -688,18 +648,15 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             category.CharacterCasing = CharacterCasing.Upper;
         }
 
-
-        void refresh()
+        private void refresh()
         {
             try
             {
-
                 remark.Text = "";
                 category.Text = "";
                 // cutomerID = "";
                 if (tabControl1.SelectedIndex == 0)
                 {
-
                     ID.Focus();
                 }
                 else if (tabControl1.SelectedIndex == 1)
@@ -739,7 +696,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -747,22 +703,18 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void brand_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void remark_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void rate_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
 
         private void brand_KeyDown(object sender, KeyEventArgs e)
@@ -771,7 +723,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void remark_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void remark_KeyDown(object sender, KeyEventArgs e)
@@ -923,9 +874,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             companyC.Text = listBox1.SelectedItem.ToString().Split(' ')[1];
-
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
@@ -946,24 +895,19 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             listBox1.Visible = false;
 
             loadCustomer(listBox1.SelectedItem.ToString().Split(' ')[0]);
-
         }
 
         private void itemProfile_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseClick(object sender, MouseEventArgs e)
         {
-
             listBox1.Visible = false;
-
         }
 
         private void itemProfile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-
         }
 
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -992,7 +936,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void codeC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -1016,18 +959,15 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     MessageBox.Show("User Detail Download Succesfully");
                     companyC.Focus();
                 }
-
             }
         }
 
         private void nameC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void nameC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void companyC_KeyDown(object sender, KeyEventArgs e)
@@ -1042,12 +982,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     loadCustomer(companyC.Text);
                     addressC.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1064,10 +1002,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void companyC_KeyUp(object sender, KeyEventArgs e)
@@ -1075,7 +1011,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             tempCustomer = "";
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | companyC.Text.Equals("")))
             {
-
                 db.setList(listBox1, companyC, companyC.Width);
 
                 try
@@ -1098,7 +1033,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (companyC.Text.Equals(""))
             {
@@ -1110,7 +1044,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void addressC_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(companyC, mobileNumberC, mobileNumberC, e.KeyValue);
-
         }
 
         private void mobileNumberC_KeyDown(object sender, KeyEventArgs e)
@@ -1127,17 +1060,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void landNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void faxNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void emailC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1190,11 +1120,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     addressS.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1211,7 +1139,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
             else if (e.KeyValue == 38)
@@ -1222,7 +1149,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void addressS_KeyDown(object sender, KeyEventArgs e)
@@ -1232,7 +1158,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void addressS_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void salary_KeyDown(object sender, KeyEventArgs e)
@@ -1252,7 +1177,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void etf_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void etf_KeyDown(object sender, KeyEventArgs e)
@@ -1271,7 +1195,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | companyS.Text.Equals("")))
             {
-
                 db.setList(listBox2, companyS, companyS.Width);
 
                 try
@@ -1294,7 +1217,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (companyS.Text.Equals(""))
             {
@@ -1325,7 +1247,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             companyS.Text = listBox2.SelectedItem.ToString().Split(' ')[0];
-
         }
 
         private void companyCo_KeyDown(object sender, KeyEventArgs e)
@@ -1344,7 +1265,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     addressCo.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1361,7 +1281,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -1370,7 +1289,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | companyCo.Text.Equals("")))
             {
-
                 db.setList(listBox3, companyCo, companyCo.Width);
 
                 try
@@ -1393,7 +1311,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (companyCo.Text.Equals(""))
             {
@@ -1446,7 +1363,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void companyC_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void code_KeyDown(object sender, KeyEventArgs e)
@@ -1465,7 +1381,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     brand.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1482,7 +1397,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -1531,10 +1445,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void code_KeyUp(object sender, KeyEventArgs e)
         {
-
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | code.Text.Equals("")))
             {
-
                 db.setList(listBox4, code, code.Width * 2);
 
                 try
@@ -1557,7 +1469,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (code.Text.Equals(""))
             {
@@ -1577,7 +1488,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 listBox4.Visible = false;
                 loadItem(listBox4.SelectedItem.ToString().Split(' ')[0]);
             }
-
         }
 
         private void listBox4_MouseClick(object sender, MouseEventArgs e)
@@ -1590,7 +1500,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             code.Text = listBox4.SelectedItem.ToString().Split(' ')[0];
-
         }
 
         private void mobileNumberC_KeyPress(object sender, KeyPressEventArgs e)
@@ -1653,7 +1562,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     companyS.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1670,7 +1578,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -1679,7 +1586,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | attendanceNo.Text.Equals("")))
             {
-
                 db.setList(listBox2, attendanceNo, attendanceNo.Width * 3);
 
                 try
@@ -1702,7 +1608,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (attendanceNo.Text.Equals(""))
             {
@@ -1742,14 +1647,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
-
                 try
                 {
                     costPrice.Text = (Double.Parse(sellingPrice.Text) / 100) * (100 - Double.Parse(discount.Text)) + "";
                 }
                 catch (Exception)
                 {
-
                 }
                 costPrice.Focus();
             }
@@ -1771,12 +1674,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     loadCustomer("C-" + ID.Text);
                     companyC.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 companyC.Focus();
@@ -1795,12 +1696,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     loadCompany("S-" + IDS.Text);
                     companyCo.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 companyCo.Focus();
@@ -1809,7 +1708,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void IDS_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void accountNumber_KeyDown(object sender, KeyEventArgs e)
@@ -1824,7 +1722,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
                         bankName.Text = reader[1] + "";
                         dayLimit.Text = reader[3] + "";
-
                     }
                     conn.Close();
                 }
@@ -1832,10 +1729,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     conn.Close();
                 }
-
             }
             db.setTextBoxPath(accountNumber, bankName, bankName, e.KeyValue);
-
         }
 
         private void bankName_KeyDown(object sender, KeyEventArgs e)
@@ -1857,7 +1752,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void mobileNumberC_CursorChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dayLimitValue_KeyDown(object sender, KeyEventArgs e)
@@ -1886,12 +1780,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void creditPeriod_MouseMove(object sender, MouseEventArgs e)
         {
-
         }
 
         private void creditPeriod_KeyDown(object sender, KeyEventArgs e)
@@ -1908,39 +1800,32 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label21_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label27_Click(object sender, EventArgs e)
         {
-
         }
 
         private void epf_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void fixedIncntive_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(etf, allowances, allowances, e.KeyValue);
-
         }
 
         private void allowances_ImeModeChanged(object sender, EventArgs e)
         {
-
         }
 
         private void allowances_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(fixedIncntive, mealAllowance, mealAllowance, e.KeyValue);
-
         }
 
         private void mealAllowance_KeyDown(object sender, KeyEventArgs e)
@@ -2005,11 +1890,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void bankingAmount_KeyDown_1(object sender, KeyEventArgs e)
         {
-
             db.setTextBoxPath(nic, salary, salary, e.KeyValue);
         }
-        double temp = 0;
-        void setGross()
+
+        private double temp = 0;
+
+        private void setGross()
         {
             try
             {
@@ -2021,7 +1907,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 if (!bankingAmount.Text.Equals(""))
                 {
                     temp = temp + Double.Parse(bankingAmount.Text);
-                } if (!fixedIncntive.Text.Equals(""))
+                }
+                if (!fixedIncntive.Text.Equals(""))
                 {
                     temp = temp + Double.Parse(fixedIncntive.Text);
                 }
@@ -2041,6 +1928,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 grossSalary.Text = "0";
             }
         }
+
         private void bankingAmount_KeyUp(object sender, KeyEventArgs e)
         {
             setGross();
@@ -2077,13 +1965,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void label41_Click(object sender, EventArgs e)
         {
-
         }
 
         private void nic_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(mobileS, bankingAmount, bankingAmount, e.KeyValue);
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -2125,17 +2011,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void nicName_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(addressS, mobileS, mobileS, e.KeyValue);
-
         }
 
         private void label44_Click(object sender, EventArgs e)
         {
-
         }
 
         private void category_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void category_KeyDown(object sender, KeyEventArgs e)
@@ -2146,7 +2029,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void remark_KeyDown_1(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(description, sellingPrice, sellingPrice, e.KeyValue);
-
         }
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
@@ -2207,6 +2089,5 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 conn.Close();
             }
         }
-
     }
 }

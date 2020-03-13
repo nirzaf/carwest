@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -15,11 +11,13 @@ namespace pos
         {
             InitializeComponent();
         }
-        DataTable dt; DataSet ds;
-        SqlConnection sqlconn, conn2;
-        SqlDataReader reader, reader2;
-        DB db, db2, db3;
-        SqlConnection conn;
+
+        private DataTable dt; private DataSet ds;
+        private SqlConnection sqlconn, conn2;
+        private SqlDataReader reader, reader2;
+        private DB db, db2, db3;
+        private SqlConnection conn;
+
         private void bankStatement_Load(object sender, EventArgs e)
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -46,23 +44,20 @@ namespace pos
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
-        double bf, recivedBf, depositbf, sendBf, recivedBfT, depositbfT, sendBfT;
-        string customerName = "";
+
+        private double bf, recivedBf, depositbf, sendBf, recivedBfT, depositbfT, sendBfT;
+        private string customerName = "";
+
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             db.setCursoerWait();
 
-
-
             try
             {
-
                 string name = "";
 
                 recivedBfT = 0; depositbfT = 0; sendBfT = 0;
@@ -70,13 +65,10 @@ namespace pos
                 if (comboBox1.SelectedIndex == 0)
                 {
                     reader = new SqlCommand("select recived,deposit,send,amount,date,sendBank,chequeNumeber,customer,address,number,cusID from chequeSummery where    date  between '" + dateTimePicker1.Value + "' and '" + dateTimePicker2.Value + "'", sqlconn).ExecuteReader();
-
                 }
                 else
                 {
-
                     reader = new SqlCommand("select recived,deposit,send,amount,date,sendBank,chequeNumeber,customer,address,number,cusID from chequeSummery where    date  between '" + dateTimePicker1.Value + "' and '" + dateTimePicker2.Value + "'", sqlconn).ExecuteReader();
-
                 }
                 while (reader.Read())
                 {
@@ -87,21 +79,19 @@ namespace pos
                     if (reader2.Read())
                     {
                         name = reader2[0] + "";
-                        customerName=reader[7]+"";
+                        customerName = reader[7] + "";
                         conn2.Close();
-                     //   MessageBox.Show(customerName+"");
+                        //   MessageBox.Show(customerName+"");
                         if (customerName.Equals(""))
                         {
                             conn2.Open();
-                            reader2 = new SqlCommand("select company from customer where id='"+reader[10]+"'",conn2).ExecuteReader();
+                            reader2 = new SqlCommand("select company from customer where id='" + reader[10] + "'", conn2).ExecuteReader();
                             if (reader2.Read())
                             {
-                                customerName=reader2[0]+"";
+                                customerName = reader2[0] + "";
                             }
                             conn2.Close();
-                            
                         }
-                       
 
                         if (radioAll.Checked)
                         {
@@ -112,30 +102,27 @@ namespace pos
                             if (reader.GetBoolean(1))
                             {
                                 depositbf = reader.GetDouble(3);
-                            } if (reader.GetBoolean(2))
+                            }
+                            if (reader.GetBoolean(2))
                             {
                                 sendBf = reader.GetDouble(3);
                             }
                             dataGridView1.Rows.Add(reader.GetDateTime(4).ToShortDateString(), customerName, reader[8], reader[9], name + " " + reader[5], reader[6], db.setAmountFormat(recivedBf + ""), db.setAmountFormat(sendBf + ""), db.setAmountFormat(depositbf + ""));
-
                         }
                         else if (radioRecevied.Checked && reader.GetBoolean(0))
                         {
                             recivedBf = reader.GetDouble(3);
                             dataGridView1.Rows.Add(reader.GetDateTime(4).ToShortDateString(), customerName, reader[8], reader[9], name + " " + reader[5], reader[6], db.setAmountFormat(recivedBf + ""), db.setAmountFormat(sendBf + ""), db.setAmountFormat(depositbf + ""));
-
                         }
                         else if (radioDeposit.Checked && reader.GetBoolean(1))
                         {
                             depositbf = reader.GetDouble(3);
                             dataGridView1.Rows.Add(reader.GetDateTime(4).ToShortDateString(), customerName, reader[8], reader[9], name + " " + reader[5], reader[6], db.setAmountFormat(recivedBf + ""), db.setAmountFormat(sendBf + ""), db.setAmountFormat(depositbf + ""));
-
                         }
                         else if (radioSend.Checked && reader.GetBoolean(2))
                         {
                             sendBf = reader.GetDouble(3);
                             dataGridView1.Rows.Add(reader.GetDateTime(4).ToShortDateString(), customerName, reader[8], reader[9], name + " " + reader[5], reader[6], db.setAmountFormat(recivedBf + ""), db.setAmountFormat(sendBf + ""), db.setAmountFormat(depositbf + ""));
-
                         }
 
                         sendBfT = sendBfT + sendBf;
@@ -144,8 +131,6 @@ namespace pos
                         depositbfT = depositbfT + depositbf;
                     }
                     conn2.Close();
-
-
                 }
                 sqlconn.Close();
 
@@ -160,9 +145,11 @@ namespace pos
             }
             db.setCursoerDefault();
         }
-        bool states;
-        double odTotal, odLimit, odBalance;
-        bool checkOD()
+
+        private bool states;
+        private double odTotal, odLimit, odBalance;
+
+        private bool checkOD()
         {
             states = false;
             if (comboBox1.SelectedIndex == 0)
@@ -180,7 +167,6 @@ namespace pos
                 odLimit = 0;
                 try
                 {
-
                     conn.Open();
                     reader = new SqlCommand("select sum(amount) from chequeSummery where send='" + "true" + "' and sendBank='" + comboBox1.SelectedItem.ToString().Split('-')[0] + "' and date='" + chequeDate.Value + "'", conn).ExecuteReader();
                     if (reader.Read())
@@ -191,7 +177,7 @@ namespace pos
                 }
                 catch (Exception a)
                 {
-                   // MessageBox.Show(a.Message);
+                    // MessageBox.Show(a.Message);
                     conn.Close();
                 }
                 try
@@ -203,15 +189,11 @@ namespace pos
                         odLimit = reader.GetDouble(0);
                     }
                     conn.Close();
-
-
                 }
                 catch (Exception)
                 {
-
-
                 }
-              //  MessageBox.Show(odLimit + "/" + odTotal);
+                //  MessageBox.Show(odLimit + "/" + odTotal);
                 odBalance = odLimit - odTotal;
                 if (odBalance < Double.Parse(amount.Text))
                 {
@@ -221,22 +203,21 @@ namespace pos
                 {
                     states = true;
                 }
-
             }
 
             return states;
-
         }
+
         private void button2_Click(object sender, EventArgs e)
         {
             try
             {
-                if (!radioAll.Checked && comboBox1.SelectedIndex!=0)
+                if (!radioAll.Checked && comboBox1.SelectedIndex != 0)
                 {
                     if (radioSend.Checked && checkOD())
                     {
                         conn.Open();
-                        new SqlCommand("insert into chequeSummery values('" + "" + "','" + "" + "','" + "" + "','" + false + "','" + false + "','" + true + "','" + amount.Text + "','" + comboBox1.SelectedItem.ToString().Split('-')[0] + "','" + chequNumber.Text + "','" + chequeDate.Value + "','" + false + "','" + true + "','" + "" + "','"+cutomerID+"','"+customer.Text+"','"+address.Text+"','"+mobileNumber.Text+"')", conn).ExecuteNonQuery();
+                        new SqlCommand("insert into chequeSummery values('" + "" + "','" + "" + "','" + "" + "','" + false + "','" + false + "','" + true + "','" + amount.Text + "','" + comboBox1.SelectedItem.ToString().Split('-')[0] + "','" + chequNumber.Text + "','" + chequeDate.Value + "','" + false + "','" + true + "','" + "" + "','" + cutomerID + "','" + customer.Text + "','" + address.Text + "','" + mobileNumber.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
                         MessageBox.Show("Saved");
                         chequNumber.Text = "";
@@ -275,10 +256,9 @@ namespace pos
                         mobileNumber.Text = "";
                         address.Text = "";
                     }
-
-                   
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Please Select Pay Type Or Bank");
                 }
             }
@@ -290,7 +270,7 @@ namespace pos
 
         private void chequNumber_KeyDown(object sender, KeyEventArgs e)
         {
-            db.setTextBoxPath(chequNumber,amount,amount,e.KeyValue);
+            db.setTextBoxPath(chequNumber, amount, amount, e.KeyValue);
         }
 
         private void customer_KeyDown(object sender, KeyEventArgs e)
@@ -309,7 +289,6 @@ namespace pos
                     // loadCustomer(customer.Text);
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -326,11 +305,12 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
-        bool checkload;
+
+        private bool checkload;
+
         private void customer_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customer.Text.Equals("")))
@@ -344,7 +324,7 @@ namespace pos
                     listBox2.Items.Clear();
                     conn.Open();
                     reader = new SqlCommand("select id,company from customer where company like '%" + customer.Text + "%' ", conn).ExecuteReader();
-                    
+
                     states = true;
                     while (reader.Read())
                     {
@@ -364,7 +344,6 @@ namespace pos
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customer.Text.Equals(""))
             {
@@ -390,15 +369,15 @@ namespace pos
         {
             listBox2.Visible = false;
             loadCustomer(listBox2.SelectedItem.ToString().Split(' ')[0]);
-      
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             customer.Text = listBox2.SelectedItem.ToString();
-    
         }
-        string cutomerID;
+
+        private string cutomerID;
+
         public Boolean loadCustomer(string id)
         {
             //   MessageBox.Show(id);
@@ -406,7 +385,6 @@ namespace pos
             {
                 try
                 {
-
                     listBox2.Visible = false;
                 }
                 catch (Exception)
@@ -444,19 +422,16 @@ namespace pos
         private void address_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(customer, mobileNumber, mobileNumber, e.KeyValue);
-       
         }
 
         private void mobileNumber_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(address, chequNumber, chequNumber, e.KeyValue);
-       
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             new chequeD().Visible = true;
         }
-       
     }
 }

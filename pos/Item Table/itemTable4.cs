@@ -1,20 +1,15 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class itemTable4 : Form
     {
-        grnNew formH;
-        DB db;
-        string indexH;
-        public itemTable4(grnNew form,string unitPriceH,string discountH,string qtyH,string index,string codeH)
+        private grnNew formH;
+        private DB db;
+        private string indexH;
+
+        public itemTable4(grnNew form, string unitPriceH, string discountH, string qtyH, string index, string codeH)
         {
             InitializeComponent();
             formH = form;
@@ -25,20 +20,19 @@ namespace pos
             qty.Focus();
         }
 
-        void save() {
-          
-             if (qty.Text.Equals("") || Double.Parse(qty.Text) == 0)
+        private void save()
+        {
+            if (qty.Text.Equals("") || Double.Parse(qty.Text) == 0)
             {
                 MessageBox.Show("Please Eneter Valied qty");
                 qty.Focus();
             }
-            else {
-
+            else
+            {
                 formH.updateTableItem("0", "0", qty.Text, Int32.Parse(indexH));
                 formH.Enabled = true;
                 this.Dispose();
             }
-        
         }
 
         private void itemTable_Load(object sender, EventArgs e)
@@ -46,7 +40,7 @@ namespace pos
             formH.Enabled = false;
             this.TopMost = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            
+
             db = new DB();
             qty.Focus();
         }
@@ -64,24 +58,23 @@ namespace pos
 
         private void unitPrice_KeyDown(object sender, KeyEventArgs e)
         {
-         }
+        }
 
         private void discount_KeyDown(object sender, KeyEventArgs e)
         {
-     
         }
 
         private void qty_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue==12| e.KeyValue==13)
+            if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 save();
             }
-            else if (e.KeyValue==38)
+            else if (e.KeyValue == 38)
             {
-           //     discount.Focus();
+                //     discount.Focus();
             }
-            else if (e.KeyValue==40)
+            else if (e.KeyValue == 40)
             {
                 button1.Focus();
             }

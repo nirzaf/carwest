@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -15,9 +10,11 @@ namespace pos
         {
             InitializeComponent();
         }
-        DB db, db2;
-        SqlDataReader reader, reader2;
-        SqlConnection sqlconn, sqlconn2;
+
+        private DB db, db2;
+        private SqlDataReader reader, reader2;
+        private SqlConnection sqlconn, sqlconn2;
+
         private void attendance_Load(object sender, EventArgs e)
         {
             try
@@ -39,14 +36,12 @@ namespace pos
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     sqlconn.Open();
@@ -63,8 +58,9 @@ namespace pos
                             new SqlCommand("insert into attendance values ('" + dataGridView1.Rows[i].Cells[0].Value + "','" + dateTimePicker1.Value + "','" + dataGridView1.Rows[i].Cells[2].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "')", sqlconn).ExecuteNonQuery();
                             sqlconn.Close();
                         }
-                        else {
-                            MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value+" Detail will not be Saved .Password Required");
+                        else
+                        {
+                            MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value + " Detail will not be Saved .Password Required");
                             password.Focus();
                         }
                     }
@@ -76,8 +72,6 @@ namespace pos
                         sqlconn.Close();
                     }
                     sqlconn.Close();
-                   
-
                 }
                 dateTimePicker1_CloseUp(null, null);
 
@@ -107,7 +101,6 @@ namespace pos
                     else
                     {
                         dataGridView1.Rows.Add(reader[1], reader[0], false, false);
-
                     }
 
                     sqlconn2.Close();
@@ -121,7 +114,6 @@ namespace pos
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
                 sqlconn.Close();
             }
-
         }
     }
 }

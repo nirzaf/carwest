@@ -1,13 +1,11 @@
-﻿using System;
+﻿using System.Data;
 using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
 
 namespace pos
 {
     public delegate void AfterRowSelectEventHandler(object sender, DataRow SelectedRow);
+
     /// <summary>
     /// Summary description for MultiColumnComboPopup.
     /// </summary>
@@ -17,6 +15,7 @@ namespace pos
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.Container components = null;
+
         private DataRow selectedRow = null;
         private System.Windows.Forms.ListView lstvMyView;
         private DataRow[] inputRows = null;
@@ -27,7 +26,6 @@ namespace pos
         private string[][] data = null;
 
         public event AfterRowSelectEventHandler AfterRowSelectEvent;
-
 
         public MultiColumnComboPopup()
         {
@@ -73,6 +71,7 @@ namespace pos
         }
 
         #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -81,9 +80,9 @@ namespace pos
         {
             this.lstvMyView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
-            // 
+            //
             // lstvMyView
-            // 
+            //
             this.lstvMyView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstvMyView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstvMyView.FullRowSelect = true;
@@ -97,9 +96,9 @@ namespace pos
             this.lstvMyView.View = System.Windows.Forms.View.Details;
             this.lstvMyView.DoubleClick += new System.EventHandler(this.lstvMyView_DoubleClick);
             this.lstvMyView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstvMyView_KeyDown);
-            // 
+            //
             // MultiColumnComboPopup
-            // 
+            //
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(459, 226);
             this.ControlBox = false;
@@ -113,11 +112,12 @@ namespace pos
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MultiColumnComboPopup_KeyDown);
             this.Leave += new System.EventHandler(this.MultiColumnComboPopup_Leave);
             this.ResumeLayout(false);
-
         }
-        #endregion
+
+        #endregion Windows Form Designer generated code
 
         #region Functions
+
         private void InitializeGridProperties()
         {
             lstvMyView.Items.Clear();
@@ -134,13 +134,12 @@ namespace pos
             {
                 ListViewItem item = new ListViewItem("");
                 lstvMyView.Items.Add(item);
-           
+
                 for (int j = 0; j < mCols; j++)
                 {
                     item.SubItems.Add(" ");
                 }
             }
-
         }
 
         public void SetCellValue(int Row, int Column, string ItemValue)
@@ -307,13 +306,12 @@ namespace pos
                     lstvMyView.Columns[i].Text = ColumnNames[i];
                     lstvMyView.Columns[i].Width = ColumnNames[i].Length * (int)Font.SizeInPoints;
                 }
-                
             }
         }
 
         public void SetColumnWidths(int[] Widths)
         {
-          //  MessageBox.Show("as");
+            //  MessageBox.Show("as");
             for (int i = 0; i < Widths.Length; i++)
             {
                 if (i >= lstvMyView.Columns.Count)
@@ -449,7 +447,8 @@ namespace pos
                 return true;
             }
         }
-        #endregion
+
+        #endregion Functions
 
         private void gridValue_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -544,7 +543,7 @@ namespace pos
 
         //		public string[] NonDisplayColumnNames{
         //			set{
-        //				
+        //
         //			}
         //		}
 
@@ -584,6 +583,5 @@ namespace pos
                 return mRows;
             }
         }
-
     }
 }

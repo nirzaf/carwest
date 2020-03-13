@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -21,32 +14,28 @@ namespace pos
             this.user = user;
             home = form;
         }
+
         //+++++++My Variable Start
-        DB db, db2, db3, db4;
-        Form home;
-        SqlConnection conn, conn2, conn3, conn4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        ArrayList arrayList, stockList;
-        Boolean check, checkListBox, states, item, checkStock, isCompany;
-        string user, type, cutomerID = "", description, invoieNoTemp, query;
-        String[] idArray;
-        DataGridViewButtonColumn btn;
-        Int32 invoiceMaxNo, rowCount;
-        Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
+        private DB db, db2, db3, db4;
+
+        private Form home;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private ArrayList arrayList, stockList;
+        private Boolean check, checkListBox, states, item, checkStock, isCompany;
+        private string user, type, cutomerID = "", description, invoieNoTemp, query;
+        private String[] idArray;
+        private DataGridViewButtonColumn btn;
+        private Int32 invoiceMaxNo, rowCount;
+        private Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
         //+++++++++My Variable End
 
         //++My Method Start
 
-
-
-        void setAutoComplete()
+        private void setAutoComplete()
         {
             try
             {
-
-
-
-
                 //conn.Open();
                 //reader = new SqlCommand("select customerid from " + query + " ", conn).ExecuteReader();
                 //arrayList = new ArrayList();
@@ -66,7 +55,8 @@ namespace pos
                 conn.Close();
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -74,12 +64,10 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + user + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     dataGridView1.Columns[6].Visible = reader.GetBoolean(14);
                     dataGridView1.Columns[7].Visible = reader.GetBoolean(20);
                     dataGridView1.Columns[0].Visible = reader.GetBoolean(2);
                     isCompany = reader.GetBoolean(2);
-
                 }
                 reader.Close();
                 conn.Close();
@@ -90,15 +78,14 @@ namespace pos
                 else
                 {
                     query = "invoiceDump";
-
                 }
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
+
         //+++++++My Method End
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -109,7 +96,6 @@ namespace pos
 
         private void label9_Click(object sender, EventArgs e)
         {
-
         }
 
         private void invoiceSearch_Load(object sender, EventArgs e)
@@ -139,7 +125,6 @@ namespace pos
             //btn.Text = "VIEW";
             //btn.UseColumnTextForButtonValue = true;
 
-
             //btn = new DataGridViewButtonColumn();
             //dataGridView1.Columns.Add(btn);
             //btn.Width = 60;
@@ -166,12 +151,10 @@ namespace pos
 
         private void invoiceNo_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void warrentyCode_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -180,14 +163,11 @@ namespace pos
             {
                 from.Enabled = true;
                 toDate.Enabled = true;
-
             }
             else
             {
                 from.Enabled = false;
                 toDate.Enabled = false;
-
-
             }
         }
 
@@ -197,15 +177,16 @@ namespace pos
             home.Enabled = true;
             home.TopMost = true;
         }
-        double cashB, cardB, totalB, paid;
-        string vehicleNO;
+
+        private double cashB, cardB, totalB, paid;
+        private string vehicleNO;
+
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
                 dataGridView1.Rows.Clear();
                 db.setCursoerWait();
-
 
                 cashB = 0;
                 cardB = 0;
@@ -216,12 +197,10 @@ namespace pos
                 if (checkBox1.Checked)
                 {
                     reader = new SqlCommand("select a.* from returnGoods as a  where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "'", conn).ExecuteReader();
-
                 }
                 else
                 {
                     reader = new SqlCommand("select * from returnGoods ", conn).ExecuteReader();
-
                 }
 
                 while (reader.Read())
@@ -235,13 +214,10 @@ namespace pos
                         {
                             vehicleNO = reader2[0] + "";
 
-
                             //MessageBox.Show(reader[0]+"");
                             dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], reader[2], 0, db.setAmountFormat(reader[5] + ""));
-
                         }
                         conn2.Close();
-
                     }
                     else if (!radioCustomer.Checked && reader.GetBoolean(4))
                     {
@@ -251,13 +227,10 @@ namespace pos
                         {
                             vehicleNO = reader2[0] + "";
 
-
                             //MessageBox.Show(reader[0]+"");
                             dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], 0, reader[2], db.setAmountFormat(reader[5] + ""));
-
                         }
                         conn2.Close();
-
                     }
                     else if (radioAll.Checked)
                     {
@@ -269,10 +242,8 @@ namespace pos
                             {
                                 vehicleNO = reader2[0] + "";
 
-
                                 //MessageBox.Show(reader[0]+"");
                                 dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], reader[2], 0, db.setAmountFormat(reader[5] + ""));
-
                             }
                             conn2.Close();
                         }
@@ -284,17 +255,12 @@ namespace pos
                             {
                                 vehicleNO = reader2[0] + "";
 
-
                                 //MessageBox.Show(reader[0]+"");
                                 dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], 0, reader[2], db.setAmountFormat(reader[5] + ""));
-
                             }
                             conn2.Close();
                         }
-
                     }
-
-
                 }
                 reader.Close();
                 conn.Close();
@@ -308,7 +274,6 @@ namespace pos
                     MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
-
 
                 db.setCursoerDefault();
             }
@@ -393,10 +358,6 @@ namespace pos
 
             //    }
 
-
-
-
-
             //    if (dataGridView1.Rows.Count == 0)
             //    {
             //        MessageBox.Show("Invalied Date Range");
@@ -427,8 +388,6 @@ namespace pos
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
-
-
                         invoieNoTemp = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                         conn.Open();
                         reader = new SqlCommand("select itemCode,qty,credit from returnGoods where id='" + invoieNoTemp + "'", conn).ExecuteReader();
@@ -446,9 +405,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                                 new SqlCommand("update item set qty=qty+'" + reader[1] + "' where code='" + reader[0] + "'", conn2).ExecuteNonQuery();
                                 conn2.Close();
                             }
-
-
-
                         }
                         reader.Close();
                         conn.Close();
@@ -470,15 +426,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     conn.Close();
                 }
             }
-
-
         }
 
         private void customer_KeyDown(object sender, KeyEventArgs e)
         {
-
-
-
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -487,7 +438,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 dataGridView1.Rows.Clear();
                 db.setCursoerWait();
-
 
                 cashB = 0;
                 cardB = 0;
@@ -499,28 +449,22 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     if (radioCustomer.Checked)
                     {
                         reader3 = new SqlCommand("select DISTINCT a.id from returnGoods as a ,customer as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' and a.customer = '" + tempCustomer + "' ", conn3).ExecuteReader();
-
                     }
                     else
                     {
                         reader3 = new SqlCommand("select DISTINCT a.id from returnGoods as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' and a.customer = '" + tempCustomer + "' ", conn3).ExecuteReader();
-
                     }
-
                 }
                 else
                 {
                     if (radioCustomer.Checked)
                     {
                         reader3 = new SqlCommand("select DISTINCT a.id from returnGoods as a ,customer as b where  a.customer = '" + tempCustomer + "' ", conn3).ExecuteReader();
-
                     }
                     else
                     {
                         reader3 = new SqlCommand("select DISTINCT a.id from returnGoods as a ,supplier as b where  a.customer = '" + tempCustomer + "' ", conn3).ExecuteReader();
-
                     }
-
                 }
                 db.setCursoerWait();
                 dataGridView1.Rows.Clear();
@@ -532,13 +476,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     try
                     {
-
-
                         conn.Open();
 
                         reader = new SqlCommand("select * from returnGoods where id='" + reader3[0] + "'", conn).ExecuteReader();
-
-
 
                         if (reader.Read())
                         {
@@ -551,13 +491,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                                 {
                                     vehicleNO = reader2[0] + "";
 
-
                                     //MessageBox.Show(reader[0]+"");
                                     dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], reader[2], 0, db.setAmountFormat(reader[5] + ""));
-
                                 }
                                 conn2.Close();
-
                             }
                             else if (!radioCustomer.Checked && reader.GetBoolean(4))
                             {
@@ -567,23 +504,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                                 {
                                     vehicleNO = reader2[0] + "";
 
-
                                     //MessageBox.Show(reader[0]+"");
                                     dataGridView1.Rows.Add(reader[0], reader.GetDateTime(6).ToShortDateString(), vehicleNO, reader[1], 0, reader[2], db.setAmountFormat(reader[5] + ""));
-
                                 }
                                 conn2.Close();
-
-
-
-
                             }
-
-
                         }
                         reader.Close();
                         conn.Close();
-
 
                         db.setCursoerDefault();
                     }
@@ -594,15 +522,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         conn.Close();
                         conn2.Close();
                     }
-
                 }
                 reader3.Close();
                 conn3.Close();
 
-
                 total.Text = db.setAmountFormat(totalB + "");
-
-
 
                 if (dataGridView1.Rows.Count == 0)
                 {
@@ -623,10 +547,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 conn.Close(); conn2.Close(); conn3.Close(); conn4.Close();
             }
         }
-        string tempCustomer;
+
+        private string tempCustomer;
+
         public Boolean loadCustomer(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -634,12 +559,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 if (radioCustomer.Checked)
                 {
                     reader = new SqlCommand("select * from customer where id='" + id + "'", conn).ExecuteReader();
-
                 }
                 else
                 {
                     reader = new SqlCommand("select * from supplier where id='" + id + "'", conn).ExecuteReader();
-
                 }
                 if (reader.Read())
                 {
@@ -669,6 +592,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             return states;
         }
+
         private void cutomerUnSaved_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 12 | e.KeyValue == 13)
@@ -681,13 +605,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     loadCustomer(cutomerUnSaved.Text);
                     button9_Click(sender, e);
                     //addressC.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -704,7 +626,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -714,7 +635,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             tempCustomer = "";
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | cutomerUnSaved.Text.Equals("")))
             {
-
                 db.setList(listBox1, cutomerUnSaved, cutomerUnSaved.Width);
 
                 try
@@ -724,12 +644,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     if (radioCustomer.Checked)
                     {
                         reader = new SqlCommand("select id,description from customer where description like '%" + cutomerUnSaved.Text + "%' ", conn).ExecuteReader();
-
                     }
                     else
                     {
                         reader = new SqlCommand("select id,description from supplier where description like '%" + cutomerUnSaved.Text + "%' ", conn).ExecuteReader();
-
                     }
                     arrayList = new ArrayList();
 
@@ -746,7 +664,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (cutomerUnSaved.Text.Equals(""))
             {
@@ -757,12 +674,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void cutomerUnSaved_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customer_KeyUp(object sender, KeyEventArgs e)
@@ -830,7 +745,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void vehicleNO_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
@@ -842,7 +756,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     dataGridView1.Rows.Clear();
                     db.setCursoerWait();
 
-
                     cashB = 0;
                     cardB = 0;
                     totalB = 0;
@@ -850,8 +763,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     conn.Open();
 
                     reader = new SqlCommand("select subTotal,grnDate,customerId,id,invoiceNo from GRN where invoiceno='" + textBox1.Text + "'", conn).ExecuteReader();
-
-
 
                     while (reader.Read())
                     {
@@ -889,7 +800,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                                     conn2.Close();
                                 }
 
-
                                 //MessageBox.Show(reader[0]+"");
                                 dataGridView1.Rows.Add(reader[3], vehicleNO, reader[4], reader.GetDateTime(1).ToShortDateString(), db.setAmountFormat(reader[0] + ""), db.setAmountFormat(paid + ""), db.setAmountFormat(reader.GetDouble(0) - paid + ""));
 
@@ -898,15 +808,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                                 cashB = cashB + (paid);
                                 cardB = cardB + (reader.GetDouble(0) - paid);
                             }
-
-
                         }
                         conn2.Close();
-
                     }
                     reader.Close();
                     conn.Close();
-
 
                     total.Text = db.setAmountFormat(totalB + "");
                     debit.Text = db.setAmountFormat(paid + "");
@@ -921,7 +827,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         MessageBox.Show("Data Downloaded Succesfully ");
                     }
                     reader.Close();
-
 
                     db.setCursoerDefault();
                 }

@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class cashOpeningBalancea : Form
     {
-        public cashOpeningBalancea(string user,Form home)
+        public cashOpeningBalancea(string user, Form home)
         {
             InitializeComponent();
             userH = user; homeH = home;
-
-
         }
-        DB db, db2;
-        Form home;
-        Form homeH;
-        string userH;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        double total=0;
+
+        private DB db, db2;
+        private Form home;
+        private Form homeH;
+        private string userH;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private double total = 0;
+
         private void cashOpeningBalance_Load(object sender, EventArgs e)
         {
             db = new DB();
@@ -33,9 +28,8 @@ namespace pos
             load();
         }
 
-        void load()
+        private void load()
         {
-
             conn.Open();
             try
             {
@@ -47,12 +41,11 @@ namespace pos
                 }
                 conn.Close();
 
-                
                 currentBalance.Text = total + "";
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
                 conn.Close();
             }
         }
@@ -69,7 +62,7 @@ namespace pos
                 new SqlCommand("delete from cashOpeningBalance where id='" + userH + "' and date='" + DateTime.Now.ToShortDateString() + "'", conn).ExecuteNonQuery();
                 conn.Close();
                 conn.Open();
-                new SqlCommand("insert into cashOpeningBalance values('"+userH+"','"+DateTime.Now+"','"+openingBalance.Text+"')", conn).ExecuteNonQuery();
+                new SqlCommand("insert into cashOpeningBalance values('" + userH + "','" + DateTime.Now + "','" + openingBalance.Text + "')", conn).ExecuteNonQuery();
                 conn.Close();
                 openingBalance.Text = "0";
                 load();
@@ -83,7 +76,6 @@ namespace pos
 
         private void openingBalance_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void openingBalance_KeyPress(object sender, KeyPressEventArgs e)

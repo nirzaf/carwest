@@ -1,11 +1,5 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -16,15 +10,17 @@ namespace pos
         {
             InitializeComponent();
         }
+
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+
         // my Variable End
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void login_Load(object sender, EventArgs e)
@@ -39,50 +35,45 @@ namespace pos
             db.setTextBoxPath(userName, password, password, e.KeyValue);
         }
 
-        void loginC()
+        private void loginC()
         {
+            /// MessageBox.Show("1");
+            //  MessageBox.Show("1");
+            conn.Open();
+            // MessageBox.Show("2");
+            ///MessageBox.Show("2");
+            reader = new SqlCommand("select username,password from users where username='" + userName.Text + "' and password='" + password.Text + "'", conn).ExecuteReader();
+            if (reader.Read())
+            {
+                this.Hide();
+                new invoiceNew(this, reader[0].ToString(), "CASH").Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Sorry, User Name or Password Invalied");
+                userName.Focus();
+            }
+            conn.Close();
 
-            
-               /// MessageBox.Show("1");
-              //  MessageBox.Show("1");
+            if (DateTime.Now.Day > 7)
+            {
                 conn.Open();
-               // MessageBox.Show("2");
-                ///MessageBox.Show("2");
-                reader = new SqlCommand("select username,password from users where username='"+userName.Text+"' and password='"+password.Text+"'",conn).ExecuteReader();
-                if (reader.Read())
-                {
-                   
-                    this.Hide();
-                    new invoiceNew(this, reader[0].ToString(), "CASH").Visible = true;
-                   
-                }
-                else
-                {
-                    MessageBox.Show("Sorry, User Name or Password Invalied");
-                    userName.Focus();
-                }
+                new SqlCommand("update users set password='" + DateTime.Now + "'", conn).ExecuteNonQuery();
                 conn.Close();
-
-                if (DateTime.Now.Day>7)
-                {
-                    conn.Open();
-                    new SqlCommand("update users set password='"+DateTime.Now+"'",conn).ExecuteNonQuery();
-                    conn.Close();
-                }
-           
+            }
         }
 
         private void password_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue==38)
+            if (e.KeyValue == 38)
             {
                 userName.Focus();
             }
-            else if (e.KeyValue==40)
+            else if (e.KeyValue == 40)
             {
                 button1.Focus();
             }
-            else if (e.KeyValue==12 | e.KeyValue==13)
+            else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 loginC();
             }

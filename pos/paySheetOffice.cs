@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -18,7 +13,7 @@ namespace pos
             InitializeComponent();
         }
 
-        string getMOnth(string y)
+        private string getMOnth(string y)
         {
             string month = "";
             if (y.Equals("January"))
@@ -56,22 +51,25 @@ namespace pos
             else if (y.Equals("September"))
             {
                 month = "09";
-            } if (y.Equals("October"))
+            }
+            if (y.Equals("October"))
             {
                 month = "10";
-            } if (y.Equals("November"))
+            }
+            if (y.Equals("November"))
             {
                 month = "11";
-            } if (y.Equals("December"))
+            }
+            if (y.Equals("December"))
             {
                 month = "12";
             }
 
             return month;
-
-
         }
-        String lastDate;
+
+        private String lastDate;
+
         public string getLastDate(int month, int year)
         {
             var firstOftargetMonth = new DateTime(year, month, 1);
@@ -89,13 +87,14 @@ namespace pos
 
         private void crystalReportViewer1_Load(object sender, EventArgs e)
         {
-
         }
-        string typeL, idL, dateL, workingDaysSeconds, otSeconds, lateSeconds, covering, coinsBF, payle, pay;
-        DB db, db2;
-        SqlDataReader reader, reader2;
-        SqlConnection sqlconn, sqlconn2;
-        string[] idArray;
+
+        private string typeL, idL, dateL, workingDaysSeconds, otSeconds, lateSeconds, covering, coinsBF, payle, pay;
+        private DB db, db2;
+        private SqlDataReader reader, reader2;
+        private SqlConnection sqlconn, sqlconn2;
+        private string[] idArray;
+
         public void setValue(string id, string type, string date, string[] idA)
         {
             typeL = type;
@@ -103,6 +102,7 @@ namespace pos
             dateL = date;
             idArray = idA;
         }
+
         private void PaySheetOffice_Load(object sender, EventArgs e)
         {
             this.TopMost = true;
@@ -116,10 +116,8 @@ namespace pos
 
             //DataTable dt = new DataTable();
 
-
-           
             //dt.Columns.Add("name", typeof(string));
-          
+
             //dt.Columns.Add("basic", typeof(string));
             //dt.Columns.Add("br", typeof(string));
             //dt.Columns.Add("salaryforepf", typeof(string));
@@ -150,7 +148,6 @@ namespace pos
             //dt.Columns.Add("etf3", typeof(string));
             //dt.Columns.Add("coinsCD", typeof(string));
 
-
             //String attandanceType = "", leave = "0"; ;
             //if (typeL.Equals("single"))
             //{
@@ -161,7 +158,6 @@ namespace pos
             //        attandanceType = reader.GetString(0);
             //    }
             //    sqlconn.Close();
-
 
             //    sqlconn.Open();
             //    reader = new SqlCommand("select a.month,b.empid,b.name,b.epfBasic,a.ot,a.ot,a.fixedAllownces,a.allwonces,a.late,a.offday,a.advanced,a.loan,a.meal,a.meal,a.workingDays,a.absentDays from paysheet as a,emp as b,company as c where a.empID='" + idL + "' and b.empid='" + idL + "' and month='" + dateL + "' ", sqlconn).ExecuteReader();
@@ -197,7 +193,7 @@ namespace pos
             //            otSeconds = "";
             //            lateSeconds = "";
             //        }
-                   
+
             //        leave = "0";
             //        try
             //        {
@@ -216,7 +212,6 @@ namespace pos
 
             //        if (!otSeconds.Equals("") & reader.GetDouble(9) != 0)
             //        {
-
             //            otSeconds = "(" + Math.Round(Double.Parse(TimeSpan.FromSeconds(Int32.Parse(otSeconds)).TotalHours + ""), 2) + ")     " + setAmountFormat(reader[9] + "");
 
             //        }
@@ -226,7 +221,6 @@ namespace pos
             //        }
             //        if (!lateSeconds.Equals("") & reader.GetDouble(13) != 0)
             //        {
-
             //            lateSeconds = "(" + Math.Round(Double.Parse(TimeSpan.FromSeconds(Int32.Parse(lateSeconds)).TotalHours + ""), 2) + ")     " + setAmountFormat(reader[13] + "");
             //        }
             //        else
@@ -241,7 +235,7 @@ namespace pos
 
             //        //dt.Rows.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[1].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[2].ToString().ToLower()), "Pay Slip for the " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader.GetString(3).Split('/')[0].ToString().ToLower()) + " of " + reader.GetString(3).Split('/')[1], reader[4], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[1].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[2].ToString().ToLower()), setAmountFormat(basic - 1000 + ""), "1000.00", setAmountFormat(basiEPF + ""), otSeconds, "0.00", "0.00", reader[15], leave, "0.00", setAmountFormat(reader[5] + ""), setAmountFormat(reader[6] + ""), reader[14], setAmountFormat(reader[7] + ""), setAmountFormat(totalEarning + ""), setAmountFormat(basic + totalEarning + ""), lateSeconds, setAmountFormat(reader[9] + ""), setAmountFormat(reader[10] + ""), setAmountFormat(reader[11] + ""), setAmountFormat(reader[12] + ""), setAmountFormat((basiEPF / 100) * 8 + ""), setAmountFormat(coinsBF), setAmountFormat(payle), setAmountFormat(pay), setAmountFormat(reader[13] + ""), setAmountFormat((basic + totalEarning) - totalDeduction + ""), setAmountFormat((basiEPF / 100) * 12 + ""), setAmountFormat((basiEPF / 100) * 3 + ""), setAmountFormat(totalDeduction + ""));
             //        dt.Rows.Add("", "", "", "", "", "", "", "", "", "", "", "", "", "", reader[15], leave, "0.00", setAmountFormat(reader[5] + ""), setAmountFormat(reader[6] + ""), reader[14], setAmountFormat(reader[7] + ""), setAmountFormat(totalEarning + ""), setAmountFormat(basic + totalEarning + ""), lateSeconds, setAmountFormat(reader[9] + ""), setAmountFormat(reader[10] + ""), setAmountFormat(reader[11] + ""), setAmountFormat(reader[12] + ""), setAmountFormat((basiEPF / 100) * 8 + ""), setAmountFormat(coinsBF), setAmountFormat(payle), setAmountFormat(pay), setAmountFormat(reader[13] + ""), setAmountFormat((basic + totalEarning) - totalDeduction + ""), setAmountFormat((basiEPF / 100) * 12 + ""), setAmountFormat((basiEPF / 100) * 3 + ""), setAmountFormat(totalDeduction + ""));
-             
+
             //    }
             //    else
             //    {
@@ -249,14 +243,9 @@ namespace pos
             //    }
             //    sqlconn.Close();
 
-
-
-
             //}
             //else
             //{
-
-
             //    try
             //    {
             //        sqlconn.Open();
@@ -302,12 +291,11 @@ namespace pos
             //                    }
             //                    catch (Exception a)
             //                    {
-
             //                        reader2.Close();
             //                        otSeconds = "";
             //                        lateSeconds = "";
             //                    }
-                               
+
             //                    leave = "0";
             //                    try
             //                    {
@@ -326,7 +314,6 @@ namespace pos
 
             //                    if (!otSeconds.Equals("") & reader.GetDouble(9) != 0)
             //                    {
-
             //                        otSeconds = "(" + Math.Round(Double.Parse(TimeSpan.FromSeconds(Int32.Parse(otSeconds)).TotalHours + ""), 2) + ")     " + setAmountFormat(reader[9] + "");
 
             //                    }
@@ -336,7 +323,6 @@ namespace pos
             //                    }
             //                    if (!lateSeconds.Equals("") & reader.GetDouble(13) != 0)
             //                    {
-
             //                        lateSeconds = "(" + Math.Round(Double.Parse(TimeSpan.FromSeconds(Int32.Parse(lateSeconds)).TotalHours + ""), 2) + ")     " + setAmountFormat(reader[13] + "");
 
             //                    }
@@ -347,7 +333,7 @@ namespace pos
             //                    coinsBF = "0.0";
             //                    payle = "0.0";
             //                    pay = "0.0";
-                               
+
             //                    sqlconn2.Close();
 
             //                    dt.Rows.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[1].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[2].ToString().ToLower()), "Pay Slip for the " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader.GetString(3).Split('/')[0].ToString().ToLower()) + " of " + reader.GetString(3).Split('/')[1], reader[4], CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[5].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[6].ToString().ToLower()), CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[7].ToString().ToLower()), setAmountFormat(basic - 1000 + ""), "1000.00", setAmountFormat(basiEPF + ""), otSeconds, "0.00", "0.00", reader[20], leave, "0.00", setAmountFormat(reader[10] + ""), setAmountFormat(reader[11] + ""), reader[19], setAmountFormat(reader[12] + ""), setAmountFormat(totalEarning + ""), setAmountFormat(basic + totalEarning + ""), lateSeconds, setAmountFormat(reader[14] + ""), setAmountFormat(reader[15] + ""), setAmountFormat(reader[16] + ""), setAmountFormat(reader[17] + ""), setAmountFormat((basiEPF / 100) * 8 + ""), setAmountFormat(coinsBF), setAmountFormat(payle), setAmountFormat(pay), setAmountFormat(reader[18] + ""), setAmountFormat((basic + totalEarning) - totalDeduction + ""), setAmountFormat((basiEPF / 100) * 12 + ""), setAmountFormat((basiEPF / 100) * 3 + ""), setAmountFormat(totalDeduction + ""));
@@ -369,12 +355,6 @@ namespace pos
 
             //}
 
-
-
-
-
-
-
             //ds.Tables.Add(dt);
 
             //// ds.WriteXmlSchema("Sample13bbbb.xml");
@@ -384,7 +364,8 @@ namespace pos
             ////paySheet.SetParameterValue("name", "mahesh");
             //crystalReportViewer1.ReportSource = paySheet;
         }
-        string setAmountFormat(string amount)
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -454,7 +435,6 @@ namespace pos
 
                 DataTable dt = new DataTable();
 
-
                 dt.Columns.Add("id", typeof(string));
                 dt.Columns.Add("name", typeof(string));
                 dt.Columns.Add("days", typeof(double));
@@ -473,11 +453,10 @@ namespace pos
                 dt.Columns.Add("epf12", typeof(double));
                 dt.Columns.Add("etf3", typeof(double));
                 sqlconn.Open();
-                double epf8, epf12, etf3,tot,ear,dedu;
+                double epf8, epf12, etf3, tot, ear, dedu;
                 reader = new SqlCommand("select a.*,b.name,b.type from paysheet as a,emp as b where a.month='" + dateTimePicker1.Value.ToString("d").ToString().Split('/')[2] + "/" + comboBox1.SelectedItem + "' and a.empid=b.empid", sqlconn).ExecuteReader();
                 while (reader.Read())
                 {
-
                     if (reader.GetString(21).Equals("timeBased"))
                     {
                         epf8 = reader.GetDouble(18);
@@ -485,33 +464,34 @@ namespace pos
                         etf3 = reader.GetDouble(20);
                         ear = (reader.GetDouble(6) + reader.GetDouble(15));
                         dedu = (reader.GetDouble(10) + reader.GetDouble(11) + reader.GetDouble(9) + epf8 + reader.GetDouble(8));
-                   
-                         tot = (reader.GetDouble(3) + ear) - dedu;
+
+                        tot = (reader.GetDouble(3) + ear) - dedu;
                     }
-                    else {
-                        epf8 = reader.GetDouble(18) * reader.GetInt32(4) ;
-                        epf12 = reader.GetDouble(19) * reader.GetInt32(4) ;
+                    else
+                    {
+                        epf8 = reader.GetDouble(18) * reader.GetInt32(4);
+                        epf12 = reader.GetDouble(19) * reader.GetInt32(4);
                         etf3 = reader.GetDouble(20) * reader.GetInt32(4);
                         ear = (reader.GetDouble(6) + reader.GetDouble(15));
                         dedu = (reader.GetDouble(10) + reader.GetDouble(11) + reader.GetDouble(9) + epf8 + reader.GetDouble(8));
 
                         tot = ((reader.GetDouble(3) * reader.GetInt32(4)) + ear) - dedu;
                     }
-                     
-                    dt.Rows.Add(reader[1], reader[21], reader[4], reader[3], reader[6], reader[15],ear, 0, reader[10], reader[11], reader[9], epf8, reader[8], dedu,tot,epf12,etf3);
+
+                    dt.Rows.Add(reader[1], reader[21], reader[4], reader[3], reader[6], reader[15], ear, 0, reader[10], reader[11], reader[9], epf8, reader[8], dedu, tot, epf12, etf3);
                 }
                 ds.Tables.Add(dt);
                 paySheet paySheet = new paySheet();
                 paySheet.SetDataSource(ds);
                 paySheet.SetParameterValue("month", "Pay Sheet on " + dateTimePicker1.Value.ToString("d").ToString().Split('/')[2] + "/" + comboBox1.SelectedItem);
                 crystalReportViewer1.ReportSource = paySheet;
-              //  ds.WriteXmlSchema("paySlipg.xml");
-               // MessageBox.Show("ok");
+                //  ds.WriteXmlSchema("paySlipg.xml");
+                // MessageBox.Show("ok");
                 sqlconn.Close();
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
                 sqlconn.Close();
             }
         }

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,23 +16,26 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        cusOuts pp;
-        DB db, db2, db3;
-        string userH, queary, tableName, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "", term, customer, item;
-        SqlConnection conn, conn2, conn3;
-        string[] idArray;
-        SqlDataReader reader, reader2, reader3;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
-        Boolean isCompany, creditDetailB, chequeDetailB, cardDetailB;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private cusOuts pp;
+        private DB db, db2, db3;
+        private string userH, queary, tableName, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "", term, customer, item;
+        private SqlConnection conn, conn2, conn3;
+        private string[] idArray;
+        private SqlDataReader reader, reader2, reader3;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
+        private Boolean isCompany, creditDetailB, chequeDetailB, cardDetailB;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void getCustomer(string id)
+        private void getCustomer(string id)
         {
             try
             {
@@ -46,12 +45,10 @@ namespace pos
                 if (reader2.Read())
                 {
                     customer = reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper();
-
                 }
                 else
                 {
                     customer = id;
-
                 }
                 conn2.Close();
             }
@@ -61,7 +58,7 @@ namespace pos
             }
         }
 
-        void getItem(string id)
+        private void getItem(string id)
         {
             try
             {
@@ -75,7 +72,6 @@ namespace pos
                 else
                 {
                     item = id;
-
                 }
                 conn2.Close();
             }
@@ -84,7 +80,8 @@ namespace pos
                 conn2.Close();
             }
         }
-        void getInvoicePayType(string id)
+
+        private void getInvoicePayType(string id)
         {
             try
             {
@@ -101,7 +98,6 @@ namespace pos
                 if (reader2.Read())
                 {
                     chequeDetailB = true;
-
                 }
                 conn2.Close();
                 conn2.Open();
@@ -109,7 +105,6 @@ namespace pos
                 if (reader2.Read())
                 {
                     cardDetailB = true;
-
                 }
                 conn2.Close();
 
@@ -120,7 +115,6 @@ namespace pos
                 }
                 else
                 {
-
                     if (creditDetailB)
                     {
                         term = "CREDIT";
@@ -139,7 +133,8 @@ namespace pos
             {
             }
         }
-        void setTempDates(Double aH)
+
+        private void setTempDates(Double aH)
         {
             a = aH;
             temp030 = 0;
@@ -163,7 +158,8 @@ namespace pos
                 temp90up = balance;
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -171,7 +167,6 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     isCompany = reader.GetBoolean(2);
                 }
@@ -184,7 +179,6 @@ namespace pos
                 else
                 {
                     tableName = "invoiceDump";
-
                 }
             }
             catch (Exception)
@@ -197,7 +191,6 @@ namespace pos
                 reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     comName = reader.GetString(0).ToUpper();
                     comAddres = reader.GetString(1).ToUpper();
                     if (!reader.GetString(2).Equals(""))
@@ -220,29 +213,23 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
-
 
         //
         private void stockReport_Load(object sender, EventArgs e)
         {
-
-
-
             db = new DB();
             conn = db.createSqlConnection();
             db2 = new DB();
             conn2 = db2.createSqlConnection();
             db3 = new DB();
             conn3 = db3.createSqlConnection();
-            
+
             radioDateCustom.Checked = true;
             radioAllDate.Checked = true;
 
@@ -253,16 +240,10 @@ namespace pos
             comboOrderTO.SelectedIndex = 0;
             comboGroupBy.SelectedIndex = 0;
 
-
-           
-
-
-
             conn.Open();
             reader = new SqlCommand("select * from company ", conn).ExecuteReader();
             if (reader.Read())
             {
-
                 comName = reader.GetString(0).ToUpper();
                 comAddres = reader.GetString(1).ToUpper();
                 if (!reader.GetString(2).Equals(""))
@@ -286,7 +267,6 @@ namespace pos
             {
                 // MessageBox.Show("m");
                 arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
             }
             reader.Close();
             idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -296,43 +276,34 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
         {
-           
         }
 
         private void checkBrand_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkCategory_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkDescription_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -350,17 +321,16 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
-        double total;
+
+        private double total;
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 amountCost = 0;
                 db.setCursoerWait();
-
-               
 
                 dt = new DataTable();
                 ds = new DataSet();
@@ -382,7 +352,6 @@ namespace pos
                 {
                     queary = queary + " order by Date";
                 }
-
                 else if (comboOrderBY.SelectedIndex == 1)
                 {
                     queary = queary + " order by userid";
@@ -405,43 +374,33 @@ namespace pos
                 reader = new SqlCommand("select * from cashSummery  " + queary, conn).ExecuteReader();
                 while (reader.Read())
                 {
-
-                    if (reader.GetDouble(2)<0)
+                    if (reader.GetDouble(2) < 0)
                     {
                         total = total + reader.GetDouble(2);
-                        dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader.GetString(0).ToUpper(), reader.GetString(1).ToUpper(), db.setAmountFormat(reader[2] + ""), "", db.setAmountFormat(total+""), itemCode.Text);
-
+                        dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader.GetString(0).ToUpper(), reader.GetString(1).ToUpper(), db.setAmountFormat(reader[2] + ""), "", db.setAmountFormat(total + ""), itemCode.Text);
                     }
                     else
                     {
                         total = total + reader.GetDouble(2);
-                        dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader.GetString(0).ToUpper(), reader.GetString(1).ToUpper(), "", db.setAmountFormat(reader[2] + ""), db.setAmountFormat(total+""), itemCode.Text);
-
+                        dt.Rows.Add(reader.GetDateTime(3).ToShortDateString(), reader.GetString(0).ToUpper(), reader.GetString(1).ToUpper(), "", db.setAmountFormat(reader[2] + ""), db.setAmountFormat(total + ""), itemCode.Text);
                     }
-
-
-
-
                 }
                 conn.Close();
 
                 ds.Tables.Add(dt);
                 //
-                 ds.WriteXmlSchema("saleSummery.xml");
+                ds.WriteXmlSchema("saleSummery.xml");
                 //   MessageBox.Show("a");
-                 cashSummeryH pp = new cashSummeryH();
+                cashSummeryH pp = new cashSummeryH();
                 pp.SetDataSource(ds);
                 pp.SetParameterValue("USER", userName);
                 if (radioAllDate.Checked)
                 {
-
                     pp.SetParameterValue("period", "ALL");
                 }
                 else
                 {
-
                     pp.SetParameterValue("period", from.Value.ToShortDateString() + " - " + to.Value.ToShortDateString());
-
                 }
                 pp.SetParameterValue("comName", comName);
                 pp.SetParameterValue("comAddress", comAddres);
@@ -461,9 +420,6 @@ namespace pos
                     //   MessageBox.Show("Succefully Downloaded");
                 }
 
-
-
-
                 db.setCursoerDefault();
             }
             catch (Exception a)
@@ -475,43 +431,34 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
         {
-            
-
         }
 
         private void brandName_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -530,14 +477,11 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioDateCustom_CheckedChanged(object sender, EventArgs e)
@@ -548,22 +492,18 @@ namespace pos
 
         private void itemCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMin_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMax_CheckedChanged(object sender, EventArgs e)
@@ -572,77 +512,66 @@ namespace pos
 
         private void radioCustomerID_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioName_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioCompany_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customerID_KeyUp(object sender, KeyEventArgs e)
         {
-            
         }
 
         private void Name_KeyUp_1(object sender, KeyEventArgs e)
         {
-
         }
 
         private void company_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        string name;
-        Boolean states;
-        Point p;
+
+        private string name;
+        private Boolean states;
+        private Point p;
+
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
         }
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
         {
-           
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
         }
 
         private void radioCustomCustomer_CheckedChanged(object sender, EventArgs e)
         {
-            
         }
 
         private void customerID_KeyDown(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void customerID_KeyUp_1(object sender, KeyEventArgs e)
         {
-            
         }
 
         private void listCustomer_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
+
         private void listCustomer_MouseClick(object sender, MouseEventArgs e)
         {
-           
         }
 
         private void listCustomer_SelectedIndexChanged(object sender, EventArgs e)
@@ -651,9 +580,6 @@ namespace pos
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
-
         }
-
-
     }
 }

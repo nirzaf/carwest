@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 using System.Windows.Forms;
+
 namespace pos
 {
-    class process
+    internal class process
     {
-        bool BonusH, epfH;
-        double loanAmount, totalEaringH, payAdvanedH, workingDaysH, absentH, commisH, bringFrontD, grossSalaryD, epf8D, punishD, bonusD, advancedD, LoanD, totalDeductionH, NetSalaryH, PayH, BalanceH, salaryD, bankingAmountD, AllowanceD, mealAllowanceD, incentiveD, epf12, etf3;
-        string epfNo = "";
+        private bool BonusH, epfH;
+        private double loanAmount, totalEaringH, payAdvanedH, workingDaysH, absentH, commisH, bringFrontD, grossSalaryD, epf8D, punishD, bonusD, advancedD, LoanD, totalDeductionH, NetSalaryH, PayH, BalanceH, salaryD, bankingAmountD, AllowanceD, mealAllowanceD, incentiveD, epf12, etf3;
+        private string epfNo = "";
+
         // public void saveSummery(string id, string month, string year, SqlConnection sqlconn, SqlDataReader reader, string paySalary, string payAdvanced, DB db)
         public void saveSummery(string id, string month, string year, SqlConnection sqlconn, SqlDataReader reader, string paySalary, string payAdvanced, DB db, DB db2, SqlConnection sqlconn2, SqlDataReader reader2, DB db3, SqlConnection sqlconn3, SqlDataReader reader3)
         {
@@ -32,13 +32,10 @@ namespace pos
                     sqlconn2.Close();
                     if ((reader.GetDouble(1) - reader.GetDouble(6)) > 1)
                     {
-
                         sqlconn2.Open();
                         new SqlCommand("insert into loanHistory values ('" + id + "','" + year + "/" + month + "','" + ((reader.GetDouble(1) / reader.GetInt32(2))) + "','" + reader[7] + "')", sqlconn2).ExecuteNonQuery();
                         sqlconn2.Close();
                         loanAmount = loanAmount + ((reader.GetDouble(1) / reader.GetInt32(2)));
-
-
                     }
 
                     sqlconn2.Open();
@@ -48,15 +45,11 @@ namespace pos
                     reader2 = new SqlCommand("select * from loanHistory where   loanid='" + reader[7] + "' ", sqlconn2).ExecuteReader();
                     while (reader2.Read())
                     {
-
-
-
                         sqlconn3.Open();
                         new SqlCommand("update loan set paid=paid+'" + ((reader.GetDouble(1) / reader.GetInt32(2))) + "' where id='" + reader[7] + "'", sqlconn3).ExecuteNonQuery();
                         sqlconn3.Close();
                     }
                     sqlconn2.Close();
-
                 }
                 sqlconn.Close();
                 try
@@ -141,7 +134,8 @@ namespace pos
                 catch (Exception)
                 {
                     sqlconn.Close();
-                } try
+                }
+                try
                 {
                     BonusH = false;
                     sqlconn.Open();
@@ -176,7 +170,6 @@ namespace pos
                 {
                     bringFrontD = 0;
                     sqlconn.Open();
-
 
                     var a = Convert.ToDateTime(db.getMOnth(month) + "/1" + "/" + year).AddMonths(-1);
                     //MessageBox.Show(a.Year + "/" + a.Month);
@@ -236,8 +229,6 @@ namespace pos
                 }
                 if (workingDaysH > 15)
                 {
-
-
                     if (id.Equals("3"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
@@ -274,7 +265,8 @@ namespace pos
                     if (id.Equals("5"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
-                    } if (id.Equals("21"))
+                    }
+                    if (id.Equals("21"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
                     }
@@ -292,7 +284,6 @@ namespace pos
 
                 if (workingDaysH > 26)
                 {
-                    
                     {
                         incentiveD = 3000;
                     }
@@ -307,7 +298,6 @@ namespace pos
                 {
                     if (id.Equals("6") || id.Equals("2") || id.Equals("19") || id.Equals("21"))
                     {
-
                     }
                     else
                     {
@@ -320,9 +310,6 @@ namespace pos
                         epf12 = ((((salaryD - 3500) - ((salaryD - 3500) / 25) * absentH) + ((3500 - (((3500) / 25) * absentH)))) / 100) * 12;
                         etf3 = ((((salaryD - 3500) - ((salaryD - 3500) / 25) * absentH) + ((3500 - (((3500) / 25) * absentH)))) / 100) * 3;
                     }
-
-
-
                 }
 
                 //else
@@ -364,6 +351,7 @@ namespace pos
                 sqlconn.Close();
             }
         }
+
         public void saveSummery2(string id, string month, string year, SqlConnection sqlconn, SqlDataReader reader, string paySalary, string payAdvanced, DB db, DB db2, SqlConnection sqlconn2, SqlDataReader reader2, DB db3, SqlConnection sqlconn3, SqlDataReader reader3)
         {
             try
@@ -391,13 +379,10 @@ namespace pos
                     sqlconn2.Close();
                     if ((reader.GetDouble(1) - reader.GetDouble(6)) > 1)
                     {
-
                         sqlconn2.Open();
                         new SqlCommand("insert into loanHistory values ('" + id + "','" + year + "/" + month + "','" + ((reader.GetDouble(1) / reader.GetInt32(2))) + "','" + reader[7] + "')", sqlconn2).ExecuteNonQuery();
                         sqlconn2.Close();
                         loanAmount = loanAmount + ((reader.GetDouble(1) / reader.GetInt32(2)));
-
-
                     }
 
                     sqlconn2.Open();
@@ -407,15 +392,11 @@ namespace pos
                     reader2 = new SqlCommand("select * from loanHistory where   loanid='" + reader[7] + "' ", sqlconn2).ExecuteReader();
                     while (reader2.Read())
                     {
-
-
-
                         sqlconn3.Open();
                         new SqlCommand("update loan set paid=paid+'" + ((reader.GetDouble(1) / reader.GetInt32(2))) + "' where id='" + reader[7] + "'", sqlconn3).ExecuteNonQuery();
                         sqlconn3.Close();
                     }
                     sqlconn2.Close();
-
                 }
                 sqlconn.Close();
                 try
@@ -500,7 +481,8 @@ namespace pos
                 catch (Exception)
                 {
                     sqlconn.Close();
-                } try
+                }
+                try
                 {
                     BonusH = false;
                     sqlconn.Open();
@@ -535,7 +517,6 @@ namespace pos
                 {
                     bringFrontD = 0;
                     sqlconn.Open();
-
 
                     var a = Convert.ToDateTime(db.getMOnth(month) + "/1" + "/" + year).AddMonths(-1);
                     //MessageBox.Show(a.Year + "/" + a.Month);
@@ -595,8 +576,6 @@ namespace pos
                 }
                 if (workingDaysH > 15)
                 {
-
-
                     if (id.Equals("3"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
@@ -633,7 +612,8 @@ namespace pos
                     if (id.Equals("5"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
-                    } if (id.Equals("21"))
+                    }
+                    if (id.Equals("21"))
                     {
                         mealAllowanceD = mealAllowanceD + 3000;
                     }
@@ -653,7 +633,6 @@ namespace pos
                 {
                     if (id.Equals("6") || id.Equals("2") || id.Equals("19") || id.Equals("21"))
                     {
-
                     }
                     else
                     {
@@ -683,9 +662,6 @@ namespace pos
                         epf12 = ((((salaryD - 3500) - ((salaryD - 3500) / 25) * absentH) + ((3500 - (((3500) / 25) * absentH)))) / 100) * 12;
                         etf3 = ((((salaryD - 3500) - ((salaryD - 3500) / 25) * absentH) + ((3500 - (((3500) / 25) * absentH)))) / 100) * 3;
                     }
-
-
-
                 }
                 else
                 {
@@ -726,6 +702,5 @@ namespace pos
                 sqlconn.Close();
             }
         }
-
     }
 }

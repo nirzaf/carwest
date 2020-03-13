@@ -1,52 +1,45 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class invoicePay : Form
     {
-        Form homeH;
+        private Form homeH;
+
         public invoicePay(Form home, String user)
         {
             InitializeComponent();
             homeH = home;
             userH = user;
         }
+
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        ArrayList arrayList, stockList, detaiArrayList;
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private ArrayList arrayList, stockList, detaiArrayList;
         public Boolean check, checkListBox, states, item, checkStock, creditDetailB, chequeDetailB, cardDetailB, saveInvoiceWithoutPay, dateNow, changeInvoiceDifDate;
-        string userH, listBoxType, cutomerID = "", invoiceNo, description, invoieNoTemp;
-        String[] idArray;
-        DataGridViewButtonColumn btn;
-        Int32 invoiceMaxNo, rowCount, no, countDB, dumpInvoice;
-        Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal, maxAmount;
+        private string userH, listBoxType, cutomerID = "", invoiceNo, description, invoieNoTemp;
+        private String[] idArray;
+        private DataGridViewButtonColumn btn;
+        private Int32 invoiceMaxNo, rowCount, no, countDB, dumpInvoice;
+        private Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal, maxAmount;
         public string[] creditDetail, chequeDetail, cardDetail;
-        string brand, tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId, invoiceino;
-        int count;
-        string type = "";
-        Boolean loadItemCheck = false;
+        private string brand, tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId, invoiceino;
+        private int count;
+        private string type = "";
+        private Boolean loadItemCheck = false;
         public Double paidAmount, cashPaidDB;
         // my Variable End
         //
         //Method
 
-        
-        
-
-     
-        void loadInvoice()
+        private void loadInvoice()
         {
             try
             {
@@ -76,8 +69,6 @@ namespace pos
                     }
                     reader2.Close();
                     conn2.Close();
-
-
 
                     conn2.Open();
                     reader2 = new SqlCommand("select * from chequeInvoiceRetail where invoiceID='" + invoiceNO.Text + "' ", conn2).ExecuteReader();
@@ -121,7 +112,6 @@ namespace pos
                     }
                     else
                     {
-
                         dateNow = false;
                     }
                     reader.Close();
@@ -139,9 +129,9 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
-        void saveInvoice()
+
+        private void saveInvoice()
         {
             try
             {
@@ -151,20 +141,19 @@ namespace pos
                 }
                 else if (!checkTerm())
                 {
-
                     MessageBox.Show("Please Eneter Pay Detail on Term Section Before Genarate Invoice");
                 }
                 else
                 {
                     db.setCursoerWait();
-                    
+
                     conn.Open();
-                    reader = new SqlCommand("select id from invoiceRetail where id='"+invoiceNO.Text+"'",conn).ExecuteReader();
+                    reader = new SqlCommand("select id from invoiceRetail where id='" + invoiceNO.Text + "'", conn).ExecuteReader();
                     if (reader.Read())
                     {
                         conn.Close();
                         conn.Open();
-                        new SqlCommand("update invoiceRetail set cash='"+cash.Text+"',balance='"+balance.Text+"' where id='"+invoiceNO.Text+"'",conn).ExecuteNonQuery();
+                        new SqlCommand("update invoiceRetail set cash='" + cash.Text + "',balance='" + balance.Text + "' where id='" + invoiceNO.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
 
                         var amountD = Double.Parse(cash.Text) - Double.Parse(balance.Text);
@@ -187,10 +176,8 @@ namespace pos
                                     conn.Open();
                                     new SqlCommand("insert into cashSummery values('" + "Edit Invoice" + "','" + "Balance Cash Amount / Invoice No -" + invoieNoTemp + "','" + amountD + "','" + DateTime.Now + "','" + userH + "')", conn).ExecuteNonQuery();
                                     conn.Close();
-
                                 }
                             }
-
                         }
 
                         var cashDetailB = true;
@@ -201,7 +188,6 @@ namespace pos
                         else
                         {
                             cashDetailB = false;
-
                         }
                         conn.Open();
                         new SqlCommand("delete from invoiceTerm where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
@@ -226,28 +212,22 @@ namespace pos
                         }
                         else
                         {
-
                             conn.Open();
                             new SqlCommand("insert into creditInvoiceRetail values ('" + invoieNoTemp + "','" + cutomerID + "','" + subTotal.Text + "','" + 0 + "','" + subTotal.Text + "','" + 30 + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
                             conn.Close();
                         }
-
-
 
                         if (cashDetailB)
                         {
                             conn.Open();
                             new SqlCommand("insert into cashInvoiceRetail values('" + invoieNoTemp + "','" + cutomerID + "','" + subTotal.Text + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
                             conn.Close();
-
-
                         }
                         if (creditDetailB)
                         {
                             conn.Open();
                             new SqlCommand("insert into creditInvoiceRetail values ('" + invoieNoTemp + "','" + cutomerID + "','" + subTotal.Text + "','" + 0 + "','" + creditDetail[0] + "','" + creditDetail[1] + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
                             conn.Close();
-
                         }
                         if (chequeDetailB)
                         {
@@ -293,12 +273,9 @@ namespace pos
                         {
                             conn.Close();
 
-
                             conn.Open();
                             new SqlCommand("update invoiceDump set customerID='" + cutomerID + "',subTotal='" + balance.Text + "',profit='" + profitTotal + "',cash='" + cash.Text + "',balance='" + balance.Text + "' where id='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                             conn.Close();
-
-
                         }
                         reader.Close();
 
@@ -310,11 +287,10 @@ namespace pos
 
                         clear();
                     }
-                    else {
-
+                    else
+                    {
                         MessageBox.Show("Invalied Invoice NO");
                         invoiceNO.Focus();
-
                     }
                     conn.Close();
                     db.setCursoerDefault();
@@ -326,8 +302,9 @@ namespace pos
                 conn.Close();
             }
         }
-        void clear() {
 
+        private void clear()
+        {
             invoiceNO.Text = "";
             subTotal.Text = "0.0";
             cash.Text = "0";
@@ -338,7 +315,8 @@ namespace pos
             chequeDetailB = false;
             cardDetailB = false;
         }
-        Boolean checkTerm()
+
+        private Boolean checkTerm()
         {
             states = true;
             try
@@ -374,7 +352,6 @@ namespace pos
                             states = false;
                         }
                     }
-
                 }
                 else if (Double.Parse(cash.Text) < Double.Parse(subTotal.Text))
                 {
@@ -385,26 +362,18 @@ namespace pos
                 }
                 else
                 {
-
                     creditDetailB = false;
                     chequeDetailB = false;
                     cardDetailB = false;
                 }
-
-
-
-
-
-
             }
             catch (Exception)
             {
-
             }
 
             return states;
         }
-     
+
         //
         private void invoicePay_Load(object sender, EventArgs e)
         {
@@ -430,8 +399,6 @@ namespace pos
                     saveInvoiceWithoutPay = false;
                 }
                 conn.Close();
-
-
             }
             catch (Exception)
             {
@@ -448,7 +415,6 @@ namespace pos
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -468,14 +434,12 @@ namespace pos
             {
                 loadInvoice();
             }
-
         }
 
         private void cash_KeyUp(object sender, KeyEventArgs e)
         {
             if (!cash.Text.Equals(""))
             {
-
                 amount = (Double.Parse(cash.Text)) - (Double.Parse(subTotal.Text));
 
                 if (amount <= 0)
@@ -511,7 +475,6 @@ namespace pos
         private void pAYDETAILToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new termXash7(this, Double.Parse(subTotal.Text), Double.Parse(cash.Text), creditDetail, chequeDetail, cardDetail, creditDetailB, chequeDetailB, cardDetailB).Visible = true;
-
         }
     }
 }

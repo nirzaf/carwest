@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -21,23 +15,25 @@ namespace pos
             this.user = user;
             home = form;
         }
+
         //+++++++My Variable Start
-        DB db, db2, db3, db4;
-        Form home;
-        SqlConnection conn, conn2, conn3, conn4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        ArrayList arrayList, stockList;
-        Boolean check, checkListBox, states, item, checkStock;
-        string user, type, cutomerID = "", description, invoieNoTemp;
-        String[] idArray;
-        DataGridViewButtonColumn btn;
-        Int32 invoiceMaxNo, rowCount;
-        Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
+        private DB db, db2, db3, db4;
+
+        private Form home;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private ArrayList arrayList, stockList;
+        private Boolean check, checkListBox, states, item, checkStock;
+        private string user, type, cutomerID = "", description, invoieNoTemp;
+        private String[] idArray;
+        private DataGridViewButtonColumn btn;
+        private Int32 invoiceMaxNo, rowCount;
+        private Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
         //+++++++++My Variable End
 
         //++My Method Start
 
-        void loadInvoiceByID()
+        private void loadInvoiceByID()
         {
             try
             {
@@ -54,13 +50,11 @@ namespace pos
                     reader2 = new SqlCommand("select name,company from supplier where id='" + reader[2] + "'", conn2).ExecuteReader();
                     if (reader2.Read())
                     {
-                        dataGridView1.Rows.Add( reader[0],reader[1], reader[5] + "(" + reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + ")", db.setAmountFormat(reader[3] + ""), reader[4].ToString().Split(' ')[0]);
-
+                        dataGridView1.Rows.Add(reader[0], reader[1], reader[5] + "(" + reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + ")", db.setAmountFormat(reader[3] + ""), reader[4].ToString().Split(' ')[0]);
                     }
                     else
                     {
                         dataGridView1.Rows.Add(reader[0], reader[1], reader[5] + "(" + reader[2].ToString().ToUpper() + ")", db.setAmountFormat(reader[3] + ""), reader[4].ToString().Split(' ')[0]);
-
                     }
                     reader2.Close();
                     conn2.Close();
@@ -77,10 +71,6 @@ namespace pos
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-
-
-
-
             }
             catch (Exception)
             {
@@ -90,13 +80,10 @@ namespace pos
             }
         }
 
-  
-        void setAutoComplete()
+        private void setAutoComplete()
         {
             try
             {
-
-             
                 conn.Open();
                 reader = new SqlCommand("select name from supplier ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -109,7 +96,6 @@ namespace pos
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(customer, idArray);
                 conn.Close();
-
             }
             catch (Exception a)
             {
@@ -117,7 +103,8 @@ namespace pos
                 conn.Close();
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -125,7 +112,7 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + user + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-                    dataGridView1.Columns[6].Visible =reader.GetBoolean(18);
+                    dataGridView1.Columns[6].Visible = reader.GetBoolean(18);
                     dataGridView1.Columns[7].Visible = reader.GetBoolean(21);
                 }
                 reader.Close();
@@ -135,8 +122,8 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
+
         //+++++++My Method End
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -147,7 +134,6 @@ namespace pos
 
         private void label9_Click(object sender, EventArgs e)
         {
-
         }
 
         private void invoiceSearch_Load(object sender, EventArgs e)
@@ -202,17 +188,14 @@ namespace pos
             {
                 loadInvoiceByID();
             }
-            
         }
 
         private void warrentyCode_KeyDown(object sender, KeyEventArgs e)
         {
-          
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-           
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -228,7 +211,6 @@ namespace pos
                 from.Enabled = false;
                 toDate.Enabled = false;
                 button3.Enabled = false;
-
             }
         }
 
@@ -248,7 +230,7 @@ namespace pos
                 invoieNoTemp = invoiceNo.Text.ToString();
 
                 conn.Open();
-                reader = new SqlCommand("select * from grn   where date between '"+from.Value.ToShortDateString()+"' and '"+toDate.Value.ToShortDateString()+"'", conn).ExecuteReader();
+                reader = new SqlCommand("select * from grn   where date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "'", conn).ExecuteReader();
                 while (reader.Read())
                 {
                     conn2.Open();
@@ -256,12 +238,10 @@ namespace pos
                     if (reader2.Read())
                     {
                         dataGridView1.Rows.Add(reader[0], reader[1], reader[5] + "(" + reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + ")", db.setAmountFormat(reader[3] + ""), reader[4].ToString().Split(' ')[0]);
-
                     }
                     else
                     {
                         dataGridView1.Rows.Add(reader[0], reader[1], reader[5] + "(" + reader[2].ToString().ToUpper() + ")", db.setAmountFormat(reader[3] + ""), reader[4].ToString().Split(' ')[0]);
-
                     }
                     reader2.Close();
                     conn2.Close();
@@ -277,7 +257,6 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
 
                 db.setCursoerDefault();
             }
@@ -314,7 +293,6 @@ namespace pos
                             if (reader3.Read())
                             {
                                 dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader3[0].ToString().ToUpper() + " " + reader3[1].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
-
                             }
                             else
                             {
@@ -346,7 +324,6 @@ namespace pos
                             if (reader3.Read())
                             {
                                 dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader3[0].ToString().ToUpper() + " " + reader3[1].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
-
                             }
                             else
                             {
@@ -361,12 +338,7 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-
                 }
-
-
-
-
 
                 if (dataGridView1.Rows.Count == 0)
                 {
@@ -395,7 +367,6 @@ namespace pos
                 new purchasing(this, user, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible = true;
                 this.Enabled = true;
             }
-            
             else if (e.ColumnIndex == 6)
             {
                 if ((MessageBox.Show("Are you Sure, Delete ?", "Confirmation",
@@ -405,57 +376,57 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     db.setCursoerWait();
                     try
                     {
-                         conn.Open();
-                         invoieNoTemp = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                         reader = new SqlCommand("select itemCode,qty,purchasingPrice from grnDetail where grnID='" + invoieNoTemp + "'", conn).ExecuteReader();
-                    while (reader.Read())
-                    {
-                        conn2.Open();
-                        reader2 = new SqlCommand("select qty from purchasingPriceList where code='" + reader[0] + "' and purchasingprice='" + reader[2] + "'", conn2).ExecuteReader();
-                        if (reader2.Read())
+                        conn.Open();
+                        invoieNoTemp = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+                        reader = new SqlCommand("select itemCode,qty,purchasingPrice from grnDetail where grnID='" + invoieNoTemp + "'", conn).ExecuteReader();
+                        while (reader.Read())
                         {
-                            reader2.Close();
+                            conn2.Open();
+                            reader2 = new SqlCommand("select qty from purchasingPriceList where code='" + reader[0] + "' and purchasingprice='" + reader[2] + "'", conn2).ExecuteReader();
+                            if (reader2.Read())
+                            {
+                                reader2.Close();
+                                conn2.Close();
+                                conn2.Open();
+                                new SqlCommand("update purchasingPriceList set qty=qty+'" + reader[1] + "' where code='" + reader[0] + "' and purchasingprice='" + reader[2] + "'", conn2).ExecuteNonQuery();
+                                conn2.Close();
+                            }
+
                             conn2.Close();
                             conn2.Open();
-                            new SqlCommand("update purchasingPriceList set qty=qty+'" + reader[1] + "' where code='" + reader[0] + "' and purchasingprice='" + reader[2] + "'", conn2).ExecuteNonQuery();
+                            new SqlCommand("update item set qty=qty-'" + reader[1] + "' where code='" + reader[0] + "'", conn2).ExecuteNonQuery();
                             conn2.Close();
                         }
-                       
-                        conn2.Close();
-                        conn2.Open();
-                        new SqlCommand("update item set qty=qty-'" + reader[1] + "' where code='" + reader[0] + "'", conn2).ExecuteNonQuery();
-                        conn2.Close();
-                    }
-                    reader.Close();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from grnDetail where grnid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from grn where id='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from cardGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from creditGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from chequeGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("delete from cashGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-                    conn.Close();
-                    conn.Open();
-                    new SqlCommand("insert into deletedInvoice values('" + invoieNoTemp + "','" + user + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
-                    conn.Close();
-                    db.setCursoerDefault();
-                    MessageBox.Show("Selected GRN Deleted Succesfully");
-                    dataGridView1.Rows.RemoveAt(e.RowIndex);
+                        reader.Close();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from grnDetail where grnid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from grn where id='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from cardGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from creditGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from chequeGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("delete from cashGrn where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
+                        conn.Close();
+                        conn.Open();
+                        new SqlCommand("insert into deletedInvoice values('" + invoieNoTemp + "','" + user + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
+                        conn.Close();
+                        db.setCursoerDefault();
+                        MessageBox.Show("Selected GRN Deleted Succesfully");
+                        dataGridView1.Rows.RemoveAt(e.RowIndex);
                     }
                     catch (Exception a)
                     {
-                        MessageBox.Show(a.Message+" "+a.StackTrace);
+                        MessageBox.Show(a.Message + " " + a.StackTrace);
                         conn.Close();
                     }
                 }
@@ -464,22 +435,20 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 try
                 {
-                      new returnGRN(this, user, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible = true;
-                this.Enabled = true;
+                    new returnGRN(this, user, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible = true;
+                    this.Enabled = true;
                 }
                 catch (Exception a)
                 {
-                    MessageBox.Show(a.Message+"/"+a.StackTrace);
-                    
-                   // throw;
+                    MessageBox.Show(a.Message + "/" + a.StackTrace);
+
+                    // throw;
                 }
-          
             }
         }
 
         private void customer_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 listBox1.Visible = false;
@@ -493,7 +462,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     loadCustomer(customer.Text);
                     button2_Click(sender, e);
                 }
-
             }
             else if (e.KeyValue == 40)
             {
@@ -511,15 +479,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
-            
         }
-        string tempCustomer;
+
+        private string tempCustomer;
+
         public Boolean loadCustomer(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -554,6 +521,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             return states;
         }
+
         private void button9_Click(object sender, EventArgs e)
         {
             try
@@ -562,41 +530,34 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 db.setCursoerWait();
                 // MessageBox.Show(from.Value.ToShortDateString());
 
-                
-                    conn.Open();
-                    reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' ", conn).ExecuteReader();
-                    while (reader.Read())
+                conn.Open();
+                reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' ", conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    // MessageBox.Show(reader[0] + " " + reader4[0]);
+                    conn2.Open();
+                    reader2 = new SqlCommand("select * from grn as a  where a.id='" + reader[0] + "'", conn2).ExecuteReader();
+                    if (reader2.Read())
                     {
-                        // MessageBox.Show(reader[0] + " " + reader4[0]);
-                        conn2.Open();
-                        reader2 = new SqlCommand("select * from grn as a  where a.id='" + reader[0] + "'", conn2).ExecuteReader();
-                        if (reader2.Read())
+                        conn3.Open();
+                        reader3 = new SqlCommand("select name,company from supplier where id='" + reader2[2] + "'", conn3).ExecuteReader();
+                        if (reader3.Read())
                         {
-                            conn3.Open();
-                            reader3 = new SqlCommand("select name,company from supplier where id='" + reader2[2] + "'", conn3).ExecuteReader();
-                            if (reader3.Read())
-                            {
-                                dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader3[0].ToString().ToUpper() + " " + reader3[1].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
-
-                            }
-                            else
-                            {
-                                dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader2[2].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
-                            }
-                            reader3.Close();
-                            conn3.Close();
+                            dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader3[0].ToString().ToUpper() + " " + reader3[1].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
                         }
-
-                        reader2.Close();
-                        conn2.Close();
+                        else
+                        {
+                            dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader2[2].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
+                        }
+                        reader3.Close();
+                        conn3.Close();
                     }
-                    reader.Close();
-                    conn.Close();
-               
 
-
-
-
+                    reader2.Close();
+                    conn2.Close();
+                }
+                reader.Close();
+                conn.Close();
 
                 if (dataGridView1.Rows.Count == 0)
                 {
@@ -624,22 +585,19 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void cutomerUnSaved_KeyUp(object sender, KeyEventArgs e)
         {
-           //
+            //
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void cutomerUnSaved_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customer_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customer_KeyUp(object sender, KeyEventArgs e)
@@ -647,7 +605,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             tempCustomer = "";
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customer.Text.Equals("")))
             {
-
                 db.setList(listBox1, customer, customer.Width);
 
                 try
@@ -670,7 +627,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customer.Text.Equals(""))
             {
@@ -704,7 +660,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             customer.Text = listBox1.SelectedItem.ToString();
-
         }
     }
 }

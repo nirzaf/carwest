@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -16,20 +11,22 @@ namespace pos
         {
             InitializeComponent();
         }
+
         //Variable Start
-        DB db, db2, db3;
-        SqlDataReader reader, reader2, reader3;
-        SqlConnection sqlconn, sqlconn2, sqlconn3;
+        private DB db, db2, db3;
+
+        private SqlDataReader reader, reader2, reader3;
+        private SqlConnection sqlconn, sqlconn2, sqlconn3;
         public string[] idArray;
         public string company;
 
-        int tableID = 0;
-        Boolean check = false;
-        DataTable dt; DataSet ds;
+        private int tableID = 0;
+        private Boolean check = false;
+        private DataTable dt; private DataSet ds;
         //Variable End
 
         //Method Start
-        string setAmountFormat(string amount)
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -94,7 +91,7 @@ namespace pos
         //Method End
         private void cFormView_Load(object sender, EventArgs e)
         {
-             this.TopMost = true;
+            this.TopMost = true;
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.CustomFormat = "yyyy";
 
@@ -114,7 +111,6 @@ namespace pos
             db.setCursoerDefault();
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == -1)
@@ -130,7 +126,6 @@ namespace pos
                     dt = new DataTable();
                     ds = new DataSet();
 
-
                     dt.Columns.Add("employeeName", typeof(string));
                     dt.Columns.Add("NIC", typeof(string));
                     dt.Columns.Add("memberNo", typeof(string));
@@ -138,9 +133,6 @@ namespace pos
                     dt.Columns.Add("epf12", typeof(float));
                     dt.Columns.Add("epf8", typeof(float));
                     dt.Columns.Add("totalEarningEmp", typeof(float));
-
-
-
 
                     sqlconn.Open();
                     reader = new SqlCommand("select * from cForm where monthAndYearOfContribution='" + dateTimePicker1.Value.ToString("d").Split('/')[2] + "/" + comboBox1.SelectedItem + "'  ", sqlconn).ExecuteReader();
@@ -154,10 +146,8 @@ namespace pos
                             //     MessageBox.Show(reader[18]+"n  vvvvvv");
                             //   dt.Rows.Add(reader[18], reader[15].ToString().Split(',')[0], reader[15].ToString().Split(',')[1], reader[15].ToString().Split(',')[2], reader[15].ToString().Split(',')[3], reader[16], reader[17], reader[18], "", reader[4], setAmountFormat(reader[5] + ""), setAmountFormat(reader[6] + ""), setAmountFormat(reader[7] + ""), reader[20], reader[20], reader[20], reader2[1], reader2[2], reader2[3], setAmountFormat(reader2[4] + ""), setAmountFormat(reader2[5] + ""), setAmountFormat(reader2[6] + ""), setAmountFormat(reader2[7] + ""), setAmountFormat(reader[11] + ""), setAmountFormat(reader[12] + ""), setAmountFormat(reader[13] + ""), setAmountFormat(reader[14] + ""));
                             dt.Rows.Add(reader2[1], reader2[2], reader2[3], reader2[4], reader2[5], reader2[6], reader2[7]);
-
                         }
                         sqlconn2.Close();
-
 
                         ds.Tables.Add(dt);
                         //ds.WriteXmlSchema("cForm__A.xml");
@@ -175,13 +165,13 @@ namespace pos
                         cForm pp = new cForm();
                         pp.SetDataSource(ds);
 
-                          pp.SetParameterValue("month", dateTimePicker1.Value.ToString("d").Split('/')[2] + "/" + comboBox1.SelectedItem);
-                          pp.SetParameterValue("contributions", setAmountFormat(reader.GetDouble(5) + ""));
-                          pp.SetParameterValue("surcharges", setAmountFormat(reader.GetDouble(6) + ""));
-                          pp.SetParameterValue("totalRemittance", setAmountFormat(reader.GetDouble(7) + ""));
-                          pp.SetParameterValue("cheequeNo", reader[8] );
-                          pp.SetParameterValue("bankName", reader[9] );
-                          pp.SetParameterValue("bankBranchName", reader[10]);
+                        pp.SetParameterValue("month", dateTimePicker1.Value.ToString("d").Split('/')[2] + "/" + comboBox1.SelectedItem);
+                        pp.SetParameterValue("contributions", setAmountFormat(reader.GetDouble(5) + ""));
+                        pp.SetParameterValue("surcharges", setAmountFormat(reader.GetDouble(6) + ""));
+                        pp.SetParameterValue("totalRemittance", setAmountFormat(reader.GetDouble(7) + ""));
+                        pp.SetParameterValue("cheequeNo", reader[8]);
+                        pp.SetParameterValue("bankName", reader[9]);
+                        pp.SetParameterValue("bankBranchName", reader[10]);
 
                         crystalReportViewer1.ReportSource = pp;
                         db.setCursoerDefault();
@@ -240,7 +230,7 @@ namespace pos
                 try
                 {
                     sqlconn.Open();
-                    reader = new SqlCommand("select * from emp where resgin='" + false + "' and epf!='"+0+"'", sqlconn).ExecuteReader();
+                    reader = new SqlCommand("select * from emp where resgin='" + false + "' and epf!='" + 0 + "'", sqlconn).ExecuteReader();
                     //MessageBox.Show("1 "+company);
                     sqlconn2.Open();
                     new SqlCommand("delete from cFormDetail where id='" + tableID + "' ", sqlconn2).ExecuteNonQuery();
@@ -254,15 +244,12 @@ namespace pos
                         sqlconn2.Open();
                         new SqlCommand("insert into cFormDetail values ('" + tableID + "','" + reader[0].ToString().ToUpper() + "','" + reader[20] + "','" + reader[3] + "','" + ((reader.GetDouble(9) + reader.GetDouble(6)) / 20) * 100 + "','" + reader[9] + "','" + reader[6] + "','" + (reader.GetDouble(9) + reader.GetDouble(6)) + "')", sqlconn2).ExecuteNonQuery();
                         sqlconn2.Close();
-
                     }
                     sqlconn.Close();
                     sqlconn.Open();
                     reader = new SqlCommand("select sum(total),sum(epf12),sum(epf8),sum(totalEarning) from cFormDetail where id='" + tableID + "'", sqlconn).ExecuteReader();
                     if (reader.Read())
                     {
-
-
                         if (check)
                         {
                             sqlconn2.Open();
@@ -303,26 +290,21 @@ namespace pos
             if (Char.IsControl(e.KeyChar)) return;
             //if ((e.KeyChar == '.')  ) return;
 
-
             e.Handled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cFormView_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Dispose();
             // new home("", this).Visible = true;
-
-
         }
 
         private void button3_Click_1(object sender, EventArgs e)

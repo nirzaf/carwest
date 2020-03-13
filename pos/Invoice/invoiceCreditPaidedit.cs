@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,23 +15,25 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        creditPaidHistory pp;
-        DB db, db2;
-        string userH, queary, userName;
-        SqlConnection conn, conn2;
-        string[] idArray;
-        SqlDataReader reader, reader2;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        DataGridViewButtonColumn btn;
-        Boolean isCompany;
+        private Form formH;
+
+        private creditPaidHistory pp;
+        private DB db, db2;
+        private string userH, queary, userName;
+        private SqlConnection conn, conn2;
+        private string[] idArray;
+        private SqlDataReader reader, reader2;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private DataGridViewButtonColumn btn;
+        private Boolean isCompany;
         //
         //++++++ My Method Start+++
 
-        void loadUser()
+        private void loadUser()
         {
             try
             {
@@ -57,9 +54,8 @@ namespace pos
                 conn.Close();
                 if (!(userName.Equals("rasika") || userName.Equals("mahesh")))
                 {
-                   // dataGridView1.Columns[5].Visible = false;
-                   // dataGridView3.Columns[7].Visible = false;
-                    
+                    // dataGridView1.Columns[5].Visible = false;
+                    // dataGridView3.Columns[7].Visible = false;
                 }
             }
             catch (Exception a)
@@ -67,9 +63,7 @@ namespace pos
                 MessageBox.Show(a.Message);
                 conn.Close();
             }
-
         }
-
 
         //
         private void stockReport_Load(object sender, EventArgs e)
@@ -89,10 +83,8 @@ namespace pos
 
             this.TopMost = true;
 
-          
             comboOrderBY.SelectedIndex = 0;
             comboOrderTO.SelectedIndex = 0;
-
 
             btn = new DataGridViewButtonColumn();
             dataGridView1.Columns.Add(btn);
@@ -100,7 +92,6 @@ namespace pos
             btn.Text = "REMOVE";
 
             btn.UseColumnTextForButtonValue = true;
-
 
             btn = new DataGridViewButtonColumn();
             dataGridView2.Columns.Add(btn);
@@ -119,8 +110,6 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -132,32 +121,26 @@ namespace pos
 
         private void checkBrand_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkCategory_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkDescription_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -175,11 +158,11 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
 
-        double tempPaid;
-        void loadInvoice()
+        private double tempPaid;
+
+        private void loadInvoice()
         {
             try
             {
@@ -191,12 +174,13 @@ namespace pos
                     {
                         queary = "where a.date between '" + from.Value.ToShortDateString() + "' and '" + to.Value.ToShortDateString() + "' and a.customerid=b.id";
                     }
-                    else { 
-                    queary="where a.customerid=b.id";
+                    else
+                    {
+                        queary = "where a.customerid=b.id";
                     }
 
                     conn.Open();
-                    reader = new SqlCommand("select a.invoiceid,b.id,b.company,a.balance,a.date from creditinvoiceRetail as a,customer as b "+queary, conn).ExecuteReader();
+                    reader = new SqlCommand("select a.invoiceid,b.id,b.company,a.balance,a.date from creditinvoiceRetail as a,customer as b " + queary, conn).ExecuteReader();
                     while (reader.Read())
                     {
                         try
@@ -212,16 +196,16 @@ namespace pos
 
                             if (radioSettele.Checked)
                             {
-                                if (tempPaid>=reader.GetDouble(3))
+                                if (tempPaid >= reader.GetDouble(3))
                                 {
-                                    dataGridView3.Rows.Add(reader[1]+" "+reader[2],"R-"+reader[0],db.setAmountFormat(reader[3]+""),db.setAmountFormat(tempPaid+""),reader.GetDateTime(4).ToShortDateString(),db.setAmountFormat((reader.GetDouble(3)-tempPaid)+""),true);
+                                    dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3) - tempPaid) + ""), true);
                                 }
                             }
                             else if (radioPending.Checked)
                             {
-                                if (tempPaid<reader.GetDouble(3))
+                                if (tempPaid < reader.GetDouble(3))
                                 {
-                                    dataGridView3.Rows.Add(reader[1]+" "+reader[2],"R-"+reader[0],db.setAmountFormat(reader[3]+""),db.setAmountFormat(tempPaid+""),reader.GetDateTime(4).ToShortDateString(),db.setAmountFormat((reader.GetDouble(3)-tempPaid)+""),false);
+                                    dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3) - tempPaid) + ""), false);
                                 }
                             }
                         }
@@ -231,8 +215,6 @@ namespace pos
                         }
                     }
                     conn.Close();
-
-
                 }
                 else if (radioAdvancedSearch.Checked)
                 {
@@ -244,7 +226,7 @@ namespace pos
                     {
                         queary = "and a.customerid=b.id";
                     }
-                  
+
                     for (int i = 0; i < dataGridView2.Rows.Count; i++)
                     {
                         conn.Open();
@@ -266,15 +248,15 @@ namespace pos
                                 {
                                     if (tempPaid >= reader.GetDouble(3))
                                     {
-                                        dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3)-tempPaid) + ""), true);
+                                        dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3) - tempPaid) + ""), true);
                                     }
                                 }
                                 else if (radioPending.Checked)
                                 {
                                     if (tempPaid < reader.GetDouble(3))
                                     {
-                                      //  MessageBox.Show((reader.GetDouble(3) - tempPaid)+"");
-                                        dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3)-tempPaid) + ""), false);
+                                        //  MessageBox.Show((reader.GetDouble(3) - tempPaid)+"");
+                                        dataGridView3.Rows.Add(reader[1] + " " + reader[2], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), reader.GetDateTime(4).ToShortDateString(), db.setAmountFormat((reader.GetDouble(3) - tempPaid) + ""), false);
                                     }
                                 }
                             }
@@ -286,15 +268,13 @@ namespace pos
                         conn.Close();
                     }
                 }
-
-
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
-
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -307,7 +287,6 @@ namespace pos
                 {
                     queary = queary + " order by a.Date";
                 }
-
 
                 if (comboOrderTO.SelectedIndex == 0)
                 {
@@ -342,15 +321,12 @@ namespace pos
                             if (reader2.Read())
                             {
                                 dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), db.setAmountFormat(reader[5] + ""), reader.GetDateTime(1).ToShortDateString(), reader[0], reader[8]);
-
                             }
                             else
                             {
                                 dataGridView1.Rows.Add(reader[3], db.setAmountFormat(reader[5] + ""), reader.GetDateTime(1).ToShortDateString(), reader[0], reader[8]);
-
                             }
                             conn2.Close();
-
                         }
                         catch (Exception a)
                         {
@@ -387,15 +363,12 @@ namespace pos
                                 if (reader2.Read())
                                 {
                                     dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), db.setAmountFormat(reader[5] + ""), reader.GetDateTime(1).ToShortDateString(), reader[0], reader[8]);
-
                                 }
                                 else
                                 {
                                     dataGridView1.Rows.Add(reader[3], db.setAmountFormat(reader[5] + ""), reader.GetDateTime(1).ToShortDateString(), reader[0], reader[8]);
-
                                 }
                                 conn2.Close();
-
                             }
                             catch (Exception a)
                             {
@@ -414,7 +387,6 @@ namespace pos
                 }
                 else
                 {
-                  
                     MessageBox.Show("Succefully Downloaded");
                 }
                 db.setCursoerDefault();
@@ -428,17 +400,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -481,7 +450,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -498,20 +466,16 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void brandName_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -525,48 +489,44 @@ MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
                         var a = 0.0;
-                       MessageBox.Show("Sorry You DOnt Have Permission");
-                       //MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                       //conn.Open();
-                       //new SqlCommand("delete from invoiceCreditPaid where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from invoiceCreditPaid where tempid='" + "OP/" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from overPayC where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from returnChequePayment where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from customerStatement where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from chequeInvoiceRetail2 where invoiceID='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
+                        MessageBox.Show("Sorry You DOnt Have Permission");
+                        //MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                        //conn.Open();
+                        //new SqlCommand("delete from invoiceCreditPaid where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from invoiceCreditPaid where tempid='" + "OP/" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from overPayC where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from returnChequePayment where tempid='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from customerStatement where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from chequeInvoiceRetail2 where invoiceID='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
 
+                        //conn.Open();
+                        //new SqlCommand("delete from receipt where id='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
+                        //conn.Open();
+                        //new SqlCommand("delete from cashSummery where reason='" + "Invoice Credit Paid-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
+                        //conn.Close();
 
-                       //conn.Open();
-                       //new SqlCommand("delete from receipt where id='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
-                       //conn.Open();
-                       //new SqlCommand("delete from cashSummery where reason='" + "Invoice Credit Paid-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "'", conn).ExecuteNonQuery();
-                       //conn.Close();
+                        // dataGridView1.Rows.RemoveAt(e.RowIndex);
+                        db.setCashBalance(DateTime.Now);
 
-                      // dataGridView1.Rows.RemoveAt(e.RowIndex);
-                       db.setCashBalance(DateTime.Now);
-
-                       //totAmount.Text = db.setAmountFormat(amountCost + "");
+                        //totAmount.Text = db.setAmountFormat(amountCost + "");
                     }
-
                 }
-                else if (e.ColumnIndex==6)
+                else if (e.ColumnIndex == 6)
                 {
                     new invoicePrint().setprintReceiprt(dataGridView1.Rows[e.RowIndex].Cells[3].Value + "", conn, reader, dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString().Split(' ')[0]);
                 }
-
-
             }
             catch (Exception a)
             {
@@ -577,7 +537,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -606,7 +565,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     dt.Columns.Add("totAmount", typeof(string));
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-
                         dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[3].Value, dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[2].Value, dataGridView1.Rows[i].Cells[6].Value);
                     }
                     ds.Tables.Add(dt);
@@ -618,14 +576,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     pp.SetParameterValue("USER", userName);
                     if (radioAllDate.Checked)
                     {
-
                         pp.SetParameterValue("period", "ALL");
                     }
                     else
                     {
-
                         pp.SetParameterValue("period", from.Value.ToShortDateString() + " - " + to.Value.ToShortDateString());
-
                     }
                     pp.PrintToPrinter(1, false, 0, 0);
                     // new test(pp).Visible = true;
@@ -637,9 +592,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
@@ -667,7 +620,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     dt.Columns.Add("totAmount", typeof(string));
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-
                         dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[3].Value, dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[2].Value, dataGridView1.Rows[i].Cells[6].Value);
                     }
                     ds.Tables.Add(dt);
@@ -679,14 +631,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     pp.SetParameterValue("USER", userName);
                     if (radioAllDate.Checked)
                     {
-
                         pp.SetParameterValue("period", "ALL");
                     }
                     else
                     {
-
                         pp.SetParameterValue("period", from.Value.ToShortDateString() + " - " + to.Value.ToShortDateString());
-
                     }
                     //  pp.PrintToPrinter(1, false, 0, 0);
                     this.Enabled = true;
@@ -699,7 +648,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
         }
 
@@ -711,22 +659,18 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void itemCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMin_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMax_CheckedChanged(object sender, EventArgs e)
@@ -735,24 +679,20 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void radioCustomerID_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioName_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioCompany_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customerID_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customerID.Text.Equals("")))
             {
-
                 db.setList(listBox1, customerID, customerID.Width);
 
                 try
@@ -775,7 +715,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customerID.Text.Equals(""))
             {
@@ -786,28 +725,25 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void Name_KeyUp_1(object sender, KeyEventArgs e)
         {
-
         }
 
         private void company_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        string name;
-        Boolean states;
-        Point p;
+
+        private string name;
+        private Boolean states;
+        private Point p;
+
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (listBox1.SelectedIndex == 0 && e.KeyValue == 38)
             {
-
                 customerID.Focus();
-
             }
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
@@ -843,7 +779,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     }
                 }
                 customerID.Text = "";
-
             }
         }
 
@@ -891,7 +826,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -907,7 +841,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioSettele_CheckedChanged(object sender, EventArgs e)
@@ -919,7 +852,5 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             loadInvoice();
         }
-
-
     }
 }

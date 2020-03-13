@@ -1,11 +1,5 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -13,7 +7,8 @@ namespace pos
 {
     public partial class supplierQuick2 : Form
     {
-        grnEdit formH;
+        private grnEdit formH;
+
         public supplierQuick2(grnEdit form)
         {
             InitializeComponent();
@@ -31,7 +26,7 @@ namespace pos
                 reader = new SqlCommand("select * from supplier where description like '%" + pcCode.Text + "%'", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper()+" "+reader[2].ToString().ToUpper());
+                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper());
                 }
                 reader.Close();
                 conn.Close();
@@ -42,9 +37,11 @@ namespace pos
                 conn.Close();
             }
         }
-        SqlConnection conn;
-        SqlDataReader reader;
-        DB db;
+
+        private SqlConnection conn;
+        private SqlDataReader reader;
+        private DB db;
+
         private void cusomerQuick_Load(object sender, EventArgs e)
         {
             this.TopMost = true;
@@ -57,12 +54,12 @@ namespace pos
                 db.setCursoerWait();
                 conn = db.createSqlConnection();
                 dataGridView1.AllowUserToAddRows = false;
-               
+
                 conn.Open();
                 reader = new SqlCommand("select * from supplier", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper()+" "+reader[2].ToString().ToUpper());
+                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper());
                 }
                 reader.Close();
                 conn.Close();
@@ -70,7 +67,6 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
             db.setCursoerDefault();
         }
@@ -88,7 +84,6 @@ namespace pos
             {
                 var y = dataGridView1.SelectedRows[0].Index;
                 // this.Dispose();
-
 
                 //  invoice ink = (invoice)formH;
                 formH.loadCustomer(dataGridView1.Rows[y].Cells[0].Value + "");
@@ -109,7 +104,6 @@ namespace pos
                 var y = dataGridView1.SelectedRows[0].Index;
                 // this.Dispose();
 
-
                 //  invoice ink = (invoice)formH;
                 formH.loadCustomer(dataGridView1.Rows[y].Cells[0].Value + "");
                 formH.Enabled = true;
@@ -117,7 +111,6 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -18,24 +12,24 @@ namespace pos
         public salesRef(Form home, String user)
         {
             InitializeComponent();
-           this.home = home;
-           this.user = user;
+            this.home = home;
+            this.user = user;
         }
 
         // My Variable Start
-        DB db,db2;
-        Form home;
-        SqlConnection conn,conn2;
-        SqlDataReader reader;
-        ArrayList arrayList;
-        string[] idArray, nameArray, addressArray, mobileNoArray, LandNoArray, emailArray, companyArray;
-      
-        Boolean check, checkListBox, states;
-        string user, listBoxType;
-        
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader;
+        private ArrayList arrayList;
+        private string[] idArray, nameArray, addressArray, mobileNoArray, LandNoArray, emailArray, companyArray;
+
+        private Boolean check, checkListBox, states;
+        private string user, listBoxType;
+
         // my Variable End
 
-      
         private void itemProfile_Load(object sender, EventArgs e)
         {
             this.TopMost = true;
@@ -45,9 +39,9 @@ namespace pos
             conn2 = db2.createSqlConnection();
             loadAutoComplete();
             this.ActiveControl = codeC;
-            
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -67,16 +61,15 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
-       public Boolean loadCustomer(string id)
-        {
 
+        public Boolean loadCustomer(string id)
+        {
             try
             {
                 db.setCursoerWait();
                 conn.Open();
-                reader = new SqlCommand("select * from salesRef where id='" + id+ "'", conn).ExecuteReader();
+                reader = new SqlCommand("select * from salesRef where id='" + id + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
                     codeC.Text = id;
@@ -84,7 +77,7 @@ namespace pos
                     nameC.Text = reader.GetString(1);
                     addressC.Text = reader.GetString(2);
                     mobileNumberC.Text = reader.GetString(3);
-                   
+
                     db.ToTitleCase(new TextBox[] { nameC, addressC, mobileNumberC });
                 }
                 else
@@ -102,15 +95,13 @@ namespace pos
             }
             return states;
         }
-     
+
         private void itemProfile_Activated(object sender, EventArgs e)
         {
-          
         }
 
         private void itemProfile_Deactivate(object sender, EventArgs e)
         {
-            
         }
 
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
@@ -147,10 +138,11 @@ namespace pos
                         reader.Close();
                         conn.Close();
                         conn.Open();
-                        new SqlCommand("update salesRef set name='" + nameC.Text + "',address='" + addressC.Text + "',mobileNo='" + mobileNumberC.Text + "',description='" + db.setItemDescriptionCusSupp(new TextBox[] { codeC, nameC}) + "' where id='" + codeC.Text + "'", conn).ExecuteNonQuery();
+                        new SqlCommand("update salesRef set name='" + nameC.Text + "',address='" + addressC.Text + "',mobileNo='" + mobileNumberC.Text + "',description='" + db.setItemDescriptionCusSupp(new TextBox[] { codeC, nameC }) + "' where id='" + codeC.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
                     }
-                    else {
+                    else
+                    {
                         MessageBox.Show("Sorry Invalied Sales Ref ID");
                         codeC.Focus();
                     }
@@ -161,7 +153,6 @@ namespace pos
                 catch (Exception)
                 {
                     conn.Close();
-                   
                 }
                 if (states)
                 {
@@ -179,7 +170,6 @@ namespace pos
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -203,7 +193,7 @@ namespace pos
                     db.setCursoerWait();
                     states = true;
                     conn.Open();
-                    new SqlCommand("insert into salesRef values ('" + codeC.Text + "','" + nameC.Text + "','" + addressC.Text + "','"+mobileNumberC.Text+"','" + db.setItemDescriptionCusSupp(new TextBox[] { codeC, nameC}) + "')", conn).ExecuteNonQuery();
+                    new SqlCommand("insert into salesRef values ('" + codeC.Text + "','" + nameC.Text + "','" + addressC.Text + "','" + mobileNumberC.Text + "','" + db.setItemDescriptionCusSupp(new TextBox[] { codeC, nameC }) + "')", conn).ExecuteNonQuery();
                     conn.Close();
                     db.setCursoerDefault();
                 }
@@ -221,12 +211,10 @@ namespace pos
         }
 
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
-
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select id from salesRef ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -235,7 +223,6 @@ namespace pos
                 {
                     // MessageBox.Show("3");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 // MessageBox.Show("2");
                 reader.Close();
@@ -250,7 +237,6 @@ namespace pos
                 while (reader.Read())
                 {
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 reader.Close();
                 conn.Close();
@@ -262,93 +248,80 @@ namespace pos
                 while (reader.Read())
                 {
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 reader.Close();
                 conn.Close();
                 addressArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(addressC, addressArray);
-                
+
                 conn.Open();
                 reader = new SqlCommand("select mobileNo from salesRef ", conn).ExecuteReader();
                 arrayList = new ArrayList();
                 while (reader.Read())
                 {
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-
                 }
                 reader.Close();
                 conn.Close();
                 mobileNoArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(mobileNumberC, mobileNoArray);
-             
             }
             catch (Exception)
             {
                 conn.Close();
             }
         }
-       
 
-        void refresh() {
+        private void refresh()
+        {
             try
             {
                 loadAutoComplete();
-                db.setTextBoxDefault(new TextBox[] { codeC, nameC, addressC, mobileNumberC});
+                db.setTextBoxDefault(new TextBox[] { codeC, nameC, addressC, mobileNumberC });
                 codeC.Focus();
                 listBox2.Items.Clear();
-                 listBox1.Visible = false;
+                listBox1.Visible = false;
             }
             catch (Exception)
             {
-               
             }
         }
-     
-         //++++++ My Method End++++
+
+        //++++++ My Method End++++
         private void code_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
         }
 
         private void code_KeyUp(object sender, KeyEventArgs e)
         {
-         
         }
 
         private void brand_KeyUp(object sender, KeyEventArgs e)
         {
-            
         }
 
         private void category_KeyUp(object sender, KeyEventArgs e)
         {
-            }
+        }
 
         private void description_KeyUp(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void remark_KeyUp(object sender, KeyEventArgs e)
         {
-         
         }
 
         private void rate_KeyUp(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
         }
 
         private void code_KeyDown(object sender, KeyEventArgs e)
         {
-
-         
         }
 
         private void brand_KeyDown(object sender, KeyEventArgs e)
@@ -365,7 +338,6 @@ namespace pos
 
         private void remark_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void remark_KeyDown(object sender, KeyEventArgs e)
@@ -424,38 +396,31 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-      
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
-             }
+        }
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            
         }
 
         private void code_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseClick(object sender, MouseEventArgs e)
         {
-            
-                listBox1.Visible = false;
-         
+            listBox1.Visible = false;
         }
 
         private void itemProfile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-
         }
 
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -463,12 +428,12 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             db.setTextBoxDefault(new TextBox[] { codeC, nameC, addressC, mobileNumberC });
             codeC.Focus();
             listBox2.Items.Clear();
-            loadAutoComplete(); listBox1.Visible = false; 
+            loadAutoComplete(); listBox1.Visible = false;
         }
 
         private void Code_KeyDown_1(object sender, KeyEventArgs e)
         {
-             }
+        }
 
         private void codeC_KeyDown(object sender, KeyEventArgs e)
         {
@@ -508,18 +473,15 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-
                     MessageBox.Show("User Detail Download Succesfully");
                     nameC.Focus();
                 }
-
             }
         }
 
         private void nameC_KeyDown(object sender, KeyEventArgs e)
         {
-            db.setTextBoxPath(codeC, addressC,addressC, e.KeyValue);
- 
+            db.setTextBoxPath(codeC, addressC, addressC, e.KeyValue);
         }
 
         private void nameC_KeyUp(object sender, KeyEventArgs e)
@@ -532,31 +494,28 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void companyC_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(nameC, addressC, addressC, e.KeyValue);
-    
         }
 
         private void companyC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void addressC_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(codeC, mobileNumberC, mobileNumberC, e.KeyValue);
-     
         }
 
         private void mobileNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue==12 | e.KeyValue==13)
+            if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 button1_Click(sender, e);
             }
-            else if (e.KeyValue==38)
+            else if (e.KeyValue == 38)
             {
                 addressC.Focus();
             }
-            else if (e.KeyValue==40)
+            else if (e.KeyValue == 40)
             {
                 button1.Focus();
             }
@@ -564,16 +523,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void landNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void faxNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-         }
+        }
 
         private void emailC_KeyDown(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -582,6 +539,5 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             home.Enabled = true;
             home.TopMost = true;
         }
-        
     }
 }

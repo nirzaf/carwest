@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 
-using System.Text;
-
 namespace pos
 {
-    class printCheque
+    internal class printCheque
     {
-        string states = "";
-        public string setprintCheque(string date, string amount, string payName,bool pabc)
-        {
+        private string states = "";
 
+        public string setprintCheque(string date, string amount, string payName, bool pabc)
+        {
             try
             {
                 dt = new DataTable();
@@ -33,7 +30,6 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                     amountNew = "";
                     amountBYNameNEw = "";
                 }
@@ -43,7 +39,6 @@ namespace pos
                 if (date.Equals(""))
                 {
                     dt.Rows.Add("", "", "", "", "", "", amountNew, amountBYNameNEw);
-
                 }
                 else if (amount.Equals("") | payName.Equals(""))
                 {
@@ -56,7 +51,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -67,10 +61,8 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), "", "");
-
                 }
                 else
                 {
@@ -83,7 +75,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -94,13 +85,9 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), amountNew, amountBYNameNEw);
-
-
                 }
-
 
                 ds.Tables.Add(dt);
 
@@ -113,14 +100,15 @@ namespace pos
                     //  pp.SetParameterValue("suppllier", chequen);
                     pp.PrintToPrinter(1, false, 0, 0);
                 }
-                else {
+                else
+                {
                     chequeReportNewHNB pp = new chequeReportNewHNB();
                     pp.SetDataSource(ds);
                     pp.SetParameterValue("name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(payName.ToLower()));
                     //  pp.SetParameterValue("suppllier", chequen);
                     pp.PrintToPrinter(1, false, 0, 0);
                 }
-               
+
                 //test3 a = new test3();
                 //a.pp = pp;
                 //a.Visible = true;
@@ -130,13 +118,12 @@ namespace pos
             {
                 throw;
                 states = s.Message;
-
             }
             return states;
         }
-        public string setprintChequeAcPay(string date, string amount, string payName,bool pabc)
-        {
 
+        public string setprintChequeAcPay(string date, string amount, string payName, bool pabc)
+        {
             try
             {
                 dt = new DataTable();
@@ -150,14 +137,11 @@ namespace pos
                 dt.Columns.Add("amountNumeric", typeof(string));
                 dt.Columns.Add("amountVarchar", typeof(string));
 
-
                 //  MessageBox.Show(s);
-
 
                 if (date.Equals(""))
                 {
                     dt.Rows.Add("", "", "", "", "", "", setAmountFormat(amount), new amountByName().setAmountName(amount));
-
                 }
                 else if (amount.Equals("") | payName.Equals(""))
                 {
@@ -170,7 +154,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -181,10 +164,8 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), "", "");
-
                 }
                 else
                 {
@@ -197,7 +178,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -208,15 +188,11 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
-
-
                 }
 
                 ds.Tables.Add(dt);
-
 
                 if (pabc)
                 {
@@ -226,7 +202,8 @@ namespace pos
                     pp.SetParameterValue("name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(payName.ToLower()));
                     pp.PrintToPrinter(1, false, 0, 0);
                 }
-                else {
+                else
+                {
                     chequeReportNewACPayHNB pp = new chequeReportNewACPayHNB();
 
                     pp.SetDataSource(ds);
@@ -234,20 +211,19 @@ namespace pos
                     pp.PrintToPrinter(1, false, 0, 0);
                 }
 
-             //   ds.WriteXmlSchema("cheque.xml");
-               
+                //   ds.WriteXmlSchema("cheque.xml");
+
                 //   crystalReportViewer1.ReportSource = pp;
             }
             catch (Exception s)
             {
                 states = s.Message;
-
             }
             return states;
         }
-        public string setprintChequeCross(string date, string amount, string payName,bool pabc)
-        {
 
+        public string setprintChequeCross(string date, string amount, string payName, bool pabc)
+        {
             try
             {
                 dt = new DataTable();
@@ -261,14 +237,11 @@ namespace pos
                 dt.Columns.Add("amountNumeric", typeof(string));
                 dt.Columns.Add("amountVarchar", typeof(string));
 
-
                 //  MessageBox.Show(s);
-
 
                 if (date.Equals(""))
                 {
                     dt.Rows.Add("", "", "", "", "", "", setAmountFormat(amount), new amountByName().setAmountName(amount));
-
                 }
                 else if (amount.Equals("") | payName.Equals(""))
                 {
@@ -281,7 +254,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -292,10 +264,8 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), "", "");
-
                 }
                 else
                 {
@@ -308,7 +278,6 @@ namespace pos
                     {
                         month1 = date.Split('/')[0].ToString().ToCharArray()[0].ToString();
                         month2 = date.Split('/')[0].ToString().ToCharArray()[1].ToString();
-
                     }
                     if (date.Split('/')[1].ToString().ToCharArray().Length == 1)
                     {
@@ -319,21 +288,15 @@ namespace pos
                     {
                         date1 = date.Split('/')[1].ToString().ToCharArray()[0].ToString();
                         date2 = date.Split('/')[1].ToString().ToCharArray()[1].ToString();
-
                     }
                     dt.Rows.Add(month1, month2, date1, date2, date.Split('/')[2].ToString().ToCharArray()[2].ToString(), date.Split('/')[2].ToString().ToCharArray()[3].ToString(), setAmountFormat(amount), new amountByName().setAmountName(amount));
-
-
                 }
 
                 ds.Tables.Add(dt);
 
-
-
-
-             ///   ds.WriteXmlSchema("cheque.xml");
-             ///   if    
-             ///   
+                ///   ds.WriteXmlSchema("cheque.xml");
+                ///   if
+                ///
                 if (pabc)
                 {
                     chequeReportNewCross pp = new chequeReportNewCross();
@@ -341,27 +304,25 @@ namespace pos
                     pp.SetDataSource(ds);
                     pp.SetParameterValue("name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(payName.ToLower()));
                     pp.PrintToPrinter(1, false, 0, 0);
-            
                 }
-                else {
+                else
+                {
                     chequeReportNewCrossHNB pp = new chequeReportNewCrossHNB();
 
                     pp.SetDataSource(ds);
                     pp.SetParameterValue("name", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(payName.ToLower()));
                     pp.PrintToPrinter(1, false, 0, 0);
-            
                 }
-                  //   crystalReportViewer1.ReportSource = pp;
+                //   crystalReportViewer1.ReportSource = pp;
             }
             catch (Exception s)
             {
                 states = s.Message;
-
             }
             return states;
         }
-      
-        string setAmountFormat(string amount)
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -422,6 +383,7 @@ namespace pos
 
             return amount;
         }
-        string month1, month2, date1, date2; DataTable dt; DataSet ds;
+
+        private string month1, month2, date1, date2; private DataTable dt; private DataSet ds;
     }
 }

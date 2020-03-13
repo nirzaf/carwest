@@ -1,11 +1,5 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -13,7 +7,8 @@ namespace pos
 {
     public partial class cusomerQuick : Form
     {
-        invoiceNew formH;
+        private invoiceNew formH;
+
         public cusomerQuick(invoiceNew form)
         {
             InitializeComponent();
@@ -31,7 +26,7 @@ namespace pos
                 reader = new SqlCommand("select * from customer where description like '%" + pcCode.Text + "%'", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper()+" "+reader[2].ToString().ToUpper());
+                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper());
                 }
                 reader.Close();
                 conn.Close();
@@ -42,9 +37,11 @@ namespace pos
                 conn.Close();
             }
         }
-        SqlConnection conn;
-        SqlDataReader reader;
-        DB db;
+
+        private SqlConnection conn;
+        private SqlDataReader reader;
+        private DB db;
+
         private void cusomerQuick_Load(object sender, EventArgs e)
         {
             this.TopMost = true;
@@ -64,7 +61,7 @@ namespace pos
                 reader = new SqlCommand("select * from customer", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper()+" "+reader[2].ToString().ToUpper());
+                    dataGridView1.Rows.Add(reader[0], reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper());
                 }
                 reader.Close();
                 conn.Close();
@@ -72,7 +69,6 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
             db.setCursoerDefault();
         }
@@ -89,8 +85,6 @@ namespace pos
             try
             {
                 var y = dataGridView1.SelectedRows[0].Index;
-               
-
 
                 //  invoice ink = (invoice)formH;
                 formH.loadCustomer(dataGridView1.Rows[y].Cells[0].Value + "");
@@ -109,8 +103,6 @@ namespace pos
             try
             {
                 var y = dataGridView1.SelectedRows[0].Index;
-               
-
 
                 //  invoice ink = (invoice)formH;
                 formH.loadCustomer(dataGridView1.Rows[y].Cells[0].Value + "");
@@ -120,15 +112,14 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 
         private void pcCode_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue==12 | e.KeyValue==13)
+            if (e.KeyValue == 12 | e.KeyValue == 13)
             {
-                  formH.loadCustomer(pcCode.Text);
+                formH.loadCustomer(pcCode.Text);
                 formH.Enabled = true;
                 formH.TopMost = true;
                 this.Dispose();

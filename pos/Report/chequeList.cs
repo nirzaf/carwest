@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,26 +15,28 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        stockReportALL pp;
-        DB db, db2, db3;
-        string userH, queary, userName;
-        SqlConnection conn, conn2, conn3;
-        string[] idArray;
-        SqlDataReader reader, reader2, reader3;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private stockReportALL pp;
+        private DB db, db2, db3;
+        private string userH, queary, userName;
+        private SqlConnection conn, conn2, conn3;
+        private string[] idArray;
+        private SqlDataReader reader, reader2, reader3;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select brand from item ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -47,7 +44,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -60,7 +56,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -73,7 +68,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -86,7 +80,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -96,10 +89,10 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
         }
-        void loadCostAll()
+
+        private void loadCostAll()
         {
             amountCost = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -121,7 +114,8 @@ namespace pos
             }
             stockValue.Text = db.setAmountFormat(amountCost + "");
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -129,7 +123,6 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     panelStockValue.Visible = reader.GetBoolean(2);
                     dataGridView1.Columns[6].Visible = reader.GetBoolean(3);
@@ -137,13 +130,11 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
 
         //
@@ -178,10 +169,8 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
             itemCode.Enabled = radioSearchByDate.Checked;
             itemCode.Focus();
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -228,7 +217,6 @@ namespace pos
 
             if (checkQty.Checked)
             {
-
                 radioMaxValue.Checked = true;
                 radioMinValue.Checked = true;
             }
@@ -261,9 +249,10 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
-        double total = 0.0;
+
+        private double total = 0.0;
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -338,14 +327,10 @@ namespace pos
                         dataGridView1.Rows.Add(reader.GetDateTime(6).ToShortDateString(), reader[10], reader[5], reader[8], db.setAmountFormat(reader[4] + ""));
                     }
                     conn.Close();
-
                 }
-
 
                 totalValue.Text = db.setAmountFormat(total + "");
                 db.setCursoerDefault();
-
-
             }
             catch (Exception a)
             {
@@ -356,17 +341,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -387,7 +369,6 @@ namespace pos
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -419,7 +400,6 @@ namespace pos
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -452,10 +432,8 @@ namespace pos
                             if (reader.Read())
                             {
                                 dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value + " " + dataGridView1.Rows[i].Cells[3].Value + " " + dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[3].Value, db.setAmountFormat(reader[0] + ""), db.setAmountFormat(reader.GetDouble(0) * reader.GetDouble(1) + ""));
-
                             }
                             conn.Close();
-
                         }
                         catch (Exception)
                         {
@@ -479,9 +457,7 @@ namespace pos
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
@@ -514,10 +490,8 @@ namespace pos
                             if (reader.Read())
                             {
                                 dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value + " " + dataGridView1.Rows[i].Cells[3].Value + " " + dataGridView1.Rows[i].Cells[4].Value, dataGridView1.Rows[i].Cells[3].Value, db.setAmountFormat(reader[0] + ""), db.setAmountFormat(reader.GetDouble(0) * reader.GetDouble(1) + ""));
-
                             }
                             conn.Close();
-
                         }
                         catch (Exception)
                         {
@@ -542,20 +516,15 @@ namespace pos
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-
-
     }
 }

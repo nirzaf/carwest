@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -21,23 +15,25 @@ namespace pos
             this.user = user;
             home = form;
         }
+
         //+++++++My Variable Start
-        DB db, db2, db3, db4;
-        Form home;
-        SqlConnection conn, conn2, conn3, conn4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        ArrayList arrayList, stockList;
-        Boolean check, checkListBox, states, item, checkStock;
-        string user, type, cutomerID = "", supplierDetail, invoieNoTemp;
-        String[] idArray;
-        DataGridViewButtonColumn btn;
-        Int32 invoiceMaxNo, rowCount;
-        Double amount, purchashingPrice, qtyTemp, tempPaid, profit, profitTotal;
+        private DB db, db2, db3, db4;
+
+        private Form home;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private ArrayList arrayList, stockList;
+        private Boolean check, checkListBox, states, item, checkStock;
+        private string user, type, cutomerID = "", supplierDetail, invoieNoTemp;
+        private String[] idArray;
+        private DataGridViewButtonColumn btn;
+        private Int32 invoiceMaxNo, rowCount;
+        private Double amount, purchashingPrice, qtyTemp, tempPaid, profit, profitTotal;
         //+++++++++My Variable End
 
         //++My Method Start
 
-        void loadInvoiceByID()
+        private void loadInvoiceByID()
         {
             try
             {
@@ -50,7 +46,6 @@ namespace pos
                 reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where a.id = '" + invoieNoTemp + "' and a.id=b.invoiceid and b.credit='" + true + "' ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     supplierDetail = reader[2].ToString().ToUpper();
 
                     try
@@ -70,8 +65,6 @@ namespace pos
                     }
                     tempPaid = tempPaid + reader.GetDouble(7);
                     dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
-
                 }
 
                 if (dataGridView1.Rows.Count == 0)
@@ -85,10 +78,6 @@ namespace pos
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-
-
-
-
             }
             catch (Exception)
             {
@@ -97,7 +86,8 @@ namespace pos
                 conn2.Close();
             }
         }
-        void loadInvoiceByIDInvoice()
+
+        private void loadInvoiceByIDInvoice()
         {
             try
             {
@@ -110,7 +100,6 @@ namespace pos
                 reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where a.idSupplier = '" + invoieNoTemp + "' and a.id=b.invoiceid and b.credit='" + true + "' ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     supplierDetail = reader[2].ToString().ToUpper();
 
                     try
@@ -130,8 +119,6 @@ namespace pos
                     }
                     tempPaid = tempPaid + reader.GetDouble(7);
                     dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
-
                 }
 
                 if (dataGridView1.Rows.Count == 0)
@@ -145,10 +132,6 @@ namespace pos
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-
-
-
-
             }
             catch (Exception)
             {
@@ -157,7 +140,8 @@ namespace pos
                 conn2.Close();
             }
         }
-      public  void load()
+
+        public void load()
         {
             try
             {
@@ -169,19 +153,15 @@ namespace pos
                 conn.Open();
                 if (checkBox1.Checked)
                 {
-                    reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' and a.date between '"+from.Value+"' and '"+toDate.Value+"' order by a.date", conn).ExecuteReader();
+                    reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' and a.date between '" + from.Value + "' and '" + toDate.Value + "' order by a.date", conn).ExecuteReader();
                 }
                 else
                 {
-
                     reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' order by a.date", conn).ExecuteReader();
-               
                 }
                 while (reader.Read())
                 {
-
                     supplierDetail = reader[2].ToString().ToUpper();
-
 
                     try
                     {
@@ -204,7 +184,6 @@ namespace pos
                         if (tempPaid >= reader.GetDouble(3))
                         {
                             dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                         }
                     }
                     else if (radioNotPaid.Checked)
@@ -212,16 +191,12 @@ namespace pos
                         if (tempPaid < reader.GetDouble(3))
                         {
                             dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                         }
                     }
                     else
                     {
                         dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                     }
-
-
                 }
 
                 if (dataGridView1.Rows.Count == 0)
@@ -235,10 +210,6 @@ namespace pos
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-
-
-
-
             }
             catch (Exception)
             {
@@ -247,7 +218,8 @@ namespace pos
                 conn2.Close();
             }
         }
-        void loadWithSupp()
+
+        private void loadWithSupp()
         {
             try
             {
@@ -259,19 +231,15 @@ namespace pos
                 conn.Open();
                 if (checkBox1.Checked)
                 {
-                    reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' and a.date between '" + from.Value + "' and '" + toDate.Value + "' and a.supplierID='"+customer.Text+"' order by a.date", conn).ExecuteReader();
+                    reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' and a.date between '" + from.Value + "' and '" + toDate.Value + "' and a.supplierID='" + customer.Text + "' order by a.date", conn).ExecuteReader();
                 }
                 else
                 {
-
                     reader = new SqlCommand("select a.* from grn as a,grnTerm as b  where  a.id=b.invoiceid and b.credit='" + true + "' and a.supplierID='" + customer.Text + "' order by a.date", conn).ExecuteReader();
-
                 }
                 while (reader.Read())
                 {
-
                     supplierDetail = reader[2].ToString().ToUpper();
-
 
                     try
                     {
@@ -294,7 +262,6 @@ namespace pos
                         if (tempPaid >= reader.GetDouble(3))
                         {
                             dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                         }
                     }
                     else if (radioNotPaid.Checked)
@@ -302,16 +269,12 @@ namespace pos
                         if (tempPaid < reader.GetDouble(3))
                         {
                             dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                         }
                     }
                     else
                     {
                         dataGridView1.Rows.Add(reader[0], reader[1], supplierDetail, db.setAmountFormat(reader[3] + ""), db.setAmountFormat(tempPaid + ""), db.setAmountFormat(reader.GetDouble(3) - tempPaid + ""), reader[4].ToString().Split(' ')[0]);
-
                     }
-
-
                 }
 
                 if (dataGridView1.Rows.Count == 0)
@@ -325,10 +288,6 @@ namespace pos
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-
-
-
-
             }
             catch (Exception)
             {
@@ -337,12 +296,11 @@ namespace pos
                 conn2.Close();
             }
         }
-        void setAutoComplete()
+
+        private void setAutoComplete()
         {
             try
             {
-
-
                 conn.Open();
                 reader = new SqlCommand("select name from supplier ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -355,7 +313,6 @@ namespace pos
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(customer, idArray);
                 conn.Close();
-
             }
             catch (Exception a)
             {
@@ -363,7 +320,8 @@ namespace pos
                 conn.Close();
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -381,8 +339,8 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
+
         //+++++++My Method End
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -393,7 +351,6 @@ namespace pos
 
         private void label9_Click(object sender, EventArgs e)
         {
-
         }
 
         private void invoiceSearch_Load(object sender, EventArgs e)
@@ -421,7 +378,6 @@ namespace pos
             btn.Text = "PAY";
             btn.UseColumnTextForButtonValue = true;
 
-
             loadUser();
             setAutoComplete();
             checkBox1.Checked = true;
@@ -430,7 +386,6 @@ namespace pos
             this.TopMost = true;
             invoiceNo.CharacterCasing = CharacterCasing.Upper;
             customer.CharacterCasing = CharacterCasing.Upper;
-
 
             int height = Screen.PrimaryScreen.Bounds.Height;
             int width = Screen.PrimaryScreen.Bounds.Width;
@@ -452,17 +407,14 @@ namespace pos
             {
                 loadInvoiceByID();
             }
-
         }
 
         private void warrentyCode_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -478,7 +430,6 @@ namespace pos
                 from.Enabled = false;
                 toDate.Enabled = false;
                 button3.Enabled = false;
-
             }
         }
 
@@ -506,18 +457,14 @@ namespace pos
                 new grnEdit(this, user, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible = true;
                 this.Enabled = true;
             }
-
             else if (e.ColumnIndex == 8)
             {
                 new grnCreditPayEdit2(this, user, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(), dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString(), e.RowIndex + "").Visible = true;
-             
             }
-            
         }
 
         private void customer_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 listBox1.Visible = false;
@@ -530,7 +477,6 @@ namespace pos
                 {
                     loadWithSupp();
                 }
-
             }
             else if (e.KeyValue == 40)
             {
@@ -548,10 +494,8 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -561,7 +505,6 @@ namespace pos
                 dataGridView1.Rows.Clear();
                 db.setCursoerWait();
                 // MessageBox.Show(from.Value.ToShortDateString());
-
 
                 conn.Open();
                 reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' ", conn).ExecuteReader();
@@ -577,7 +520,6 @@ namespace pos
                         if (reader3.Read())
                         {
                             dataGridView1.Rows.Add(reader2[0], reader2[1], reader2[5] + "(" + reader3[0].ToString().ToUpper() + " " + reader3[1].ToString().ToUpper() + ")", db.setAmountFormat(reader2[3] + ""), reader2[4].ToString().Split(' ')[0]);
-
                         }
                         else
                         {
@@ -592,11 +534,6 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
-
-
-
-
 
                 if (dataGridView1.Rows.Count == 0)
                 {
@@ -629,17 +566,14 @@ namespace pos
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void cutomerUnSaved_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customer_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customer_KeyUp(object sender, KeyEventArgs e)
@@ -687,7 +621,7 @@ namespace pos
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
                 listBox1.Visible = false;
-                customer.Text = listBox1.SelectedItem.ToString() ;
+                customer.Text = listBox1.SelectedItem.ToString();
                 customer.SelectionLength = customer.MaxLength;
                 loadWithSupp();
             }
@@ -705,7 +639,6 @@ namespace pos
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             customer.Text = listBox1.SelectedItem.ToString();
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -719,7 +652,6 @@ namespace pos
             {
                 loadInvoiceByIDInvoice();
             }
-
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -729,12 +661,10 @@ namespace pos
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellBorderStyleChanged(object sender, EventArgs e)
         {
-
         }
     }
 }

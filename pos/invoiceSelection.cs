@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -23,8 +17,10 @@ namespace pos
             tempcreditPaidID = tempCreID;
             home = form;
         }
-        string customer, user, tempcreditPaidID;
-        double amount, amount2;
+
+        private string customer, user, tempcreditPaidID;
+        private double amount, amount2;
+
         private void invoiceSelection_Load(object sender, EventArgs e)
         {
             // MessageBox.Show("1");
@@ -39,19 +35,21 @@ namespace pos
             this.TopMost = true;
             //MessageBox.Show("1b");
         }
-        DB db, db2;
-        invoiceCreditPay home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        double amountTemp, amountTemp2;
-        string tempInvoiceNO = "";
-        void load()
+
+        private DB db, db2;
+        private invoiceCreditPay home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private double amountTemp, amountTemp2;
+        private string tempInvoiceNO = "";
+
+        private void load()
         {
             try
             {
                 conn2.Open();
-               // MessageBox.Show(customer);
-                reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" +  customer + "' order by requstdate", conn2).ExecuteReader();
+                // MessageBox.Show(customer);
+                reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" + customer + "' order by requstdate", conn2).ExecuteReader();
                 while (reader2.Read())
                 {
                     amountTemp = 0;
@@ -60,7 +58,6 @@ namespace pos
                     while (reader.Read())
                     {
                         amountTemp = amountTemp + reader.GetDouble(0);
-
                     }
 
                     if (amountTemp < reader2.GetDouble(1))
@@ -81,12 +78,10 @@ namespace pos
         {
             try
             {
-
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[4].Value.ToString().ToUpper().Equals("TRUE"))
                     {
-
                         if (amount2 != 0)
                         {
                             amount = 0;
@@ -127,7 +122,6 @@ namespace pos
                                         tempInvoiceNO = tempInvoiceNO + "/R-" + dataGridView1.Rows[i].Cells[0].Value.ToString().Split('-')[1];
                                     }
                                     amount2 = amount2 - amount;
-
                                 }
                             }
                         }
@@ -141,7 +135,6 @@ namespace pos
                     reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" + customer + "' order by requstdate", conn2).ExecuteReader();
                     while (reader2.Read())
                     {
-
                         if (amount2 != 0)
                         {
                             amount = 0;
@@ -152,7 +145,6 @@ namespace pos
                             {
                                 states = true;
                                 amount = amount + reader.GetDouble(0);
-
                             }
 
                             conn.Close();
@@ -162,7 +154,6 @@ namespace pos
                             }
                             else
                             {
-
                                 amount = reader2.GetDouble(1) - amount;
                             }
 
@@ -183,8 +174,6 @@ namespace pos
                                         tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                     }
 
-
-
                                     amount2 = 0;
                                 }
                                 else
@@ -203,7 +192,6 @@ namespace pos
                                         tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                     }
                                     amount2 = amount2 - amount;
-
                                 }
                             }
                         }
@@ -233,7 +221,6 @@ namespace pos
 
         private void dataGridView1_MouseEnter(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -242,7 +229,6 @@ namespace pos
 
         private void dataGridView1_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -251,12 +237,10 @@ namespace pos
 
         private void dataGridView1_MouseLeave(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellLeave(object sender, DataGridViewCellEventArgs e)
@@ -265,24 +249,20 @@ namespace pos
 
         private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
-
         }
 
         private void dataGridView1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //if (e.ColumnIndex == 4)
             //{
-
             //    var a = 0.0;
             //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
             //    {
@@ -295,43 +275,34 @@ namespace pos
             //    balance.Text = db.setAmountFormat((amountTemp2 - a) + "");
 
             //}
-
-
         }
 
         private void dataGridView1_CausesValidationChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellStateChanged(object sender, DataGridViewCellStateChangedEventArgs e)
         {
-
         }
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void dataGridView1_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void invoiceSelection_FormClosing(object sender, FormClosingEventArgs e)
@@ -340,10 +311,9 @@ namespace pos
             {
                 conn2.Open();
                 bool states = false; ;
-                reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" +  customer + "' order by requstdate", conn2).ExecuteReader();
+                reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" + customer + "' order by requstdate", conn2).ExecuteReader();
                 while (reader2.Read())
                 {
-
                     if (amount2 != 0)
                     {
                         amount = 0;
@@ -354,7 +324,6 @@ namespace pos
                         {
                             states = true;
                             amount = amount + reader.GetDouble(0);
-
                         }
 
                         conn.Close();
@@ -364,7 +333,6 @@ namespace pos
                         }
                         else
                         {
-
                             amount = reader2.GetDouble(1) - amount;
                         }
 
@@ -385,8 +353,6 @@ namespace pos
                                     tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                 }
 
-
-
                                 amount2 = 0;
                             }
                             else
@@ -405,7 +371,6 @@ namespace pos
                                     tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                 }
                                 amount2 = amount2 - amount;
-
                             }
                         }
                     }

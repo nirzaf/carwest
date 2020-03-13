@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -25,12 +19,10 @@ namespace pos
             db = new DB();
             sqlconn = db.createSqlConnection();
 
-
             try
             {
                 using (sqlconn = new DB().createSqlConnection())
                 {
-
                     sqlconn.Open();
                     reader = new SqlCommand("select EMPID,NAME from EMP WHERE resgin='" + false + "'", sqlconn).ExecuteReader();
 
@@ -55,10 +47,11 @@ namespace pos
             btn.UseColumnTextForButtonValue = true;
             this.TopMost = true;
         }
-        DataGridViewButtonColumn btn;
-        void clear()
-        {
 
+        private DataGridViewButtonColumn btn;
+
+        private void clear()
+        {
             dateTimePicker1.Value = DateTime.Now;
             loanTable.Rows.Clear();
             loanAmount.Text = "";
@@ -70,19 +63,18 @@ namespace pos
 
         private void comboBox2_DropDown(object sender, EventArgs e)
         {
-
         }
 
         private void dateTimePicker1_DropDown(object sender, EventArgs e)
         {
-
         }
-        DB db;
-        SqlDataReader reader;
-        SqlConnection sqlconn;
+
+        private DB db;
+        private SqlDataReader reader;
+        private SqlConnection sqlconn;
+
         private void listBox1_Click(object sender, EventArgs e)
         {
-
             try
             {
                 {
@@ -113,7 +105,6 @@ namespace pos
 
         private void LoanAdvanced_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -132,27 +123,21 @@ namespace pos
                 {
                     MessageBox.Show("Please Select Employee");
                 }
-
                 else if ((MessageBox.Show("Are you Sure Save these Loan Values for Select User", "Confirmation",
     MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
-
-
                     using (sqlconn = db.createSqlConnection())
                     {
                         // new SqlCommand("delete from loan where month='" + dateTimePicker1.Value.ToString("d").ToString().Split('/')[2] + "/" + comboBox2.SelectedItem + "' and empid='" + left.SelectedItem.ToString().Split('-')[0] + "' ", sqlconn).ExecuteNonQuery();
 
-
                         sqlconn.Open();
                         new SqlCommand("insert into loan values('" + left.SelectedItem.ToString().Split('-')[0] + "','" + loanAmount.Text + "','" + noOfInstallment.Text + "','" + dateTimePicker1.Value.ToString("d").ToString().Split('/')[2] + "/" + comboBox2.SelectedItem + "','" + DateTime.Now + "','" + comboLoanType.SelectedItem + "','" + paid.Text + "')", sqlconn).ExecuteNonQuery();
 
-
                         sqlconn.Close();
                         MessageBox.Show("Succefully Upated Loan Values");
-                      
-                        ///textBox1.Focus();
 
+                        ///textBox1.Focus();
                     }
                     var tempID = 0;
                     using (sqlconn = db.createSqlConnection())
@@ -166,11 +151,11 @@ namespace pos
                                 tempID = reader.GetInt32(0);
                                 tempID++;
                             }
-                             sqlconn.Close();
+                            sqlconn.Close();
                         }
                         catch (Exception a)
                         {
-                          //  MessageBox.Show(a.Message);
+                            //  MessageBox.Show(a.Message);
                             tempID = 1;
                         }
                         //   MessageBox.Show(tempID);
@@ -179,12 +164,11 @@ namespace pos
                         sqlconn.Close();
 
                         sqlconn.Open();
-                        new SqlCommand("insert into cashSummery values('" + "LOAN "+left.SelectedItem.ToString().Split('-')[1] + "/" + tempID + "','" + "EXPENCES-MANUAL" + "','" + Double.Parse(loanAmount.Text) + "','" + DateTime.Now + "','" + "" + "')", sqlconn).ExecuteNonQuery();
+                        new SqlCommand("insert into cashSummery values('" + "LOAN " + left.SelectedItem.ToString().Split('-')[1] + "/" + tempID + "','" + "EXPENCES-MANUAL" + "','" + Double.Parse(loanAmount.Text) + "','" + DateTime.Now + "','" + "" + "')", sqlconn).ExecuteNonQuery();
                         sqlconn.Close();
                     }
                     listBox1_Click(sender, e);
                 }
-
             }
             catch (Exception abc)
             {
@@ -211,10 +195,10 @@ namespace pos
             {
                 //"29-"+ getMOnth(comboBox2.SelectedItem.ToString())+"-"+dateTimePicker1.Value.ToString("d").ToString().Split('/')[2]
                 loanTable.Rows.Add(loanAmount.Text, noOfInstallment.Text, dateTimePicker1.Value.ToString("d").ToString().Split('/')[2] + "-" + getMOnth(comboBox2.SelectedItem.ToString()) + "-20");
-
             }
         }
-        string getMOnth(string y)
+
+        private string getMOnth(string y)
         {
             string month = "";
             if (y.Equals("January"))
@@ -252,21 +236,23 @@ namespace pos
             else if (y.Equals("September"))
             {
                 month = "09";
-            } if (y.Equals("October"))
+            }
+            if (y.Equals("October"))
             {
                 month = "10";
-            } if (y.Equals("November"))
+            }
+            if (y.Equals("November"))
             {
                 month = "11";
-            } if (y.Equals("December"))
+            }
+            if (y.Equals("December"))
             {
                 month = "12";
             }
 
             return month;
-
-
         }
+
         private void button21_Click(object sender, EventArgs e)
         {
             try
@@ -280,24 +266,20 @@ namespace pos
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Sorry , You havnet selected any Row to Delete");
             }
         }
 
         private void loanAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void noOfInstallment_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void LoanAdvanced_FormClosing(object sender, FormClosingEventArgs e)
@@ -308,7 +290,6 @@ namespace pos
 
         private void LoanAdvanced_FormClosed(object sender, FormClosedEventArgs e)
         {
-
         }
 
         private void loanAmount_KeyPress_1(object sender, KeyPressEventArgs e)
@@ -324,17 +305,16 @@ namespace pos
 
         private void comboLine_DropDownClosed(object sender, EventArgs e)
         {
-
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
-        bool tempcheck = false;
+
+        private bool tempcheck = false;
+
         private void loanTable_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-     
             if (e.ColumnIndex == 6)
             {
                 if ((MessageBox.Show("Are You Sure Remove Loan Detail For Selected User?", "Confirmation",
@@ -345,9 +325,7 @@ namespace pos
                     {
                         using (sqlconn = db.createSqlConnection())
                         {
-
                             new SqlCommand("delete from loan where  id='" + loanTable.Rows[e.RowIndex].Cells[0].Value + "'", sqlconn).ExecuteNonQuery();
-
                         }
                         listBox1_Click(sender, e);
                     }
@@ -372,7 +350,6 @@ namespace pos
 
         private void paid_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void paid_KeyDown(object sender, KeyEventArgs e)
@@ -400,7 +377,6 @@ namespace pos
                 //{
                 //    using (sqlconn = new DB().createSqlConnection())
                 //    {
-
                 //        reader = new SqlCommand("select id from emp where empid='" + textBox1.Text + "'", sqlconn).ExecuteReader();
                 //        if (reader.Read())
                 //        {
@@ -417,7 +393,6 @@ namespace pos
                 //                        test = false;
                 //                    }
 
-
                 //                }
                 //            }
                 //            loanAmount.Focus();
@@ -431,7 +406,6 @@ namespace pos
                 //}
                 //catch (Exception)
                 //{
-
                 //    sqlconn.Close();
                 //}
                 tempcheck = true;

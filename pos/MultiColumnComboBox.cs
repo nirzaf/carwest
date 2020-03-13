@@ -1,10 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Collections;
-using System.Diagnostics;
 using System.Data;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace pos.InheritedCombo
 {
@@ -12,18 +9,21 @@ namespace pos.InheritedCombo
     /// Summary description for MultiColumnComboBox.
     /// </summary>
     public delegate void AfterSelectEventHandler();
+
     public class MultiColumnComboBox : System.Windows.Forms.ComboBox
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.Container components = null;
+
         private DataRow selectedRow = null;
         private string displayMember = "";
         private string displayValue = "";
         private DataTable dataTable = null;
         private DataRow[] dataRows = null;
         private string[] columnsToDisplay = null;
+
         public event AfterSelectEventHandler AfterSelectEvent;
 
         public MultiColumnComboBox(System.ComponentModel.IContainer container)
@@ -45,6 +45,7 @@ namespace pos.InheritedCombo
         }
 
         #region Component Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -53,19 +54,18 @@ namespace pos.InheritedCombo
         {
             components = new System.ComponentModel.Container();
         }
-        #endregion
+
+        #endregion Component Designer generated code
 
         protected override void OnDropDown(System.EventArgs e)
         {
-
             Form parent = this.FindForm();
             if (this.dataTable != null || this.dataRows != null)
             {
-
                 MultiColumnComboPopup popup = new MultiColumnComboPopup(this.dataTable, ref this.selectedRow, columnsToDisplay);
-               
+
                 popup.AfterRowSelectEvent += new AfterRowSelectEventHandler(MultiColumnComboBox_AfterSelectEvent);
-                popup.Location = new Point(parent.Left + this.Left + 8, parent.Top + this.Bottom + this.Height+8);
+                popup.Location = new Point(parent.Left + this.Left + 8, parent.Top + this.Bottom + this.Height + 8);
                 popup.Show();
                 if (popup.SelectedRow != null)
                 {

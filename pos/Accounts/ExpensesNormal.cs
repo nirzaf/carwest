@@ -1,26 +1,21 @@
-﻿using pos.InheritedCombo;
-using System;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-using pos.InheritedCombo;
 namespace pos
 {
     public partial class ExpensesNormal : Form
     {
         private System.Windows.Forms.Button button1;
-        Form formH;
-        DB db, db2;
-        SqlConnection conn, conn2;
-        double amount;
-        Int32 maxID, statementH;
-        bool openingBalance, isIncomeH, isExpensesH;
-        SqlDataReader reader, reader2;
+        private Form formH;
+        private DB db, db2;
+        private SqlConnection conn, conn2;
+        private double amount;
+        private Int32 maxID, statementH;
+        private bool openingBalance, isIncomeH, isExpensesH;
+        private SqlDataReader reader, reader2;
         public string indexH, accountNO, payeeName, userH;
+
         public ExpensesNormal(Form form, string user)
         {
             InitializeComponent();
@@ -28,8 +23,7 @@ namespace pos
             userH = user;
         }
 
-
-        void save()
+        private void save()
         {
             try
             {
@@ -67,7 +61,6 @@ namespace pos
                     conn2.Close();
                     // new invoicePrint().setprintReceiprt(tempID + "", conn2, reader, userH);
 
-
                     db.setCashBalance(DateTime.Now);
                     date.Value = DateTime.Now;
                     payee.Text = "";
@@ -76,17 +69,16 @@ namespace pos
                     MessageBox.Show("Saved");
                     load();
                 }
-
             }
             catch (Exception a)
             {
                 conn.Close();
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
-
-
         }
-        DataGridViewButtonColumn btn;
+
+        private DataGridViewButtonColumn btn;
+
         private void itemTable_Load(object sender, EventArgs e)
         {
             formH.Enabled = false;
@@ -97,7 +89,6 @@ namespace pos
             conn = db.createSqlConnection2();
             db2 = new DB();
             conn2 = db2.createSqlConnection2();
-
 
             payee.CharacterCasing = CharacterCasing.Upper;
             dataGridView1.AllowUserToAddRows = false;
@@ -122,12 +113,12 @@ namespace pos
                 comboBox1.Items.Add(reader[0] + "." + reader[1]);
             }
             conn.Close();
-
         }
 
-        string dateFromS, dateToS;
-        double totalS;
-        void load()
+        private string dateFromS, dateToS;
+        private double totalS;
+
+        private void load()
         {
             try
             {
@@ -143,12 +134,10 @@ namespace pos
                     if (reader.GetString(0).Split('/').Length > 1)
                     {
                         dataGridView1.Rows.Add(reader[0] + "", reader[2] + "", reader.GetString(0).Split('/')[1]);
-
                     }
                     else
                     {
                         dataGridView1.Rows.Add(reader[0] + "", reader[2] + "", "0");
-
                     }
                     totalS = totalS + reader.GetDouble(2);
                 }
@@ -158,9 +147,9 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
+
         private void discount_KeyPress(object sender, KeyPressEventArgs e)
         {
             //if (Char.IsDigit(e.KeyChar)) return;
@@ -178,7 +167,6 @@ namespace pos
 
         private void discount_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void qty_KeyDown(object sender, KeyEventArgs e)
@@ -211,19 +199,18 @@ namespace pos
 
         private void radioCHeque_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioCash_CheckedChanged(object sender, EventArgs e)
         {
-
         }
-        bool check;
+
+        private bool check;
+
         private void payee_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(payee, amountCash, amountCash, e.KeyValue);
@@ -231,46 +218,34 @@ namespace pos
 
         private void payee_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void listBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
-
-
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
         {
-
-
         }
 
         private void payee_ImeModeChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-
-
-
         }
 
         private void amountCash_KeyDown(object sender, KeyEventArgs e)
@@ -307,7 +282,6 @@ namespace pos
                 }
                 else if (e.ColumnIndex == 4)
                 {
-
                     new invoicePrint().setprintReceiprt(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString(), conn, reader, userH);
                 }
             }
@@ -344,13 +318,11 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
             {
                 try
                 {
@@ -363,7 +335,6 @@ namespace pos
                 {
                     conn.Open();
                 }
-
             }
         }
     }

@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class grnCreditPayEdit2 : Form
     {
-        grnSearchCredit homeH;
+        private grnSearchCredit homeH;
+
         public grnCreditPayEdit2(grnSearchCredit home, String user, string id, String redordID, string rowID)
         {
             InitializeComponent();
@@ -23,24 +17,22 @@ namespace pos
             recordIDH = redordID;
             rowIDH = rowID;
         }
+
         // My Variable Start
-        DB db;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
+        private DB db;
+
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
         public Boolean check, checkListBox, states, item, checkStock, creditDetailB, chequeDetailB, cardDetailB, saveInvoiceWithoutPay, dateNow, changeInvoiceDifDate;
-        string userH,rowIDH;
+        private string userH, rowIDH;
         public string[] creditDetail, chequeDetail, cardDetail;
-        string inID, recordIDH;
+        private string inID, recordIDH;
         public Double paidAmount, cashPaidDB, amountH, amount;
         // my Variable End
         //
         //Method
 
-
-
-
-
-        void loadInvoice()
+        private void loadInvoice()
         {
             try
             {
@@ -61,14 +53,12 @@ namespace pos
                     reader2 = new SqlCommand("select * from creditGRN where grnID='" + invoiceNO.Text + "' ", conn2).ExecuteReader();
                     if (reader2.Read())
                     {
-
                         creditDetailB = true;
                         //   MessageBox.Show("" + reader2.GetDouble(4));
                         paidAmount = paidAmount + reader2.GetDouble(4);
                     }
                     else
                     {
-
                         //  MessageBox.Show(invoiceNO.Text);
                     }
                     reader2.Close();
@@ -88,7 +78,6 @@ namespace pos
                     {
                         conn.Close();
                     }
-                   
 
                     creditAmount.Text = (paidAmount + amountH) + "";
 
@@ -108,9 +97,9 @@ namespace pos
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
                 conn.Close();
             }
-
         }
-        void saveInvoice()
+
+        private void saveInvoice()
         {
             try
             {
@@ -118,7 +107,6 @@ namespace pos
                 {
                     MessageBox.Show("Sorry , Invalied Credit Amount");
                 }
-
                 else
                 {
                     db.setCursoerWait();
@@ -131,7 +119,6 @@ namespace pos
                         conn.Open();
                         var amountD = Double.Parse(cash.Text);
 
-
                         new SqlCommand("insert into grnCreditPaid values('" + invoiceNO.Text + "','" + amountD + "','" + cash.Text + "','" + 0 + "','" + userH + "','" + DateTime.Now + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
                         conn.Close();
 
@@ -139,14 +126,12 @@ namespace pos
                         homeH.Enabled = true;
                         homeH.TopMost = true;
                         this.Dispose();
-                      //
+                        //
                     }
                     else
                     {
-
                         MessageBox.Show("Invalied GRN NO");
                         invoiceNO.Focus();
-
                     }
                     conn.Close();
                     db.setCursoerDefault();
@@ -158,16 +143,17 @@ namespace pos
                 conn.Close();
             }
         }
-        void clear()
-        {
 
+        private void clear()
+        {
             invoiceNO.Text = "";
             subTotal.Text = "0.0";
             cash.Text = "0";
             creditAmount.Text = "0.0";
             invoiceNO.Focus();
         }
-        Boolean checkTerm()
+
+        private Boolean checkTerm()
         {
             states = true;
             try
@@ -203,7 +189,6 @@ namespace pos
                             states = false;
                         }
                     }
-
                 }
                 else if (Double.Parse(cash.Text) < Double.Parse(subTotal.Text))
                 {
@@ -214,21 +199,13 @@ namespace pos
                 }
                 else
                 {
-
                     creditDetailB = false;
                     chequeDetailB = false;
                     cardDetailB = false;
                 }
-
-
-
-
-
-
             }
             catch (Exception)
             {
-
             }
 
             return states;
@@ -259,7 +236,6 @@ namespace pos
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
@@ -279,12 +255,10 @@ namespace pos
             {
                 loadInvoice();
             }
-
         }
 
         private void cash_KeyUp(object sender, KeyEventArgs e)
         {
-          
         }
 
         private void cash_KeyDown(object sender, KeyEventArgs e)
@@ -308,12 +282,10 @@ namespace pos
 
         private void pAYDETAILToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
         }
     }
 }

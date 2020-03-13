@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -16,12 +11,14 @@ namespace pos
         {
             InitializeComponent();
         }
-        DB db, db2;
-        SqlDataReader reader, reader2;
-        SqlConnection sqlconn, sqlconn2, sqlconn3;
+
+        private DB db, db2;
+        private SqlDataReader reader, reader2;
+        private SqlConnection sqlconn, sqlconn2, sqlconn3;
         public string[] idArray;
         public string company;
-        DataTable dt; DataSet ds;
+        private DataTable dt; private DataSet ds;
+
         private void cFormView_Load(object sender, EventArgs e)
         {
             this.TopMost = true;
@@ -39,16 +36,13 @@ namespace pos
             chequeNo.Text = "0";
             sqlconn.Open();
             sqlconn2.Open();
-
-
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
-        string setAmountFormat(string amount)
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -109,6 +103,7 @@ namespace pos
 
             return amount;
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == -1)
@@ -117,7 +112,6 @@ namespace pos
             }
             else
             {
-
                 try
                 {
                     db.setCursoerWait();
@@ -137,7 +131,6 @@ namespace pos
                     dt.Rows.Clear();
                     if (reader.Read())
                     {
-
                         reader2 = new SqlCommand("select * from etfFormDetail where id='" + reader.GetInt32(9) + "'order by memberNO ", sqlconn2).ExecuteReader();
                         while (reader2.Read())
                         {
@@ -145,7 +138,6 @@ namespace pos
                             //   dt.Rows.Add(reader[18], reader[15].ToString().Split(',')[0], reader[15].ToString().Split(',')[1], reader[15].ToString().Split(',')[2], reader[15].ToString().Split(',')[3], reader[16], reader[17], reader[18], "", reader[4], setAmountFormat(reader[5] + ""), setAmountFormat(reader[6] + ""), setAmountFormat(reader[7] + ""), reader[20], reader[20], reader[20], reader2[1], reader2[2], reader2[3], setAmountFormat(reader2[4] + ""), setAmountFormat(reader2[5] + ""), setAmountFormat(reader2[6] + ""), setAmountFormat(reader2[7] + ""), setAmountFormat(reader[11] + ""), setAmountFormat(reader[12] + ""), setAmountFormat(reader[13] + ""), setAmountFormat(reader[14] + ""));
                             //    dt.Rows.Add(reader[13], company.ToString().ToUpper() + ",", reader[15].ToString().Split(',')[0] + ",", reader[15].ToString().Split(',')[1] + ",", reader[15].ToString().Split(',')[2], reader[16], "", reader[17], reader[19], reader[20], dateTimePicker1.Value.ToString("d").Split('/')[2] + "/" + comboBox1.SelectedItem, setAmountFormat(reader.GetDouble(5) + ""), setAmountFormat(surcharges.Text + ""), setAmountFormat(reader.GetDouble(5) - Double.Parse(surcharges.Text) + ""), chequeNo.Text, reader[22], reader[23], reader2[1], reader2[2], reader2[3], setAmountFormat(reader2[4] + ""), setAmountFormat(reader2[5] + ""), setAmountFormat(reader2[6] + ""), setAmountFormat(reader2[7] + ""), setAmountFormat(reader.GetDouble(5) + ""), setAmountFormat(reader.GetDouble(11) + ""), setAmountFormat(reader.GetDouble(12) + ""), setAmountFormat(reader.GetDouble(13) + ""));
                             dt.Rows.Add(reader2[1], reader2[2], reader2[3]);
-
                         }
 
                         //ds.WriteXmlSchema("cForm.xml");
@@ -179,8 +171,9 @@ namespace pos
                 }
             }
         }
-        int tableID = 0;
-        Boolean check = false;
+
+        private int tableID = 0;
+        private Boolean check = false;
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -211,10 +204,8 @@ namespace pos
                     }
                     catch (Exception)
                     {
-                      
-
                         tableID = 1;
-                         reader.Close();
+                        reader.Close();
                     }
 
                     check = false;
@@ -229,17 +220,12 @@ namespace pos
                         //   MessageBox.Show("2 " + reader.GetDouble(3) / 12 + " b " + reader.GetDouble(3)+" c "+13500/12 );
                         check = true;
 
-
                         new SqlCommand("insert into etfFormDetail values ('" + tableID + "','" + reader[0].ToString().ToUpper() + "','" + reader[20] + "','" + reader[3] + "','" + reader[7] + "')", sqlconn2).ExecuteNonQuery();
-
-
                     }
                     reader.Close();
                     reader = new SqlCommand("select sum(total),count(id) from etfFormDetail where id='" + tableID + "'", sqlconn).ExecuteReader();
                     if (reader.Read())
                     {
-
-
                         if (check)
                         {
                             new SqlCommand("delete from etfForm where monthAndYearOfContribution='" + dateTimePicker1.Value.ToString("d").Split('/')[2] + "/" + comboBox1.SelectedItem + "' and company='" + company + "'", sqlconn2).ExecuteNonQuery();
@@ -253,7 +239,7 @@ namespace pos
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
         }
 
@@ -274,13 +260,11 @@ namespace pos
             if (Char.IsControl(e.KeyChar)) return;
             //if ((e.KeyChar == '.')  ) return;
 
-
             e.Handled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void otherPayments_KeyPress(object sender, KeyPressEventArgs e)
@@ -296,7 +280,6 @@ namespace pos
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
 
         private void etfView_FormClosing(object sender, FormClosingEventArgs e)

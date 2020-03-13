@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,24 +16,26 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        cusCheque pp;
-        DB db, db2;
-        string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
-        SqlConnection conn, conn2;
-        string[] idArray;
-        SqlDataReader reader, reader2;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost;
-        DataGridViewButtonColumn btn;
-        Boolean isCompany;
+        private Form formH;
+
+        private cusCheque pp;
+        private DB db, db2;
+        private string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
+        private SqlConnection conn, conn2;
+        private string[] idArray;
+        private SqlDataReader reader, reader2;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost;
+        private DataGridViewButtonColumn btn;
+        private Boolean isCompany;
         //
         //++++++ My Method Start+++
 
-        void loadUser()
+        private void loadUser()
         {
             try
             {
@@ -45,22 +43,18 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
 
                     isCompany = reader.GetBoolean(2);
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
-
 
         //
         private void stockReport_Load(object sender, EventArgs e)
@@ -75,7 +69,6 @@ namespace pos
             radioAdvancedSearch.Checked = true;
             searchALL.Checked = true;
 
-
             checkCustomer.Checked = true;
             checkBox1.Checked = true;
 
@@ -86,8 +79,6 @@ namespace pos
             loadUser();
             comboOrderBY.SelectedIndex = 0;
             comboOrderTO.SelectedIndex = 0;
-
-
 
             btn = new DataGridViewButtonColumn();
             dataGridView2.Columns.Add(btn);
@@ -113,7 +104,6 @@ namespace pos
                 reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     comName = reader.GetString(0).ToUpper();
                     comAddres = reader.GetString(1).ToUpper();
                     if (!reader.GetString(2).Equals(""))
@@ -136,7 +126,6 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
@@ -150,7 +139,6 @@ namespace pos
             {
                 //  MessageBox.Show("m");
                 arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
             }
             reader.Close();
             idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -160,8 +148,6 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -173,32 +159,26 @@ namespace pos
 
         private void checkBrand_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkCategory_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkDescription_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -216,9 +196,8 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
-
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -233,7 +212,6 @@ namespace pos
                 {
                     queary = queary + " order by a.Datetime";
                 }
-
                 else if (comboOrderBY.SelectedIndex == 1)
                 {
                     queary = queary + " order by a.invoiceID";
@@ -256,10 +234,8 @@ namespace pos
 
                     reader = new SqlCommand("select a.* from chequeInvoiceRetail as a " + queary, conn).ExecuteReader();
 
-
                     while (reader.Read())
                     {
-
                         try
                         {
                             conn2.Open();
@@ -283,14 +259,11 @@ namespace pos
                                 {
                                     dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, "1", reader[0] + "/" + reader[1]);
                                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                 }
                                 else
                                 {
                                     dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, "1", reader[0] + "/" + reader[1]);
-
                                 }
-
                             }
                             else
                             {
@@ -298,14 +271,11 @@ namespace pos
                                 {
                                     dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, "1", reader[0] + "/" + reader[1]);
                                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                 }
                                 else
                                 {
                                     dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, "1", reader[0] + "/" + reader[1]);
-
                                 }
-
                             }
                             conn2.Close();
                             //    dt.Rows.Add("1", "2", "3", "4", "5", "6", "7", "8");
@@ -321,11 +291,11 @@ namespace pos
 
                     reader = new SqlCommand("select a.* from chequeInvoiceRetail2 as a " + queary, conn).ExecuteReader();
 
-                 //   MessageBox.Show("1sas");
+                    //   MessageBox.Show("1sas");
                     while (reader.Read())
                     {
-                      //   MessageBox.Show("1");
-                       //  this.Dispose();
+                        //   MessageBox.Show("1");
+                        //  this.Dispose();
                         try
                         {
                             conn2.Open();
@@ -351,33 +321,27 @@ namespace pos
                                     //   MessageBox.Show("3");
                                     dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, reader[0], reader[1]);
                                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                 }
                                 else
                                 {
                                     //   MessageBox.Show("4");
                                     dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, reader[0], reader[1]);
-
                                 }
-
                             }
                             else
                             {
-                              //  MessageBox.Show("5");
+                                //  MessageBox.Show("5");
                                 if (states)
                                 {
                                     //  MessageBox.Show("6");
                                     dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, reader[0], reader[1]);
                                     dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                 }
                                 else
                                 {
                                     // MessageBox.Show("7");
                                     dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, reader[0], reader[1]);
-
                                 }
-
                             }
                             conn2.Close();
                             //    dt.Rows.Add("1", "2", "3", "4", "5", "6", "7", "8");
@@ -396,12 +360,10 @@ namespace pos
                     {
                         conn.Open();
 
-                        reader = new SqlCommand("select a.* from chequeInvoiceRetail as a where a.cutomerId='"+dataGridView2.Rows[i].Cells[0].Value+"'" + queary, conn).ExecuteReader();
-
+                        reader = new SqlCommand("select a.* from chequeInvoiceRetail as a where a.cutomerId='" + dataGridView2.Rows[i].Cells[0].Value + "'" + queary, conn).ExecuteReader();
 
                         while (reader.Read())
                         {
-
                             try
                             {
                                 conn2.Open();
@@ -425,14 +387,11 @@ namespace pos
                                     {
                                         dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, "1", reader[0] + "/" + reader[1]);
                                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                     }
                                     else
                                     {
                                         dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, "1", reader[0] + "/" + reader[1]);
-
                                     }
-
                                 }
                                 else
                                 {
@@ -440,14 +399,11 @@ namespace pos
                                     {
                                         dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, "1", reader[0] + "/" + reader[1]);
                                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                     }
                                     else
                                     {
                                         dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, "1", reader[0] + "/" + reader[1]);
-
                                     }
-
                                 }
                                 conn2.Close();
                                 //    dt.Rows.Add("1", "2", "3", "4", "5", "6", "7", "8");
@@ -462,7 +418,6 @@ namespace pos
                         conn.Open();
 
                         reader = new SqlCommand("select a.* from chequeInvoiceRetail2 as a where a.cutomerId='" + dataGridView2.Rows[i].Cells[0].Value + "'" + queary, conn).ExecuteReader();
-
 
                         while (reader.Read())
                         {
@@ -492,15 +447,12 @@ namespace pos
                                         //   MessageBox.Show("3");
                                         dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, reader[0], reader[1]);
                                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                     }
                                     else
                                     {
                                         //   MessageBox.Show("4");
                                         dataGridView1.Rows.Add(reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, reader[0], reader[1]);
-
                                     }
-
                                 }
                                 else
                                 {
@@ -510,15 +462,12 @@ namespace pos
                                         //  MessageBox.Show("6");
                                         dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), true, reader[0], reader[1]);
                                         dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
-
                                     }
                                     else
                                     {
                                         // MessageBox.Show("7");
                                         dataGridView1.Rows.Add(reader[1], reader.GetDateTime(6).ToShortDateString(), reader.GetDouble(4), reader[5] + "", reader[8], reader.GetDateTime(7).ToShortDateString(), false, reader[0], reader[1]);
-
                                     }
-
                                 }
                                 conn2.Close();
                                 //    dt.Rows.Add("1", "2", "3", "4", "5", "6", "7", "8");
@@ -552,17 +501,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -605,7 +551,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -622,30 +567,24 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void brandName_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -664,39 +603,31 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioDateCustom_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMin_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMax_CheckedChanged(object sender, EventArgs e)
@@ -705,24 +636,20 @@ namespace pos
 
         private void radioCustomerID_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioName_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioCompany_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customerID_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customerID.Text.Equals("")))
             {
-
                 db.setList(listBox1, customerID, customerID.Width);
 
                 try
@@ -745,7 +672,6 @@ namespace pos
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customerID.Text.Equals(""))
             {
@@ -756,28 +682,25 @@ namespace pos
 
         private void Name_KeyUp_1(object sender, KeyEventArgs e)
         {
-
         }
 
         private void company_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        string name;
-        Boolean states;
-        Point p;
+
+        private string name;
+        private Boolean states;
+        private Point p;
+
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (listBox1.SelectedIndex == 0 && e.KeyValue == 38)
             {
-
                 customerID.Focus();
-
             }
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
@@ -813,7 +736,6 @@ namespace pos
                     }
                 }
                 customerID.Text = "";
-
             }
         }
 
@@ -861,7 +783,6 @@ namespace pos
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -871,7 +792,6 @@ namespace pos
 
         private void checkInvoiceDate_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
@@ -895,14 +815,12 @@ namespace pos
                     amountCost = 0;
                     db.setCursoerWait();
 
-
                     queary = "";
 
                     if (comboOrderBY.SelectedIndex == 0)
                     {
                         queary = queary + " order by b.Date";
                     }
-
                     else if (comboOrderBY.SelectedIndex == 1)
                     {
                         queary = queary + " order by a.invoiceID";
@@ -924,16 +842,13 @@ namespace pos
                     if (isCompany)
                     {
                         reader = new SqlCommand("select a.invoiceID,b.subTotal,a.cheque,a.chequenumber,a.checkCodeNo,a.chequeDate,b.customerid from chequeInvoiceRetail as a,invoiceRetail as b where b.id=a.invoiceId and a.chequenumber='" + toolStripTextBox1.Text + "'" + queary, conn).ExecuteReader();
-
                     }
                     else
                     {
                         reader = new SqlCommand("select a.invoiceID,b.subTotal,a.cheque,a.chequenumber,a.checkCodeNo,a.chequeDate,b.customerid from chequeInvoiceRetail as a,invoiceDump as b where b.id=a.invoiceId and a.chequenumber='" + toolStripTextBox1.Text + "'" + queary, conn).ExecuteReader();
-
                     }
                     while (reader.Read())
                     {
-
                         try
                         {
                             amountCost = amountCost + reader.GetDouble(2);
@@ -943,12 +858,10 @@ namespace pos
                             {
                                 // MessageBox.Show("sa");
                                 dt.Rows.Add(reader[6], reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), "R-" + reader[0], reader.GetDouble(1), reader.GetDouble(2), reader[3] + "", reader[4], reader.GetDateTime(5).ToShortDateString());
-
                             }
                             else
                             {
                                 dt.Rows.Add(reader[6], reader[6], "R-" + reader[0], reader.GetDouble(1), reader.GetDouble(2), reader[3] + "", reader[4], reader.GetDateTime(5).ToShortDateString());
-
                             }
                             conn2.Close();
                             //    dt.Rows.Add("1", "2", "3", "4", "5", "6", "7", "8");
@@ -960,7 +873,6 @@ namespace pos
                     }
                     conn.Close();
 
-
                     ds.Tables.Add(dt);
                     //
                     // ds.WriteXmlSchema("outsThisara3.xml");
@@ -971,14 +883,11 @@ namespace pos
 
                     if (!checkBox1.Checked)
                     {
-
                         pp.SetParameterValue("period2", "ALL");
                     }
                     else
                     {
-
                         pp.SetParameterValue("period2", dateChequeFrom.Value.ToShortDateString() + " - " + dateChequeTo.Value.ToShortDateString());
-
                     }
 
                     if (dt.Rows.Count == 0)
@@ -1001,114 +910,103 @@ namespace pos
 
         private void dataGridView1_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-
             try
             {
-                 if (e.ColumnIndex == 9)
-            {
-                if (dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString().Equals("1"))
+                if (e.ColumnIndex == 9)
                 {
-                    MessageBox.Show("Sorry, This is an Invoice Genarated Cheque ..you cant modify ");
-                }
-                else
-                {
-                    if ((MessageBox.Show("Are you Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    if (dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString().Equals("1"))
                     {
-                        try
+                        MessageBox.Show("Sorry, This is an Invoice Genarated Cheque ..you cant modify ");
+                    }
+                    else
+                    {
+                        if ((MessageBox.Show("Are you Sure ?", "Confirmation",
+    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+    MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         {
-                            conn.Open();
-                            new SqlCommand("delete from  chequeInvoiceRetail2 where chequenumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and checkCodeNo='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteReader();
-                            conn.Close();
-                            conn.Open();
-                            new SqlCommand("delete from  returnCheck where chequeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and cheQueCodeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteReader();
-                            conn.Close();
-                            conn.Open();
-                            new SqlCommand("delete from  bankAccountStatment where number='" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteReader();
-                            conn.Close();
-                            conn.Open();
-                            new SqlCommand("delete from  customerStatement where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteReader();
-                            conn.Close();
-                            dataGridView1.Rows.RemoveAt(e.RowIndex);
-                            MessageBox.Show("Cheque Deleted Succefully");
-                        }
-                        catch (Exception a)
-                        {
-                            MessageBox.Show(a.Message + "/" + a.StackTrace);
+                            try
+                            {
+                                conn.Open();
+                                new SqlCommand("delete from  chequeInvoiceRetail2 where chequenumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and checkCodeNo='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteReader();
+                                conn.Close();
+                                conn.Open();
+                                new SqlCommand("delete from  returnCheck where chequeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and cheQueCodeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteReader();
+                                conn.Close();
+                                conn.Open();
+                                new SqlCommand("delete from  bankAccountStatment where number='" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteReader();
+                                conn.Close();
+                                conn.Open();
+                                new SqlCommand("delete from  customerStatement where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteReader();
+                                conn.Close();
+                                dataGridView1.Rows.RemoveAt(e.RowIndex);
+                                MessageBox.Show("Cheque Deleted Succefully");
+                            }
+                            catch (Exception a)
+                            {
+                                MessageBox.Show(a.Message + "/" + a.StackTrace);
+                            }
                         }
                     }
-
                 }
-            }
-                 else if (e.ColumnIndex == 10)
-                 {
+                else if (e.ColumnIndex == 10)
+                {
+                    {
+                        if ((MessageBox.Show("Are you Sure Mark as RETURN Selected Cheque ?", "Confirmation",
+    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
+    MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                        {
+                            conn.Open();
+                            new SqlCommand("delete from customerStatement where reason='" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[0] + "'", conn).ExecuteNonQuery();
+                            conn.Close();
 
-                     {
-                         if ((MessageBox.Show("Are you Sure Mark as RETURN Selected Cheque ?", "Confirmation",
-     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
-                         {
+                            conn.Open();
+                            new SqlCommand("delete from returnCheck where chequeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and cheQueCodeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteNonQuery();
+                            conn.Close();
+                            if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString().Equals("True"))
+                            {
+                                if (dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString().Equals("1"))
+                                {
+                                    conn.Open();
+                                    new SqlCommand("insert into customerStatement values('" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[0] + "','" + "Return Cheque Amount" + "','" + dataGridView1.Rows[e.RowIndex].Cells[2].Value + "','" + 0 + "','" + 1 + "','" + DateTime.Now + "','" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[1] + "')", conn).ExecuteNonQuery();
+                                    conn.Close();
+                                }
+                                else
+                                {
+                                    conn.Open();
+                                    new SqlCommand("update customerStatement set states='" + false + "' where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteNonQuery();
+                                    conn.Close();
+                                    //conn.Open();
+                                    //new SqlCommand("insert into customerStatement values('" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value+ "','" + "Return Cheque Amount" + "','" + dataGridView1.Rows[e.RowIndex].Cells[2].Value + "','" + 0 + "','" + 1 + "','" + DateTime.Now + "','" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() + "')", conn).ExecuteNonQuery();
+                                    //conn.Close();
+                                }
+                                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Silver;
+                                conn.Open();
+                                new SqlCommand("INSERT into returnCheck values('" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "','" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "','" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "')", conn).ExecuteNonQuery();
+                                conn.Close();
+                                conn.Open();
+                                new SqlCommand("update bankAccountStatment set isDeposit='" + false + "' where memo='" + "Cheque Payment :Cheque No-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + ",Cheque Date-" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "' and type='" + "Invoice-Pay" + "'", conn).ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            else
+                            {
+                                conn.Open();
+                                new SqlCommand("update customerStatement set states='" + true + "' where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteNonQuery();
+                                conn.Close();
+                                dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                                conn.Open();
+                                new SqlCommand("update bankAccountStatment set isDeposit='" + true + "' where memo='" + "Cheque Payment :Cheque No-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + ",Cheque Date-" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "' and type='" + "Invoice-Pay" + "'", conn).ExecuteNonQuery();
+                                conn.Close();
+                            }
 
-                             conn.Open();
-                             new SqlCommand("delete from customerStatement where reason='" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[0] + "'", conn).ExecuteNonQuery();
-                             conn.Close();
-                           
-                             conn.Open();
-                             new SqlCommand("delete from returnCheck where chequeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "' and cheQueCodeNumber='" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "'", conn).ExecuteNonQuery();
-                             conn.Close();
-                             if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString().Equals("True"))
-                             {
-                                 if (dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString().Equals("1"))
-                                 {
-                                     conn.Open();
-                                     new SqlCommand("insert into customerStatement values('" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[0] + "','" + "Return Cheque Amount" + "','" + dataGridView1.Rows[e.RowIndex].Cells[2].Value + "','" + 0 + "','" + 1 + "','" + DateTime.Now + "','" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Split('/')[1] + "')", conn).ExecuteNonQuery();
-                                     conn.Close();
-                                 }
-                                 else
-                                 {
-                                     conn.Open();
-                                     new SqlCommand("update customerStatement set states='" + false + "' where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteNonQuery();
-                                     conn.Close();
-                                     //conn.Open();
-                                     //new SqlCommand("insert into customerStatement values('" + "RETURN-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value+ "','" + "Return Cheque Amount" + "','" + dataGridView1.Rows[e.RowIndex].Cells[2].Value + "','" + 0 + "','" + 1 + "','" + DateTime.Now + "','" + dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() + "')", conn).ExecuteNonQuery();
-                                     //conn.Close();
-                                 }
-                                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Silver;
-                                 conn.Open();
-                                 new SqlCommand("INSERT into returnCheck values('" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + "','" + dataGridView1.Rows[e.RowIndex].Cells[4].Value + "','" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "')", conn).ExecuteNonQuery();
-                                 conn.Close();
-                                 conn.Open();
-                                 new SqlCommand("update bankAccountStatment set isDeposit='" + false + "' where memo='" + "Cheque Payment :Cheque No-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + ",Cheque Date-" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "' and type='"+"Invoice-Pay"+"'", conn).ExecuteNonQuery();
-                                 conn.Close();
-                             } 
-                             else
-                             {
-                                 conn.Open();
-                                 new SqlCommand("update customerStatement set states='" + true + "' where reason='" + "SETTELE-" + dataGridView1.Rows[e.RowIndex].Cells[7].Value + "'", conn).ExecuteNonQuery();
-                                 conn.Close();
-                                 dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-                                 conn.Open();
-                                 new SqlCommand("update bankAccountStatment set isDeposit='" + true + "' where memo='" + "Cheque Payment :Cheque No-" + dataGridView1.Rows[e.RowIndex].Cells[3].Value + ",Cheque Date-" + dataGridView1.Rows[e.RowIndex].Cells[1].Value + "' and type='" + "Invoice-Pay" + "'", conn).ExecuteNonQuery();
-                                 conn.Close();
-                             }
-
-
-                           
-
-
-                             MessageBox.Show("Selected CHeque Marked as a Return");
-                             
-                         }
-                     }
-                 }
+                            MessageBox.Show("Selected CHeque Marked as a Return");
+                        }
+                    }
+                }
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
         }
-
-
     }
 }

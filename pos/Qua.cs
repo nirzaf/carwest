@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -20,27 +15,30 @@ namespace pos
             home = form;
             this.user = user;
         }
+
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        ArrayList arrayList, stockList;
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private ArrayList arrayList, stockList;
         public Boolean check, checkListBox, states, item, checkStock, creditDetailB, chequeDetailB, cardDetailB, saveInvoiceWithoutPay, cashFLowAuto;
-        string user, listBoxType, cutomerID = "", invoiceNo, description, invoieNoTemp;
-        String[] idArray;
-        DataGridViewButtonColumn btn;
-        Int32 invoiceMaxNo, rowCount, no, countDB, dumpInvoice;
-        Double amount, amount2, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal, maxAmount;
+        private string user, listBoxType, cutomerID = "", invoiceNo, description, invoieNoTemp;
+        private String[] idArray;
+        private DataGridViewButtonColumn btn;
+        private Int32 invoiceMaxNo, rowCount, no, countDB, dumpInvoice;
+        private Double amount, amount2, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal, maxAmount;
         public string[] creditDetail, chequeDetail, cardDetail;
-        string brand, tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId;
-        int count;
-        string type = "";
-        Boolean loadItemCheck = false, discPrestage, isNBT, isTax;
+        private string brand, tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId;
+        private int count;
+        private string type = "";
+        private Boolean loadItemCheck = false, discPrestage, isNBT, isTax;
         public double paidAmount = 0, taxpre, nbtpre;
+
         // my Variable End
         //my Method Start++++++
-        void loadCompany()
+        private void loadCompany()
         {
             try
             {
@@ -79,7 +77,8 @@ namespace pos
                 conn.Close();
             }
         }
-        Boolean checkUser()
+
+        private Boolean checkUser()
         {
             try
             {
@@ -97,9 +96,7 @@ namespace pos
                         states = true;
                     }
                     conn.Close();
-
                 }
-
             }
             catch (Exception)
             {
@@ -108,7 +105,7 @@ namespace pos
             }
             return states;
         }
-  
+
         public Int32 checkDumpInvoice(double amount, string date, string id)
         {
             no = 0;
@@ -163,20 +160,16 @@ namespace pos
                                 }
                                 else
                                 {
-
                                     reader.Close();
                                     conn.Close();
                                     conn.Open();
                                     new SqlCommand("insert into dumpInvoiceCount values('" + date + "','" + 1 + "','" + id + "')", conn).ExecuteNonQuery();
                                     conn.Close();
                                 }
-
                             }
                             else
                             {
-
                                 no = 0;
-
                             }
 
                             reader.Close();
@@ -200,7 +193,6 @@ namespace pos
                                 }
                                 catch (Exception)
                                 {
-
                                     reader.Close();
                                     conn.Close();
                                     no = 0;
@@ -212,7 +204,6 @@ namespace pos
                                 no = 0;
                             }
                         }
-
                         else
                         {
                             no = 0;
@@ -221,11 +212,7 @@ namespace pos
                             conn.Close();
                         }
                     }
-
                 }
-
-
-
             }
             catch (Exception a)
             {
@@ -234,7 +221,6 @@ namespace pos
             }
             conn.Close();
             return no;
-
         }
 
         public Boolean loadCustomer(string id)
@@ -248,7 +234,6 @@ namespace pos
                 {
                     states = true;
                     customer.Text = "";
-
 
                     customer.AppendText(id + Environment.NewLine);
                     customer.AppendText(reader[1] + Environment.NewLine);
@@ -272,7 +257,7 @@ namespace pos
             return states;
         }
 
-        void loadInvoiceNoRetail()
+        private void loadInvoiceNoRetail()
         {
             try
             {
@@ -285,10 +270,9 @@ namespace pos
                     invoiceMaxNo = reader.GetInt32(0);
                 }
                 invoiceMaxNo++;
-                invoiceNo =  invoiceMaxNo + "";
+                invoiceNo = invoiceMaxNo + "";
                 reader.Close();
                 conn.Close();
-              
             }
             catch (Exception)
             {
@@ -298,9 +282,10 @@ namespace pos
                 conn.Close();
             }
         }
-        Double amountR;
 
-        void clear()
+        private Double amountR;
+
+        private void clear()
         {
             subTotal.Text = "0.0";
             total.Text = "0.0";
@@ -318,9 +303,9 @@ namespace pos
             tax.Text = "0";
             saleRef.SelectedIndex = -1;
         }
-        void clearSub()
-        {
 
+        private void clearSub()
+        {
             minRetailPrice.Text = "0.0";
             maxRetailPrice.Text = "0.0";
             availebleQty.Text = "0";
@@ -331,7 +316,8 @@ namespace pos
             code.Focus();
             availebleQty.Text = "0";
         }
-        void loadItem(string codeValue)
+
+        private void loadItem(string codeValue)
         {
             try
             {
@@ -346,7 +332,6 @@ namespace pos
                     description = "";
                     for (int i = 0; i < ab.Length; i++)
                     {
-
                         if (i != 0)
                         {
                             description = description + " " + ab[i];
@@ -358,7 +343,6 @@ namespace pos
 
                     discount.Focus();
                     conn.Close();
-
                 }
                 else
                 {
@@ -371,9 +355,6 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
-
-
             }
             catch (Exception a)
             {
@@ -384,7 +365,8 @@ namespace pos
                 //MessageBox.Show(a.Message);
             }
         }
-        void addToTable()
+
+        private void addToTable()
         {
             try
             {
@@ -397,16 +379,13 @@ namespace pos
                         MessageBox.Show("Sorry Stock not Available on this Item to Invoice ");
                         qty.Focus();
                     }
-
                     else if (unitPrice.Text.Equals(""))
                     {
                         MessageBox.Show("Sorry Unit Price Cannot be Emprty Or Zero");
                         unitPrice.Focus();
                     }
-
                     else
                     {
-
                         if (dataGridView1.Rows.Count == 0)
                         {
                             amount2 = (Double.Parse(unitPrice.Text) * Double.Parse(qty.Text));
@@ -419,13 +398,11 @@ namespace pos
                             else
                             {
                                 amount = ((Double.Parse(unitPrice.Text) - Double.Parse(discount.Text)) * (Double.Parse(qty.Text)));
-
                             }
 
                             dataGridView1.Rows.Add(rowCount + "", code.Text, "", description, unitPrice.Text, discount.Text, qty.Text, amount);
 
                             amount = (Double.Parse(subTotal.Text));
-
                         }
                         else
                         {
@@ -455,16 +432,13 @@ namespace pos
                                                 states = true;
                                                 qtyTemp = Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) + Double.Parse(qty.Text);
 
-
                                                 if (discPrestage)
                                                 {
                                                     amountTemp = ((Double.Parse(unitPrice.Text) - ((Double.Parse(unitPrice.Text) / 100) * Double.Parse(discount.Text))) * qtyTemp);
-
                                                 }
                                                 else
                                                 {
                                                     amountTemp = (Double.Parse(unitPrice.Text) - Double.Parse(discount.Text)) * qtyTemp;
-
                                                 }
                                                 //   amount = Double.Parse(subTotal.Text) + amountTemp;
                                                 //dataGridView1.Rows.RemoveAt(i);
@@ -477,16 +451,9 @@ namespace pos
                                                 dataGridView1.Rows[i].Cells[6].Value = qtyTemp;
 
                                                 dataGridView1.Rows[i].Cells[7].Value = amountTemp;
-
-
-
                                             }
                                         }
-
-
                                     }
-
-
                                 }
                             }
                             else
@@ -495,13 +462,10 @@ namespace pos
                                 if (discPrestage)
                                 {
                                     amount = ((Double.Parse(unitPrice.Text) - ((Double.Parse(unitPrice.Text) / 100) * Double.Parse(discount.Text))) * (Double.Parse(qty.Text)));
-
                                 }
                                 else
                                 {
                                     amount = ((Double.Parse(unitPrice.Text) - Double.Parse(discount.Text)) * (Double.Parse(qty.Text)));
-
-
                                 }
                                 dataGridView1.Rows.Add(rowCount + "", code.Text, "", description, unitPrice.Text, discount.Text, qty.Text, amount);
 
@@ -509,8 +473,6 @@ namespace pos
                                 var y = dataGridView1.RowCount;
                                 y--;
                                 dataGridView1.Rows[y].DefaultCellStyle.BackColor = Color.Azure;
-
-
                             }
                         }
 
@@ -520,7 +482,6 @@ namespace pos
                         {
                             amount = amount + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                             amount2 = amount2 + ((Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) * Double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())) - Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()));
-
                         }
                         subTotal.Text = amount + "";
                         disc.Text = amount2 + "";
@@ -529,7 +490,6 @@ namespace pos
                         nbt.Text = (Double.Parse(subTotal.Text) / 100) * nbtpre + "";
                         clearSub();
                         code.Focus();
-
                     }
                 }
                 else
@@ -538,12 +498,10 @@ namespace pos
                     if (discPrestage)
                     {
                         amount = ((Double.Parse(unitPrice.Text) - ((Double.Parse(unitPrice.Text) / 100) * Double.Parse(discount.Text))) * (Double.Parse(qty.Text)));
-
                     }
                     else
                     {
                         amount = ((Double.Parse(unitPrice.Text) - (Double.Parse(discount.Text))) * (Double.Parse(qty.Text)));
-
                     }
                     dataGridView1.Rows.Add(rowCount + "", "#", "", code.Text, unitPrice.Text, discount.Text, qty.Text, amount);
 
@@ -557,7 +515,6 @@ namespace pos
                     {
                         amount = amount + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                         amount2 = amount2 + ((Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) * Double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())) - Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()));
-
                     }
                     subTotal.Text = amount + "";
                     disc.Text = amount2 + "";
@@ -567,31 +524,25 @@ namespace pos
                     clearSub();
                     code.Focus();
                 }
-
-
             }
             catch (Exception s)
             {
                 MessageBox.Show("Please Enter Value");
-
             }
-
         }
+
         public void updateTableItem(string unitPrice, string discount, string qty, Int32 index)
         {
             if (discPrestage)
             {
                 amountTemp = ((Double.Parse(unitPrice) - ((Double.Parse(unitPrice) / 100) * Double.Parse(discount))) * Double.Parse(qty));
-
             }
             else
             {
                 amountTemp = (Double.Parse(unitPrice) - Double.Parse(discount)) * Double.Parse(qty);
-
             }  //   amount = Double.Parse(subTotal.Text) + amountTemp;
             //dataGridView1.Rows.RemoveAt(i);
             //dataGridView1.Rows.Add(code.Text, brand, description, qtyTemp, retailPrice.Text, Double.Parse(disc2.Text), amountTemp, amountTemp - (purchashingPrice * qtyTemp), purchashingPrice, 2);
-
 
             dataGridView1.Rows[index].Cells[4].Value = unitPrice;
             dataGridView1.Rows[index].Cells[5].Value = discount;
@@ -606,17 +557,15 @@ namespace pos
             {
                 amount = amount + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                 amount2 = amount2 + ((Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) * Double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())) - Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()));
-
             }
             subTotal.Text = amount + "";
             disc.Text = amount2 + "";
             total.Text = amount + amount2 + "";
             tax.Text = (Double.Parse(subTotal.Text) / 100) * taxpre + "";
             nbt.Text = (Double.Parse(subTotal.Text) / 100) * nbtpre + "";
-
-
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -625,7 +574,6 @@ namespace pos
                 if (reader.Read())
                 {
                     nEWCUSTOMERToolStripMenuItem.Enabled = reader.GetBoolean(6);
-
                 }
                 reader.Close();
                 conn.Close();
@@ -634,8 +582,8 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
+
         //   my Method End+++++++++
         private void invoiceNew_Load(object sender, EventArgs e)
         {
@@ -662,7 +610,6 @@ namespace pos
             p.X = panel2.Width - panel3.Width;
             panel3.Location = p;
 
-
             p.X = width - panel4.Width - 15;
             p.Y = height - panel4.Height - 15;
             panel4.Location = p;
@@ -681,7 +628,6 @@ namespace pos
             btn.Width = 40;
             btn.Text = "EDIT";
 
-
             btn.UseColumnTextForButtonValue = true;
 
             db = new DB();
@@ -693,7 +639,6 @@ namespace pos
             customer.CharacterCasing = CharacterCasing.Upper;
             code.CharacterCasing = CharacterCasing.Upper;
             loadUser();
-
 
             loadCompany();
             dataGridView1.Columns[5].Visible = false;
@@ -715,7 +660,6 @@ namespace pos
 
         private void quickPanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void button1_MouseHover(object sender, EventArgs e)
@@ -725,8 +669,7 @@ namespace pos
 
         private void button1_Click(object sender, EventArgs e)
         {
-              new cusomerQuick3(this).Visible = true;
-
+            new cusomerQuick3(this).Visible = true;
         }
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
@@ -736,7 +679,6 @@ namespace pos
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -754,7 +696,6 @@ namespace pos
                     amount2 = amount2 + ((Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) * Double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())) - Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()));
                     dataGridView1.Rows[i].Cells[0].Value = ++i;
                     i--;
-
                 }
                 subTotal.Text = amount + "";
 
@@ -773,7 +714,6 @@ namespace pos
 
         private void rEFRESHToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void bILLTOAREAToolStripMenuItem_Click(object sender, EventArgs e)
@@ -783,14 +723,12 @@ namespace pos
 
         private void button2_Click(object sender, EventArgs e)
         {
-
             //    new termXash(this, Double.Parse(subTotal.Text), Double.Parse(cashPaid.Text), creditDetail, chequeDetail, cardDetail, creditDetailB, chequeDetailB, cardDetailB).Visible = true;
             //     MessageBox.Show(creditDetailB+"");
         }
 
         private void term_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void pAYMENTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -804,12 +742,10 @@ namespace pos
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void code_ImeModeChanged(object sender, EventArgs e)
         {
-
         }
 
         private void code_KeyDown(object sender, KeyEventArgs e)
@@ -827,7 +763,6 @@ namespace pos
                     loadItem(code.Text);
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -844,7 +779,6 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -890,13 +824,11 @@ namespace pos
         private void unitPrice_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(code, discount, discount, e.KeyValue);
-
         }
 
         private void discount_KeyDown(object sender, KeyEventArgs e)
         {
             db.setTextBoxPath(unitPrice, qty, qty, e.KeyValue);
-
         }
 
         private void unitPrice_KeyPress(object sender, KeyPressEventArgs e)
@@ -939,17 +871,14 @@ namespace pos
 
         private void label8_Click(object sender, EventArgs e)
         {
-
         }
 
         private void availebleQty_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void panel2_MouseClick(object sender, MouseEventArgs e)
@@ -959,7 +888,6 @@ namespace pos
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (listBox1.SelectedIndex == 0 && e.KeyValue == 38)
             {
                 code.Focus();
@@ -971,12 +899,10 @@ namespace pos
                 code.SelectionLength = code.MaxLength;
                 loadItem(code.Text);
             }
-
         }
 
         private void listBox1_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void listBox1_MouseClick(object sender, MouseEventArgs e)
@@ -986,19 +912,15 @@ namespace pos
             code.Text = listBox1.SelectedItem.ToString().Split(' ')[0];
             code.SelectionLength = code.MaxLength;
             loadItem(code.Text);
-
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             code.Text = listBox1.SelectedItem.ToString().Split(' ')[0];
-
         }
 
         private void warrentyCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void warrentyCode_KeyDown(object sender, KeyEventArgs e)
@@ -1019,7 +941,6 @@ namespace pos
 
         private void cashPaid_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -1029,13 +950,10 @@ namespace pos
                 MessageBox.Show("Sorry Emprt Data for Generate Quation");
                 code.Focus();
             }
-
             else if (!checkUser())
             {
                 MessageBox.Show("Please Enter a Registerd Customer for a Credit Invoice");
-
             }
-
             else if ((MessageBox.Show("Generate Quation ?", "Confirmation",
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
@@ -1054,8 +972,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         //  profit = profit + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                     }
 
-
-
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
                         qtyTemp = Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
@@ -1063,7 +979,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         new SqlCommand("insert into quaDetail values ('" + invoieNoTemp + "','" + dataGridView1.Rows[i].Cells[1].Value + "','" + qtyTemp + "','" + dataGridView1.Rows[i].Cells[4].Value + "','" + dataGridView1.Rows[i].Cells[7].Value + "','" + dataGridView1.Rows[i].Cells[5].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "')", conn2).ExecuteNonQuery();
                         conn2.Close();
                     }
-
 
                     if (cutomerID.Equals(""))
                     {
@@ -1074,27 +989,20 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     new SqlCommand("insert into qua values('" + invoieNoTemp + "','" + cutomerID + "','" + subTotal.Text + "','" + DateTime.Now.ToShortDateString() + "','" + dateExpire.Value + "','" + disc.Text + "','" + total.Text + "','" + user + "')", conn).ExecuteNonQuery();
                     conn.Close();
 
-
-
                     if ((MessageBox.Show("Quation Succefully Generated , Do You want to Print it", "Confirmation",
          MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
          MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     {
                         // testPrint a = new testPrint();
 
-
                         //  new invoicePrint().setprintCheque("R-" + invoieNoTemp, customer.Text, term.Text, dataGridView1, subTotal.Text, cashPaid.Text, balance.Text, DateTime.Now, conn, reader, user);
-                        new invoicePrint().setprintqUATE(invoieNoTemp, customer.Text, dataGridView1, DateTime.Now, conn, reader, user,dateExpire.Value);
-
-
+                        new invoicePrint().setprintqUATE(invoieNoTemp, customer.Text, dataGridView1, DateTime.Now, conn, reader, user, dateExpire.Value);
 
                         conn.Close();
                         //  a.Visible = true;
                     }
 
                     clear();
-
-
                 }
                 catch (Exception a)
                 {
@@ -1103,7 +1011,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     conn2.Close();
                 }
                 db.setCursoerDefault();
-
             }
         }
 
@@ -1114,17 +1021,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void cashPaid_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void unitPrice_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sELECTCUSTOMERToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1135,7 +1039,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         private void eDITTERMToolStripMenuItem_Click(object sender, EventArgs e)
         {
             button2_Click(sender, e);
-
         }
 
         private void eNABLEDISABLEAUTOLOADINGITEMToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1146,7 +1049,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
             else
             {
-
                 loadItemCheck = true;
             }
         }
@@ -1159,12 +1061,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void panel4_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void cASHPAIDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void comboCompany_DropDownClosed(object sender, EventArgs e)
@@ -1176,13 +1076,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 reader = new SqlCommand("select name,istax,taxpre,isNBT,nbtPre,default from company where  name='" + comboCompany.SelectedItem.ToString() + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
-
                     isNBT = reader.GetBoolean(3);
                     isTax = reader.GetBoolean(1);
                     taxpre = reader.GetDouble(2);
                     nbtpre = reader.GetDouble(4);
-
                 }
                 conn.Close();
 
@@ -1199,12 +1096,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void saleRef_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void saleRef_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void listBox2_KeyDown(object sender, KeyEventArgs e)
@@ -1218,7 +1113,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 listBox2.Visible = false;
                 saleRef.Text = listBox2.SelectedItem.ToString();
                 saleRef.SelectionLength = saleRef.MaxLength;
-
             }
         }
 
@@ -1228,13 +1122,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
             saleRef.Text = listBox2.SelectedItem.ToString();
             saleRef.SelectionLength = saleRef.MaxLength;
-
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             saleRef.Text = listBox2.SelectedItem.ToString();
-
         }
 
         private void poNumber_KeyDown(object sender, KeyEventArgs e)
@@ -1251,17 +1143,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void saleRef_DropDownClosed(object sender, EventArgs e)
         {
-         
         }
 
         private void saleRef_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void saleRef_MouseLeave(object sender, EventArgs e)
         {
-           
         }
 
         private void saleRef_KeyDown_1(object sender, KeyEventArgs e)
@@ -1301,7 +1190,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void disc_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void disc_KeyPress(object sender, KeyPressEventArgs e)
@@ -1320,44 +1208,32 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             var sub = Double.Parse(total.Text);
             if (!disc.Text.Equals(""))
             {
-
-
-
                 if (Double.Parse(disc.Text) > (sub))
                 {
-
                     disc.Focus();
                     disc.Text = "0";
                     subTotal.Text = total.Text;
                     disc.SelectAll();
                 }
 
-
-
                 subTotal.Text = sub - (Double.Parse(disc.Text)) + "";
-
             }
             else
             {
-
-
                 disc.Text = "0";
                 subTotal.Text = total.Text;
                 disc.SelectAll();
             }
             tax.Text = (Double.Parse(subTotal.Text) / 100) * taxpre + "";
             nbt.Text = (Double.Parse(subTotal.Text) / 100) * nbtpre + "";
-
         }
 
         private void subTotal_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
     }
 }

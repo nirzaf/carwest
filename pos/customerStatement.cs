@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,21 +16,21 @@ namespace pos
             isSingle = AS;
         }
 
+        private DB db, db2;
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
 
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
+        private Double openingBalance, amount, cre, debi;
+        private string userH, cusH;
+        public bool states, loadBankBool = false, loadFixedAsset = false, loadEQUITY = false, loadLibilityBool = false, isSingle;
 
-        Double openingBalance, amount, cre, debi;
-        string userH, cusH;
-        public bool states, loadBankBool = false, loadFixedAsset = false, loadEQUITY = false, loadLibilityBool = false,isSingle;
+        private Int32 yearB, monthB;
+        private DateTime dateSearchB;
+        private DataTable dt;
+        private DataSet ds;
+        private double totalOut, amount3, amount4, amount2;
 
-        Int32 yearB, monthB;
-        DateTime dateSearchB;
-        DataTable dt;
-        DataSet ds;
-        double totalOut, amount3, amount4, amount2;
         public void loadBank(DateTime dateSearch, string cus)
         {
             comboBox1.Text = db.getMOnthName(dateSearch.Month.ToString().ToUpper());
@@ -42,7 +38,6 @@ namespace pos
             db.setCursoerWait();
             dt = new DataTable();
             ds = new DataSet();
-
 
             dt.Columns.Add("DATE", typeof(string));
             dt.Columns.Add("INVOICE", typeof(string));
@@ -66,17 +61,18 @@ namespace pos
                     if (isSingle)
                     {
                         reader2 = new SqlCommand("select sum(a.balance) from creditInvoiceRetail as a,invoiceTerm as b where a.customerid='" + cus + "' and a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date<'" + dateSearch.Year + "-" + dateSearch.Month + "-1" + " 00:00:00" + "' ", conn2).ExecuteReader();
-                    //    reader2 = new SqlCommand("select sum(a.balance) from creditInvoiceRetail as a,invoiceTerm as b where a.customerid='" + "C-" + invoiceNO.Text + "' and a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date<'" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-1" + " 00:00:00" + "' ", conn2).ExecuteReader();
-                //        MessageBox.Show("1");
+                        //    reader2 = new SqlCommand("select sum(a.balance) from creditInvoiceRetail as a,invoiceTerm as b where a.customerid='" + "C-" + invoiceNO.Text + "' and a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date<'" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-1" + " 00:00:00" + "' ", conn2).ExecuteReader();
+                        //        MessageBox.Show("1");
                     }
-                    else {
+                    else
+                    {
                         reader2 = new SqlCommand("select sum(a.balance) from creditInvoiceRetail as a,invoiceTerm as b where  a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date<'" + dateSearch.Year + "-" + dateSearch.Month + "-1" + " 00:00:00" + "' ", conn2).ExecuteReader();
-                      //  MessageBox.Show("2");
+                        //  MessageBox.Show("2");
                     }
                     if (reader2.Read())
                     {
                         amount = reader2.GetDouble(0);
-                     //   MessageBox.Show("" + amount);
+                        //   MessageBox.Show("" + amount);
                     }
                     conn2.Close();
                 }
@@ -86,7 +82,7 @@ namespace pos
                     amount = 0;
                     conn2.Close();
                 }
-              //  MessageBox.Show(dateSearch.Year + "-" + dateSearch.Month + "-1" + "A");
+                //  MessageBox.Show(dateSearch.Year + "-" + dateSearch.Month + "-1" + "A");
                 //try
                 //{
                 //    conn2.Open();
@@ -112,7 +108,7 @@ namespace pos
                 //    amount = 0;
                 //    conn2.Close();
                 //}
-              //  MessageBox.Show(amount + "B");
+                //  MessageBox.Show(amount + "B");
                 try
                 {
                     conn2.Open();
@@ -120,11 +116,10 @@ namespace pos
                     if (isSingle)
                     {
                         reader2 = new SqlCommand("select sum(amount2) from receipt where customer='" + cus + "' and date<'" + dateSearch.Year + "-" + dateSearch.Month + "-1" + "" + "' ", conn2).ExecuteReader();
-
                     }
-                    else {
+                    else
+                    {
                         reader2 = new SqlCommand("select sum(amount2) from receipt where  date<'" + dateSearch.Year + "-" + dateSearch.Month + "-1" + "" + "' ", conn2).ExecuteReader();
-
                     }
                     if (reader2.Read())
                     {
@@ -137,10 +132,10 @@ namespace pos
                     amount2 = 0;
                     conn2.Close();
                 }
-              //  MessageBox.Show(amount2 + "C");
+                //  MessageBox.Show(amount2 + "C");
                 totalOut = amount - amount2;
 
-                dt.Rows.Add("B/F", "",  "", "0","0", totalOut );
+                dt.Rows.Add("B/F", "", "", "0", "0", totalOut);
                 //MessageBox.Show(invoiceNO.Text);
                 //    var a = ;
                 for (int i = 1; i <= Int32.Parse(db.getLastDate(dateSearch.Month, dateSearch.Year)); i++)
@@ -170,17 +165,16 @@ namespace pos
                     if (isSingle)
                     {
                         reader2 = new SqlCommand("select a.* from creditInvoiceRetail as a,invoiceTerm as b where a.customerid='" + cus + "' and a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date between '" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + " 00:00:00" + "' and '" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + " 23:59:59" + "' ", conn2).ExecuteReader();
-                   
                     }
-                    else {
+                    else
+                    {
                         reader2 = new SqlCommand("select a.* from creditInvoiceRetail as a,invoiceTerm as b where  a.invoiceID=b.invoiceid and b.cheque='" + false + "' and b.card='" + false + "' and B.credit='" + true + "' and a.date between '" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + " 00:00:00" + "' and '" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + " 23:59:59" + "' ", conn2).ExecuteReader();
-                   
                     }
                     while (reader2.Read())
                     {
                         amount3 = amount3 + reader2.GetDouble(4);
                         totalOut = totalOut + reader2.GetDouble(4);
-                        dt.Rows.Add(reader2.GetDateTime(6).ToShortDateString(), "R-" + reader2[0], "CREDIT INVOICE",reader2[4] , 0.0,totalOut );
+                        dt.Rows.Add(reader2.GetDateTime(6).ToShortDateString(), "R-" + reader2[0], "CREDIT INVOICE", reader2[4], 0.0, totalOut);
                     }
                     conn2.Close();
 
@@ -189,17 +183,16 @@ namespace pos
                     if (isSingle)
                     {
                         reader2 = new SqlCommand("select * from receipt where customer='" + cus + "' and date='" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + "" + "' ", conn2).ExecuteReader();
-                 
                     }
-                    else {
+                    else
+                    {
                         reader2 = new SqlCommand("select * from receipt where  date='" + dateSearch.Year + "-" + dateSearch.Month + "-" + i + "" + "' ", conn2).ExecuteReader();
-                 
                     }
-                   while (reader2.Read())
+                    while (reader2.Read())
                     {
                         amount4 = amount4 + reader2.GetDouble(5);
                         totalOut = totalOut - reader2.GetDouble(5);
-                        dt.Rows.Add(reader2.GetDateTime(1).ToShortDateString(), reader2[0], reader2[8], 0.0, reader2[5] , totalOut);
+                        dt.Rows.Add(reader2.GetDateTime(1).ToShortDateString(), reader2[0], reader2[8], 0.0, reader2[5], totalOut);
                     }
                     conn2.Close();
                 }
@@ -209,28 +202,23 @@ namespace pos
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
 
-
             ds.Tables.Add(dt);
             cusStatement pp = new cusStatement();
             pp.SetDataSource(ds);
             if (isSingle)
             {
                 conn2.Open();
-                reader2 = new SqlCommand("select company from customer where id='"+cus+"'",conn2).ExecuteReader();
+                reader2 = new SqlCommand("select company from customer where id='" + cus + "'", conn2).ExecuteReader();
                 if (reader2.Read())
                 {
-                    pp.SetParameterValue("user", dateSearch.Year + "/" + dateSearch.Month+" [ "+reader2.GetString(0).ToUpper()+" ]");
-
+                    pp.SetParameterValue("user", dateSearch.Year + "/" + dateSearch.Month + " [ " + reader2.GetString(0).ToUpper() + " ]");
                 }
                 conn2.Close();
-               
-
             }
-            else {
-                pp.SetParameterValue("user",  dateSearch.Year + "/" + dateSearch.Month+" [ ALL CUSTOMERS ]");
-
+            else
+            {
+                pp.SetParameterValue("user", dateSearch.Year + "/" + dateSearch.Month + " [ ALL CUSTOMERS ]");
             }
-          
 
             crystalReportViewer1.ReportSource = pp;
             // MessageBox.Show("2");
@@ -238,12 +226,10 @@ namespace pos
             //new cusStateView(pp).Visible = true;
         }
 
+        private Point p;
 
-        Point p;
         private void accountList_Load(object sender, EventArgs e)
         {
-
-
             this.TopMost = true;
             this.WindowState = FormWindowState.Normal;
             //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -257,8 +243,6 @@ namespace pos
             //  dataGridView1.Columns[0].Width = dataGridView1.Width - 470;
 
             p = new Point();
-
-
 
             p = crystalReportViewer1.Location;
             //   MessageBox.Show((width - dataGridView1.Width) / 2+"");
@@ -274,7 +258,6 @@ namespace pos
             year.Format = DateTimePickerFormat.Custom;
             year.CustomFormat = "yyyy";
             //  load();
-
         }
 
         private void accountList_FormClosing(object sender, FormClosingEventArgs e)
@@ -287,12 +270,10 @@ namespace pos
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)
@@ -303,61 +284,49 @@ namespace pos
         private void dataGridView3_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             //   MessageBox.Show("a");
-
         }
 
         private void dataGridView3_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
         }
 
         private void dataGridView3_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void comboBox1_DropDownClosed(object sender, EventArgs e)
         {
             loadBank(DateTime.Parse(year.Value.Year + "/" + comboBox1.SelectedItem.ToString() + "/1"), cusH);
-
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
             //loadBank(DateTime.Parse(year.Value.Year + "/" + comboBox1.SelectedItem.ToString() + "/1"), cusH);
-
         }
 
         private void year_CloseUp(object sender, EventArgs e)
         {
             loadBank(DateTime.Parse(year.Value.Year + "/" + comboBox1.SelectedItem.ToString() + "/1"), cusH);
-
         }
 
         private void year_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
         {
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -23,16 +15,16 @@ namespace pos
         }
 
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader;
+        private DB db, db2;
 
-        Boolean states;
-        string user;
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader;
+
+        private Boolean states;
+        private string user;
 
         // my Variable End
-
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
@@ -46,9 +38,9 @@ namespace pos
             checkOpeningBalance.Checked = false;
 
             name.CharacterCasing = CharacterCasing.Upper;
-
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -64,9 +56,9 @@ namespace pos
             {
                 conn.Close();
             }
-
         }
-        void update(string id)
+
+        private void update(string id)
         {
             try
             {
@@ -86,17 +78,13 @@ namespace pos
                     conn.Open();
                     new SqlCommand("insert into accounts values('" + number.Text + "','" + name.Text + "','" + "FIXEDASSETS" + "')", conn).ExecuteNonQuery();
                     conn.Close();
-
-
                 }
                 else
                 {
-
                     conn.Close();
                     MessageBox.Show("Sorry Invalied Account Number");
                 }
                 conn.Close();
-
 
                 db.setCursoerDefault();
             }
@@ -109,13 +97,11 @@ namespace pos
             {
                 MessageBox.Show("Saved Succefully");
                 refresh(); name.Focus();
-
             }
-
         }
+
         public Boolean loadCustomer(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -123,7 +109,6 @@ namespace pos
                 reader = new SqlCommand("select * from fixedAssets where id='" + id + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     states = true;
                     number.Text = reader[0] + "";
                     name.Text = reader.GetString(1);
@@ -137,9 +122,6 @@ namespace pos
                     {
                         checkOpeningBalance.Checked = false;
                     }
-
-
-
                 }
                 else
                 {
@@ -159,15 +141,12 @@ namespace pos
             return states;
         }
 
-       
         private void itemProfile_Activated(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_Deactivate(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
@@ -208,9 +187,10 @@ namespace pos
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
-
         }
-        string subAcount;
+
+        private string subAcount;
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (name.Text.Equals(""))
@@ -237,7 +217,7 @@ namespace pos
                     //  MessageBox.Show(comboAcount.Items.Count+"");
                     db.setCursoerWait();
                     states = true;
-                   
+
                     conn.Open();
                     reader = new SqlCommand("select id from accounts where id='" + number.Text + "'", conn).ExecuteReader();
                     if (reader.Read())
@@ -252,8 +232,6 @@ namespace pos
                         conn.Open();
                         new SqlCommand("insert into fixedAssets values ('" + number.Text + "','" + name.Text + "','" + amount.Text + "','" + date.Value + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
-
 
                         conn.Open();
                         new SqlCommand("insert into accounts values('" + number.Text + "','" + name.Text + "','" + "FIXEDASSETS" + "')", conn).ExecuteNonQuery();
@@ -273,20 +251,16 @@ namespace pos
                     MessageBox.Show("Saved Succefully");
                     refresh();
                     number.Focus();
-
                 }
             }
         }
 
         //++++++ My Method Start+++
 
-
-
-        void refresh()
+        private void refresh()
         {
             try
             {
-
                 db.setTextBoxDefault(new TextBox[] { name, amount });
                 // id = "0";
                 listBox1.Visible = false;
@@ -302,17 +276,14 @@ namespace pos
         //++++++ My Method End++++
         private void code_KeyPress(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void code_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void brand_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void category_KeyUp(object sender, KeyEventArgs e)
@@ -321,28 +292,22 @@ namespace pos
 
         private void description_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void remark_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void rate_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-
         }
 
         private void code_KeyDown(object sender, KeyEventArgs e)
         {
-
-
         }
 
         private void brand_KeyDown(object sender, KeyEventArgs e)
@@ -359,7 +324,6 @@ namespace pos
 
         private void remark_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void remark_KeyDown(object sender, KeyEventArgs e)
@@ -377,7 +341,6 @@ namespace pos
 
         private void button3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void dELETECURRENTITEMToolStripMenuItem_Click(object sender, EventArgs e)
@@ -392,14 +355,12 @@ namespace pos
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 12 | e.KeyValue == 13)
             {
-
                 listBox1.Visible = false;
                 try
                 {
@@ -409,7 +370,6 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
             else if (e.KeyValue == 38)
@@ -432,31 +392,24 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
-
         }
 
         private void code_Leave(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseHover(object sender, EventArgs e)
         {
-
         }
 
         private void itemProfile_MouseClick(object sender, MouseEventArgs e)
         {
-
             listBox1.Visible = false;
-
         }
 
         private void itemProfile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-
         }
 
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -470,17 +423,14 @@ namespace pos
 
         private void codeC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void codeC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-
         }
 
         private void nameC_KeyDown(object sender, KeyEventArgs e)
@@ -489,22 +439,18 @@ namespace pos
 
         private void nameC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void companyC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void companyC_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void addressC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void mobileNumberC_KeyDown(object sender, KeyEventArgs e)
@@ -513,17 +459,14 @@ namespace pos
 
         private void landNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void faxNumberC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void emailC_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -553,7 +496,6 @@ namespace pos
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void checkChequePaymnet_CheckedChanged(object sender, EventArgs e)
@@ -587,7 +529,6 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -608,7 +549,6 @@ namespace pos
                 if (listBox1.Items.Count != 0)
                 {
                     listBox1.Visible = true;
-
                 }
                 else
                 {
@@ -625,6 +565,5 @@ namespace pos
         private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
         {
         }
-
     }
 }

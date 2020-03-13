@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -15,12 +10,12 @@ namespace pos
         public processAllDateSelect()
         {
             InitializeComponent();
-          //  MessageBox.Show("1");
+            //  MessageBox.Show("1");
         }
 
         private void processAllDateSelect_Load(object sender, EventArgs e)
         {
-            db3= new DB();
+            db3 = new DB();
             sqlconn3 = db3.createSqlConnection();
             db2 = new DB();
             sqlconn2 = db2.createSqlConnection();
@@ -30,9 +25,11 @@ namespace pos
             dateTimePicker1.CustomFormat = "yyyy";
             this.TopMost = true;
         }
-        SqlConnection sqlconn, sqlconn2,sqlconn3;
-        DB db3,db2,db;
-        SqlDataReader reader, reader2,reader3;
+
+        private SqlConnection sqlconn, sqlconn2, sqlconn3;
+        private DB db3, db2, db;
+        private SqlDataReader reader, reader2, reader3;
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex == -1)
@@ -57,7 +54,6 @@ namespace pos
                             while (reader3.Read())
                             {
                                 process(reader3[0].ToString(), comboBox1.SelectedItem.ToString(), dateTimePicker1.Value.ToString("d").Split('/')[2], true);
-
                             }
                             sqlconn3.Close();
                             // loadTimeSheet();
@@ -65,7 +61,6 @@ namespace pos
                             MessageBox.Show("Process Completed Succesfully ");
 
                             this.Dispose();
-
                         }
                         else
                         {
@@ -83,7 +78,6 @@ namespace pos
                         while (reader3.Read())
                         {
                             process(reader3[0].ToString(), comboBox1.SelectedItem.ToString(), dateTimePicker1.Value.ToString("d").Split('/')[2], true);
-
                         }
                         reader3.Close();
                         // loadTimeSheet();
@@ -91,17 +85,16 @@ namespace pos
                         MessageBox.Show("Process Completed Succesfully ");
 
                         this.Dispose();
-
                     }
                     sqlconn2.Close();
-               
                 }
                 catch (Exception a)
                 {
-                    MessageBox.Show(a.Message+"/"+a.StackTrace);
+                    MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
             }
         }
+
         public static int diffMonths(DateTime start, DateTime end)
         {
             if (start > end)
@@ -123,11 +116,13 @@ namespace pos
                     return 12 * (3 - (end.Year - start.Year)) + (12 - start.Month) + end.Month;
             }
         }
-        Boolean otEpfPay;
-        string imagePath = "", imageFullPath = "", attandanceType;
-        string[] readfromAddress;
-        double basicEpf, basicSalary2, offDayDeductValue2, absentDaysValue2, workingDaysValue2;
-        string getMOnth(string y)
+
+        private Boolean otEpfPay;
+        private string imagePath = "", imageFullPath = "", attandanceType;
+        private string[] readfromAddress;
+        private double basicEpf, basicSalary2, offDayDeductValue2, absentDaysValue2, workingDaysValue2;
+
+        private string getMOnth(string y)
         {
             string month = "";
             if (y.Equals("January"))
@@ -165,22 +160,24 @@ namespace pos
             else if (y.Equals("September"))
             {
                 month = "09";
-            } if (y.Equals("October"))
+            }
+            if (y.Equals("October"))
             {
                 month = "10";
-            } if (y.Equals("November"))
+            }
+            if (y.Equals("November"))
             {
                 month = "11";
-            } if (y.Equals("December"))
+            }
+            if (y.Equals("December"))
             {
                 month = "12";
             }
 
             return month;
-
-
         }
-        string setAmountFormat(string amount)
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -241,11 +238,12 @@ namespace pos
 
             return amount;
         }
-        double basicSalary, bankingAmount, epf, etf, epf_, otRate, otRate2, lateRate, lateRate2, offDayRate, offDayRate2, earning2;
-        string workingDaysSeconds, workingDaysSeconds2, otSeconds, otSeconds2, lateSeconds, lateSeconds2;
-        int workingDaysDB, workingDaysDB2;
-        bool otpay, otpay2, latededu, latededu2, lateBalance, lateBalance2;
-        
+
+        private double basicSalary, bankingAmount, epf, etf, epf_, otRate, otRate2, lateRate, lateRate2, offDayRate, offDayRate2, earning2;
+        private string workingDaysSeconds, workingDaysSeconds2, otSeconds, otSeconds2, lateSeconds, lateSeconds2;
+        private int workingDaysDB, workingDaysDB2;
+        private bool otpay, otpay2, latededu, latededu2, lateBalance, lateBalance2;
+
         public List<DateTime> AllDatesInAMonth(int month, int year)
         {
             var firstOftargetMonth = new DateTime(year, month, 1);
@@ -261,7 +259,8 @@ namespace pos
             return allDates;
         }
 
-        string lastDate;
+        private string lastDate;
+
         public string getLastDate(int month, int year)
         {
             var firstOftargetMonth = new DateTime(year, month, 1);
@@ -276,11 +275,11 @@ namespace pos
             lastDate = allDates[allDates.Count - 1].ToString().Split(' ')[0].ToString().Split('/')[1];
             return lastDate;
         }
+
         private void process(string id, string month, string year, bool states)
         {
             try
             {
-
                 Cursor.Current = Cursors.WaitCursor;
                 sqlconn.Open();
                 reader = new SqlCommand("select type,empID,epfBasic,bankingAmount,epf,epf12,etf from emp where empid='" + id + "'", sqlconn).ExecuteReader();
@@ -297,7 +296,6 @@ namespace pos
                 }
                 if (states)
                 {
-
                     try
                     {
                         //  MessageBox.Show("dada2");
@@ -311,7 +309,6 @@ namespace pos
                     }                 //   MessageBox.Show("hu2");
                 }
                 reader.Close();
-
 
                 //******************************************************************************************************************************
 
@@ -347,7 +344,6 @@ namespace pos
                         lateRate = Math.Round((basicSalary / (8)), 2);
                         offDayRate = basicSalary;
                         lateBalance = reader.GetBoolean(5);
-
                     }
 
                     reader.Close();
@@ -365,7 +361,6 @@ namespace pos
                 reader = new SqlCommand("select amount,installment,month,date from loan  where  empid='" + id + "'  ", sqlconn).ExecuteReader();
                 while (reader.Read())
                 {
-
                     try
                     {
                         if (((new DateTime(Int32.Parse(year), Int32.Parse(getMOnth(month)), 20) - reader.GetDateTime(3)).TotalDays) >= 0)
@@ -374,16 +369,13 @@ namespace pos
                             {
                                 loan = loan + (reader.GetDouble(0) / reader.GetInt32(1));
                                 //  MessageBox.Show(+"");
-
                             }
                         }
-
                     }
                     catch (Exception a)
                     {
                         MessageBox.Show(a.Message);
                     }
-
                 }
                 reader.Close();
 
@@ -396,15 +388,12 @@ namespace pos
                         using (sqlconn2 = new DB().createSqlConnection())
                         {
                             new SqlCommand("update timesheet set workmin='" + "00:00" + "',lateMin='" + "00:00" + "',otMin='" + "00:00" + "' where empid='" + id + "' and date='" + reader[0] + "'", sqlconn2).ExecuteNonQuery();
-
                         }
-
                     }
                     reader.Close();
                 }
                 catch (Exception a)
                 {
-
                     //  MessageBox.Show("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+a.Message);
                 }
                 reader = new SqlCommand("select count(a.empid) from dayoff as a,timesheet as b where a.empid='" + id + "' and a.date between '" + year + "-" + getMOnth(month) + "-1" + "' and '" + year + "-" + getMOnth(month) + "-" + getLastDate(Int32.Parse(getMOnth(month)), Int32.Parse(year)) + "' and b.empid='" + id + "' and b.workMin !='" + "00:00" + "' and a.date=b.date", sqlconn).ExecuteReader();
@@ -416,7 +405,6 @@ namespace pos
                 reader.Close();
 
                 {
-
                     if (attandanceType.Equals("dayBased") | attandanceType.Equals("dayBasedShift") | attandanceType.Equals("dayBasedMultiShift"))
                     {
                         //   MessageBox.Show("huuuuuuu");
@@ -457,7 +445,6 @@ namespace pos
                                     }
                                     else
                                     {
-
                                         lateL = setAmountFormat(lateRate * (Double.Parse((Int32.Parse(lateSeconds) - Int32.Parse(otSeconds)).ToString()) / (60 * 60)) + "");
                                         otSeconds = "0";
                                     }
@@ -466,9 +453,7 @@ namespace pos
                                 {
                                     //    MessageBox.Show((Double.Parse(lateSeconds) / (60 * 60)) + "");
                                     lateL = setAmountFormat(lateRate * (Double.Parse(lateSeconds) / (60 * 60)) + "");
-
                                 }
-
                             }
 
                             if (!otpay | otSeconds.Equals(""))
@@ -479,21 +464,15 @@ namespace pos
                             {
                                 //  ot.Text = setAmountFormat(Math.Round(((Double.Parse(otSeconds) / (60 * 60)) * otRate), 2) + "");
                                 otL = setAmountFormat(((Double.Parse(otSeconds) / (60 * 60)) * otRate) + "");
-
                             }
                         }
                         reader.Close();
-
                     }
                     else
                     {
-
                         reader = new SqlCommand("select count(empid) from timesheet where workMin!='" + "00:00:00" + "' and empid='" + id + "' and date between '" + year + "-" + getMOnth(month) + "-1" + "' and '" + year + "-" + getMOnth(month) + "-" + getLastDate(Int32.Parse(getMOnth(month)), Int32.Parse(year)) + "'", sqlconn).ExecuteReader();
                         if (reader.Read())
                         {
-
-
-
                             workingDaysL = reader[0].ToString();
                             if (reader.GetInt32(0) > workingDaysDB)
                             {
@@ -513,13 +492,9 @@ namespace pos
                             }
                             else
                             {
-
                                 offDayL = setAmountFormat((offDayRate * (workingDaysDB - reader.GetInt32(0))) + "");
                                 absentDaysL = (workingDaysDB - reader.GetInt32(0)) + "";
                             }
-
-
-
                         }
                         reader.Close();
                         //++++++++++++
@@ -546,7 +521,6 @@ namespace pos
                                     }
                                     else
                                     {
-
                                         lateL = setAmountFormat(lateRate * (Double.Parse((Int32.Parse(lateSeconds) - Int32.Parse(otSeconds)).ToString()) / (60 * 60)) + "");
                                         otSeconds = "0";
                                     }
@@ -555,9 +529,7 @@ namespace pos
                                 {
                                     //    MessageBox.Show((Double.Parse(lateSeconds) / (60 * 60)) + "");
                                     lateL = setAmountFormat(lateRate * (Double.Parse(lateSeconds) / (60 * 60)) + "");
-
                                 }
-
                             }
                             //   MessageBox.Show("ot ");
                             if (!otpay | otSeconds.Equals(""))
@@ -568,11 +540,9 @@ namespace pos
                             {
                                 //  ot.Text = setAmountFormat(Math.Round(((Double.Parse(otSeconds) / (60 * 60)) * otRate), 2) + "");
                                 otL = setAmountFormat(((Double.Parse(otSeconds) / (60 * 60)) * otRate) + "");
-
                             }
                         }
                         reader.Close();
-
                     }
 
                     //+++++++++++++++++++
@@ -580,22 +550,17 @@ namespace pos
                     //++++++++++++
                 }
 
-
-
                 reader = new SqlCommand("select sum(amount) from deduct  where  id='" + id + "' and month = '" + year + "/" + month + "'", sqlconn).ExecuteReader();
                 if (reader.Read())
                 {
                     if (reader[0].ToString().Equals(""))
                     {
                         advancedL = setAmountFormat("0.00");
-
                     }
                     else
                     {
                         advancedL = setAmountFormat(reader[0].ToString());
-
                     }
-
                 }
 
                 reader.Close();
@@ -603,10 +568,8 @@ namespace pos
                 reader = new SqlCommand("select sum(amount) from earning  where  id='" + id + "' and month = '" + year + "/" + month + "'", sqlconn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     //if ()
                     //{
-
                     //}
                     try
                     {
@@ -614,17 +577,11 @@ namespace pos
                     }
                     catch (Exception)
                     {
-
                         earning = 0.0;
                     }
-
-
-
                 }
 
                 reader.Close();
-
-
 
                 reader.Close();
 
@@ -639,7 +596,6 @@ namespace pos
                     {
                         fixedDeductionL = "0.00";
                     }
-
                 }
                 reader.Close();
                 reader = new SqlCommand("select sum(amount) from fixedAllownces where empid='" + id + "'", sqlconn).ExecuteReader();
@@ -653,9 +609,7 @@ namespace pos
                     {
                         fixedAllowncesL = "0.00";
                     }
-
                 }
-
 
                 reader.Close();
                 attendanceAllownce = 0;
@@ -675,38 +629,31 @@ namespace pos
 
                 new SqlCommand("insert into paysheet values('" + id + "','" + year + "/" + month + "','" + (basicSalary) + "','" + (workingDaysL) + "','" + Int32.Parse(absentDaysL) + "','" + Double.Parse(fixedAllowncesL) + "','" + (Double.Parse(otL)) + "','" + bankingAmount + "','" + Double.Parse(advancedL) + "','" + (Double.Parse(lateL)) + "','" + (Double.Parse(offDayL) + dayOffAmount) + "','" + DateTime.Now + "','" + Double.Parse(extraWorkingDayspayL) + "','" + Int32.Parse(extraWorkDaysL) + "','" + earning + "','" + meal + "','" + loan + "','" + epf + "','" + epf_ + "','" + etf + "','" + attendanceAllownce + "')", sqlconn).ExecuteNonQuery();
 
-
-
                 //  sqlconn.Close();
                 //******************************************************************************************************************************
-
 
                 //  listBox2_Click(new object, new EventArgs);
                 Cursor.Current = Cursors.Default;
                 sqlconn.Close();
-
-
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message + " / " + a.StackTrace);
             }
-
         }
 
+        private string extraWorkDaysL, extraWorkingDayspayL;
+        private Int32 workingdaysGover, count, maxOTHours, dayOffCount;
+        private TimeSpan workHours, lateMin, OtMIn, otEpfPayTime;
+        private bool sndayOT;
+        private bool states, states2;
+        private companySalary companySalary;
+        private double attendanceAllownce, offDayDeductValue = 0.0, absentDaysValue = 0.0, workingDaysValue = 0, earning, dayOffAmount, loan, advanced1, advanced2;
+        private TimeSpan workingDaysSecondsValue, otSecondsValue, lateSecondsValue;
+        private String workingDaysL, absentDaysL, fixedAllowncesL, otL, fixedDeductionL, advancedL, lateL, offDayL;
+        private string late1, late2, ot1, ot2, offDay1, offDay2, extraDay1, extraDay2, workDay1, workDay2, extraDayPay1, extraDayPay2, offDayPay1, offDayPay2;
+        private double basicSalary_, basicSalary2_, meal, balance;
 
-        string extraWorkDaysL, extraWorkingDayspayL;
-        Int32 workingdaysGover, count, maxOTHours,dayOffCount;
-        TimeSpan workHours, lateMin, OtMIn, otEpfPayTime;
-        bool sndayOT;
-        bool states, states2;
-        companySalary companySalary;
-        double attendanceAllownce, offDayDeductValue = 0.0, absentDaysValue = 0.0, workingDaysValue = 0, earning, dayOffAmount, loan, advanced1, advanced2;
-        TimeSpan workingDaysSecondsValue, otSecondsValue, lateSecondsValue;
-        String workingDaysL, absentDaysL, fixedAllowncesL, otL, fixedDeductionL, advancedL, lateL, offDayL;
-        string late1, late2, ot1, ot2, offDay1, offDay2, extraDay1, extraDay2, workDay1, workDay2, extraDayPay1, extraDayPay2, offDayPay1, offDayPay2;
-        double  basicSalary_, basicSalary2_,meal,balance;
-
-        Double otepfPayAmount, grossSalary, netSalaryLast, netSalaryAmOunt, Traveling, Meal, Bounes;
+        private Double otepfPayAmount, grossSalary, netSalaryLast, netSalaryAmOunt, Traveling, Meal, Bounes;
     }
 }

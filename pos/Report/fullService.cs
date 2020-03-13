@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,26 +15,28 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        stockReportALL pp;
-        DB db;
-        string userH, queary, userName;
-        SqlConnection conn;
-        string[] idArray;
-        SqlDataReader reader;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private stockReportALL pp;
+        private DB db;
+        private string userH, queary, userName;
+        private SqlConnection conn;
+        private string[] idArray;
+        private SqlDataReader reader;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select brand from item ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -47,7 +44,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -60,7 +56,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -73,7 +68,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -86,7 +80,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -96,10 +89,10 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
         }
-        void loadCostAll()
+
+        private void loadCostAll()
         {
             amountCost = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -121,7 +114,8 @@ namespace pos
             }
             stockValue.Text = db.setAmountFormat(amountCost + "");
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -129,7 +123,6 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     panelStockValue.Visible = reader.GetBoolean(2);
                     dataGridView1.Columns[6].Visible = reader.GetBoolean(3);
@@ -137,13 +130,11 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
 
         //
@@ -178,10 +169,8 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
             itemCode.Enabled = radioSearchByDate.Checked;
             itemCode.Focus();
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -228,7 +217,6 @@ namespace pos
 
             if (checkQty.Checked)
             {
-
                 radioMaxValue.Checked = true;
                 radioMinValue.Checked = true;
             }
@@ -261,7 +249,6 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -285,7 +272,6 @@ namespace pos
                         else
                         {
                             queary = " and brand='" + brandName.Text + "'";
-
                         }
                     }
 
@@ -298,7 +284,6 @@ namespace pos
                         else
                         {
                             queary = " and categorey='" + categoryName.Text + "'";
-
                         }
                     }
                     if (checkDescription.Checked)
@@ -310,7 +295,6 @@ namespace pos
                         else
                         {
                             queary = " and description='" + descriptionName.Text + "'";
-
                         }
                     }
 
@@ -323,12 +307,10 @@ namespace pos
                             if (radioMinValue.Checked)
                             {
                                 queary = " qty<='" + minValue.Text + "'";
-
                             }
                             else
                             {
                                 queary = " qty>='" + maxValue.Text + "'";
-
                             }
                         }
                         else
@@ -336,17 +318,13 @@ namespace pos
                             if (radioMinValue.Checked)
                             {
                                 queary = " and qty<='" + minValue.Text + "'";
-
                             }
                             else
                             {
                                 queary = " and qty>='" + maxValue.Text + "'";
-
                             }
-
                         }
                     }
-
                 }
 
                 if (!queary.Equals(""))
@@ -363,13 +341,13 @@ namespace pos
                 //    queary = queary + " desc ";
                 //}
 
-               // MessageBox.Show(queary);
+                // MessageBox.Show(queary);
                 dataGridView1.Rows.Clear();
                 conn.Open();
                 reader = new SqlCommand("select a.id,b.name,d.vehicleno from fullservice as a,customer as b,invoiceRetail as c,vehicle as d  where a.isDf='" + true + "' and a.invoiceId=c.id and c.customerID=b.id and a.invoiceId=d.vehicleno ", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    dataGridView1.Rows.Add( reader[0],reader.GetString(1).ToUpper(), reader.GetString(2).ToUpper());
+                    dataGridView1.Rows.Add(reader[0], reader.GetString(1).ToUpper(), reader.GetString(2).ToUpper());
                 }
                 conn.Close();
 
@@ -380,7 +358,7 @@ namespace pos
                 }
                 else
                 {
-                   // loadCostAll();
+                    // loadCostAll();
                     db.setCursoerDefault();
                     MessageBox.Show("Download Succesfully");
                 }
@@ -394,17 +372,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -445,7 +420,6 @@ namespace pos
                 {
                     //  dataGridView1.Rows.Add(reader.GetString(0).ToUpper(), reader[9] + " " + reader.GetString(5).ToUpper(), reader.GetString(1).ToUpper(), reader.GetString(2).ToUpper(), reader.GetString(3).ToUpper(), reader.GetString(4).ToUpper());
                     dataGridView1.Rows.Add(reader.GetString(0).ToUpper(), reader[9] + " " + reader.GetString(5).ToUpper(), reader.GetString(1).ToUpper(), reader.GetString(2).ToUpper(), reader.GetString(3).ToUpper(), db.setAmountFormat(reader[6] + ""), db.setAmountFormat(reader[7] + ""));
-
                 }
                 conn.Close();
                 loadCostAll();
@@ -464,21 +438,18 @@ namespace pos
             {
                 if (e.ColumnIndex == 5)
                 {
-                   // MessageBox.Show(e.RowIndex+"");
-                   new stockProfile(this,userH,dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible=true;
-
+                    // MessageBox.Show(e.RowIndex+"");
+                    new stockProfile(this, userH, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString()).Visible = true;
                 }
-                
             }
             catch (Exception a)
             {
-                  MessageBox.Show(a.Message);
+                MessageBox.Show(a.Message);
             }
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -511,10 +482,8 @@ namespace pos
                             if (reader.Read())
                             {
                                 dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value + " " + dataGridView1.Rows[i].Cells[3].Value + " " + dataGridView1.Rows[i].Cells[4].Value + " " + dataGridView1.Rows[i].Cells[5].Value, dataGridView1.Rows[i].Cells[3].Value, db.setAmountFormat(reader[0] + ""), db.setAmountFormat(reader.GetDouble(0) * reader.GetDouble(1) + ""));
-
                             }
                             conn.Close();
-
                         }
                         catch (Exception)
                         {
@@ -538,9 +507,7 @@ namespace pos
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
@@ -573,10 +540,8 @@ namespace pos
                             if (reader.Read())
                             {
                                 dt.Rows.Add(dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value + " " + dataGridView1.Rows[i].Cells[3].Value + " " + dataGridView1.Rows[i].Cells[4].Value + " " + dataGridView1.Rows[i].Cells[5].Value, dataGridView1.Rows[i].Cells[3].Value, db.setAmountFormat(reader[0] + ""), db.setAmountFormat(reader.GetDouble(0) * reader.GetDouble(1) + ""));
-
                             }
                             conn.Close();
-
                         }
                         catch (Exception)
                         {
@@ -601,25 +566,20 @@ namespace pos
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
             //new stockOrderHistorey(this, userH).Visible = true;
         }
-
-
     }
 }

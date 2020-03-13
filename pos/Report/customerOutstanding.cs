@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,23 +15,26 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        cusOuts pp;
-        DB db, db2;
-        string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
-        SqlConnection conn, conn2;
-        string[] idArray;
-        SqlDataReader reader, reader2;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
-        Boolean isCompany;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private cusOuts pp;
+        private DB db, db2;
+        private string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
+        private SqlConnection conn, conn2;
+        private string[] idArray;
+        private SqlDataReader reader, reader2;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
+        private Boolean isCompany;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void setTempDates(Double aH)
+        private void setTempDates(Double aH)
         {
             a = aH;
             temp030 = 0;
@@ -60,7 +58,8 @@ namespace pos
                 temp90up = balance;
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -68,13 +67,11 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     isCompany = reader.GetBoolean(2);
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
@@ -86,7 +83,6 @@ namespace pos
                 reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     comName = reader.GetString(0).ToUpper();
                     comAddres = reader.GetString(1).ToUpper();
                     if (!reader.GetString(2).Equals(""))
@@ -109,15 +105,12 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
-
 
         //
         private void stockReport_Load(object sender, EventArgs e)
@@ -139,7 +132,6 @@ namespace pos
             comboOrderTO.SelectedIndex = 0;
             ComboCreditTerm.SelectedIndex = 0;
 
-
             btn = new DataGridViewButtonColumn();
             dataGridView2.Columns.Add(btn);
             btn.Width = 60;
@@ -147,12 +139,10 @@ namespace pos
 
             btn.UseColumnTextForButtonValue = true;
 
-
             conn.Open();
             reader = new SqlCommand("select * from company ", conn).ExecuteReader();
             if (reader.Read())
             {
-
                 comName = reader.GetString(0).ToUpper();
                 comAddres = reader.GetString(1).ToUpper();
                 if (!reader.GetString(2).Equals(""))
@@ -163,7 +153,6 @@ namespace pos
                 {
                     comcontact = comcontact + "Fax : " + reader[3];
                 }
-
             }
             reader.Close();
             conn.Close();
@@ -173,8 +162,6 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -186,32 +173,26 @@ namespace pos
 
         private void checkBrand_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkCategory_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkDescription_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -229,9 +210,10 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
-        double returnAmount = 0;
+
+        private double returnAmount = 0;
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -265,7 +247,6 @@ namespace pos
                 {
                     queary = queary + " order by b.Date";
                 }
-
                 else if (comboOrderBY.SelectedIndex == 1)
                 {
                     queary = queary + " order by b.invoiceID";
@@ -285,12 +266,10 @@ namespace pos
                     if (isCompany)
                     {
                         reader = new SqlCommand("select a.invoiceID,a.balance,a.duration,b.subtotal,b.date,b.customerid from creditInvoiceRetail as a,invoiceRetail as b where b.id=a.invoiceId " + queary, conn).ExecuteReader();
-
                     }
                     else
                     {
                         reader = new SqlCommand("select a.invoiceID,a.balance,a.duration,b.subtotal,b.date,b.customerid from creditInvoiceRetail as a,invoiceDump as b where b.id=a.invoiceId " + queary, conn).ExecuteReader();
-
                     }
                     while (reader.Read())
                     {
@@ -313,7 +292,6 @@ namespace pos
                             {
                                 //  states = true;
                                 returnAmount = reader2.GetDouble(0);
-
                             }
 
                             conn2.Close();
@@ -336,7 +314,6 @@ namespace pos
                         {
                             //  MessageBox.Show(a.Message+"aq");
                             conn2.Close();
-
                         }
                         balance = reader.GetDouble(1) - amountPaid - returnAmount;
                         //     MessageBox.Show(balance+"");
@@ -353,16 +330,13 @@ namespace pos
                                     reader2 = new SqlCommand("select id,name,company from customer where id='" + reader[5] + "'", conn2).ExecuteReader();
                                     if (reader2.Read())
                                     {
-
                                         dt.Rows.Add(reader2[0].ToString().ToUpper(), reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(reader[1] + ""), db.setAmountFormat(amountPaid + ""), db.setAmountFormat(balance + ""), reader.GetDateTime(4).ToShortDateString(), reader[2], a, temp030, temp3060, temp6090, temp90up);
-
                                     }
                                     else
                                     {
                                         dt.Rows.Add(reader[5], reader[5], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(reader[1] + ""), db.setAmountFormat(amountPaid + ""), db.setAmountFormat(balance + ""), reader.GetDateTime(4).ToShortDateString(), reader[2], a, temp030, temp3060, temp6090, temp90up);
                                     }
                                     conn2.Close();
-
                                 }
                                 catch (Exception a)
                                 {
@@ -372,7 +346,6 @@ namespace pos
                                 }
                             }
                         }
-
                     }
                     conn.Close();
                 }
@@ -384,12 +357,10 @@ namespace pos
                         if (isCompany)
                         {
                             reader = new SqlCommand("select a.invoiceID,a.balance,a.duration,b.subtotal,b.date,b.customerid from creditInvoiceRetail as a,invoiceRetail as b where b.id=a.invoiceId and b.customerid='" + dataGridView2.Rows[i].Cells[0].Value + "'" + queary, conn).ExecuteReader();
-
                         }
                         else
                         {
                             reader = new SqlCommand("select a.invoiceID,a.balance,a.duration,b.subtotal,b.date,b.customerid from creditInvoiceRetail as a,invoiceDump as b where b.id=a.invoiceId and b.customerid='" + dataGridView2.Rows[i].Cells[0].Value + "'" + queary, conn).ExecuteReader();
-
                         }
                         while (reader.Read())
                         {
@@ -430,7 +401,6 @@ namespace pos
                                 {
                                     //  states = true;
                                     returnAmount = reader2.GetDouble(0);
-
                                 }
 
                                 conn2.Close();
@@ -438,9 +408,8 @@ namespace pos
                             catch (Exception)
                             {
                                 conn2.Close();
-
                             }
-                       //     balance = reader.GetDouble(1) - amountPaid;
+                            //     balance = reader.GetDouble(1) - amountPaid;
 
                             balance = reader.GetDouble(1) - amountPaid - returnAmount;
                             //     MessageBox.Show(balance+"");
@@ -458,14 +427,12 @@ namespace pos
                                         if (reader2.Read())
                                         {
                                             dt.Rows.Add(reader2[0].ToString().ToUpper(), reader2[0].ToString().ToUpper() + " " + reader2[1].ToString().ToUpper() + " " + reader2[2].ToString().ToUpper(), "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(reader[1] + ""), db.setAmountFormat(amountPaid + ""), db.setAmountFormat(balance + ""), reader.GetDateTime(4).ToShortDateString(), reader[2], a, temp030, temp3060, temp6090, temp90up);
-
                                         }
                                         else
                                         {
                                             dt.Rows.Add(reader[5], reader[5], "R-" + reader[0], db.setAmountFormat(reader[3] + ""), db.setAmountFormat(reader[1] + ""), db.setAmountFormat(amountPaid + ""), db.setAmountFormat(balance + ""), reader.GetDateTime(4).ToShortDateString(), reader[2], a, temp030, temp3060, temp6090, temp90up);
                                         }
                                         conn2.Close();
-
                                     }
                                     catch (Exception a)
                                     {
@@ -474,7 +441,6 @@ namespace pos
                                     }
                                 }
                             }
-
                         }
                         conn.Close();
                     }
@@ -488,14 +454,11 @@ namespace pos
                 pp.SetParameterValue("USER", userName);
                 if (radioAllDate.Checked)
                 {
-
                     pp.SetParameterValue("period", "ALL");
                 }
                 else
                 {
-
                     pp.SetParameterValue("period", from.Value.ToShortDateString() + " - " + to.Value.ToShortDateString());
-
                 }
                 pp.SetParameterValue("comName", comName);
                 pp.SetParameterValue("comAddress", comAddres);
@@ -524,17 +487,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -577,7 +537,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -594,30 +553,24 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void brandName_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -636,14 +589,11 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioDateCustom_CheckedChanged(object sender, EventArgs e)
@@ -654,22 +604,18 @@ namespace pos
 
         private void itemCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMin_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMax_CheckedChanged(object sender, EventArgs e)
@@ -678,24 +624,20 @@ namespace pos
 
         private void radioCustomerID_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioName_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioCompany_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customerID_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customerID.Text.Equals("")))
             {
-
                 db.setList(listBox1, customerID, customerID.Width);
 
                 try
@@ -718,7 +660,6 @@ namespace pos
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customerID.Text.Equals(""))
             {
@@ -729,28 +670,25 @@ namespace pos
 
         private void Name_KeyUp_1(object sender, KeyEventArgs e)
         {
-
         }
 
         private void company_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        string name;
-        Boolean states;
-        Point p;
+
+        private string name;
+        private Boolean states;
+        private Point p;
+
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (listBox1.SelectedIndex == 0 && e.KeyValue == 38)
             {
-
                 customerID.Focus();
-
             }
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
@@ -786,7 +724,6 @@ namespace pos
                     }
                 }
                 customerID.Text = "";
-
             }
         }
 
@@ -884,7 +821,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -901,16 +837,12 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
 
         private void customerID_TextChanged(object sender, EventArgs e)
         {
-
         }
-
-
     }
 }

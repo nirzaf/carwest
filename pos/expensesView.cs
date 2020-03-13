@@ -1,17 +1,12 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class expensesView : Form
     {
-        invoiceReportEx formh;
+        private invoiceReportEx formh;
+
         public expensesView(invoiceReportEx form)
         {
             InitializeComponent();

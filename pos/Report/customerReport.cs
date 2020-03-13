@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,26 +15,28 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        customerReportALL pp;
-        DB db;
-        string userH, queary,userName;
-        SqlConnection conn;
-        string[] idArray;
-        SqlDataReader reader;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private customerReportALL pp;
+        private DB db;
+        private string userH, queary, userName;
+        private SqlConnection conn;
+        private string[] idArray;
+        private SqlDataReader reader;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void loadAutoComplete()
+        private void loadAutoComplete()
         {
             try
             {
-
                 conn.Open();
                 reader = new SqlCommand("select brand from item ", conn).ExecuteReader();
                 arrayList = new ArrayList();
@@ -47,7 +44,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -60,7 +56,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -73,7 +68,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -86,7 +80,6 @@ namespace pos
                 {
                     // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToUpper()) + "");
-
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
@@ -96,11 +89,10 @@ namespace pos
             catch (Exception)
             {
                 conn.Close();
-
             }
         }
-       
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -108,19 +100,16 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     dataGridView1.Columns[8].Visible = reader.GetBoolean(6);
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
 
         //
@@ -148,10 +137,8 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
             itemCode.Enabled = radioSearchByDate.Checked;
             itemCode.Focus();
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -188,17 +175,14 @@ namespace pos
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-         
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-           
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-         
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -216,7 +200,6 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -240,7 +223,6 @@ namespace pos
                         else
                         {
                             queary = " and name='" + brandName.Text + "'";
-
                         }
                     }
 
@@ -253,7 +235,6 @@ namespace pos
                         else
                         {
                             queary = " and company='" + categoryName.Text + "'";
-
                         }
                     }
                     if (checkDescription.Checked)
@@ -265,11 +246,8 @@ namespace pos
                         else
                         {
                             queary = " and email='" + descriptionName.Text + "'";
-
                         }
                     }
-                   
-
                 }
 
                 if (!queary.Equals(""))
@@ -315,17 +293,14 @@ namespace pos
 
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -367,7 +342,7 @@ namespace pos
                     dataGridView1.Rows.Add(reader.GetString(0).ToUpper(), reader.GetString(1).ToUpper(), reader.GetString(2).ToUpper(), reader.GetString(3).ToUpper(), reader.GetString(4).ToUpper(), reader.GetString(5).ToUpper(), reader.GetString(6).ToUpper(), reader.GetString(7).ToUpper());
                 }
                 conn.Close();
-              
+
                 db.setCursoerDefault();
             }
             catch (Exception a)
@@ -387,19 +362,16 @@ namespace pos
                     customerProfile a = new customerProfile(this, userH);
                     a.Visible = true;
                     a.loadCustomer(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-
                 }
-               
             }
             catch (Exception a)
             {
-              //  MessageBox.Show(a.Message);
+                //  MessageBox.Show(a.Message);
             }
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -431,7 +403,7 @@ namespace pos
                     }
                     ds.Tables.Add(dt);
                     //
-                            ds.WriteXmlSchema("customerThisara.xml");
+                    ds.WriteXmlSchema("customerThisara.xml");
                     //         MessageBox.Show("a");
                     pp = new customerReportALL();
                     pp.SetDataSource(ds);
@@ -446,9 +418,7 @@ namespace pos
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
@@ -485,21 +455,18 @@ namespace pos
                     pp = new customerReportALL();
                     pp.SetDataSource(ds);
                     pp.SetParameterValue("USER", userName);
-                  //  pp.PrintToPrinter(1, false, 0, 0);
+                    //  pp.PrintToPrinter(1, false, 0, 0);
                     this.Enabled = true;
-                     new customerReportView(this,userH,pp).Visible = true;
+                    new customerReportView(this, userH, pp).Visible = true;
                     //crystalReportViewer1.ReportSource = pp;
                     db.setCursoerDefault();
-                 //   MessageBox.Show("Report Send to Print Succefully........");
+                    //   MessageBox.Show("Report Send to Print Succefully........");
                 }
                 catch (Exception a)
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
                 }
-
             }
         }
-
-
     }
 }

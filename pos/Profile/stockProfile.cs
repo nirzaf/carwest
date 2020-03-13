@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -22,15 +16,16 @@ namespace pos
         }
 
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader;
-        ArrayList arrayList;
-        Boolean check, checkListBox;
-        string user, listBoxType, idS, supplierID;
-        String[] idArray;
-        double qtyDb;
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader;
+        private ArrayList arrayList;
+        private Boolean check, checkListBox;
+        private string user, listBoxType, idS, supplierID;
+        private String[] idArray;
+        private double qtyDb;
         // my Variable End
 
         private void stockProfile_Load(object sender, EventArgs e)
@@ -43,7 +38,6 @@ namespace pos
 
             item.CharacterCasing = CharacterCasing.Upper;
 
-
             try
             {
                 //  MessageBox.Show(idS);
@@ -53,7 +47,6 @@ namespace pos
                 {
                     availbleQty.Text = reader[0] + "";
                     item.Text = reader[1] + " " + reader[2];
-
                 }
                 conn.Close();
                 companyName.Focus();
@@ -81,7 +74,6 @@ namespace pos
         //++++My Method start++++
         public void loadItem(string id)
         {
-
             try
             {
                 listBox1.Visible = false;
@@ -96,11 +88,8 @@ namespace pos
                 }
                 else
                 {
-
                     MessageBox.Show("Invalied Item Code");
                     item.Focus();
-
-
                 }
                 db.setCursoerDefault();
                 reader.Close();
@@ -111,9 +100,9 @@ namespace pos
                 conn.Close();
                 MessageBox.Show("You Have Enterd Invalied Charactores " + e.StackTrace + e.Message);
             }
-
         }
-        void plus()
+
+        private void plus()
         {
             try
             {
@@ -133,14 +122,13 @@ namespace pos
                     MessageBox.Show("Please Enter Requsted QTY");
                     requstedQty.Focus();
                 }
-                else {
-
-                    new SqlCommand("insert into stockOrder values ('"+idS+"','"+item.Text+"','"+availbleQty.Text+"','"+requstedQty.Text+"','"+cutomerID+"','"+meassge.Text+"','"+DateTime.Now+"')", conn).ExecuteNonQuery();
-                    MessageBox.Show("Meassge Sent to "+number.Text+" Succefully" );
+                else
+                {
+                    new SqlCommand("insert into stockOrder values ('" + idS + "','" + item.Text + "','" + availbleQty.Text + "','" + requstedQty.Text + "','" + cutomerID + "','" + meassge.Text + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
+                    MessageBox.Show("Meassge Sent to " + number.Text + " Succefully");
                     this.Dispose();
                 }
                 conn.Close();
-
             }
             catch (Exception a)
             {
@@ -148,9 +136,11 @@ namespace pos
                 MessageBox.Show(a.StackTrace);
             }
         }
-        Int32 tempCount;
-        double tempPrice;
-        void mins()
+
+        private Int32 tempCount;
+        private double tempPrice;
+
+        private void mins()
         {
             try
             {
@@ -159,7 +149,6 @@ namespace pos
                     MessageBox.Show("Please Enter Qty");
                     number.Focus();
                 }
-
                 else if ((MessageBox.Show("Are You Sure Less Price Detail and QTY ?", "Confirmation",
 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
@@ -178,9 +167,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     reader.Close();
                     conn.Close();
                     db.setCursoerDefault();
-
                 }
-
             }
             catch (Exception a)
             {
@@ -189,14 +176,14 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
         }
 
-
-        void refrsh()
+        private void refrsh()
         {
             item.Focus();
             MessageBox.Show("a");
             db.setTextBoxDefault(new TextBox[] { item, number, companyName });
             MessageBox.Show("a");
         }
+
         //++++My Method End+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         private void button4_Click(object sender, EventArgs e)
         {
@@ -205,7 +192,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private void purchasingPrice_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void purchasingPrice_KeyDown(object sender, KeyEventArgs e)
@@ -256,7 +242,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -372,10 +357,11 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             home.Enabled = true;
             home.TopMost = true;
         }
-        string cutomerID;
+
+        private string cutomerID;
+
         public void loadCompany(string id)
         {
-
             try
             {
                 cutomerID = "";
@@ -401,7 +387,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 MessageBox.Show(A.Message);
                 conn.Close();
             }
-
         }
 
         private void companyName_KeyDown(object sender, KeyEventArgs e)
@@ -420,7 +405,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     number.Focus();
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -437,7 +421,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
@@ -446,7 +429,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | companyName.Text.Equals("")))
             {
-
                 db.setList(listBox3, companyName, companyName.Width);
 
                 try
@@ -469,7 +451,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (companyName.Text.Equals(""))
             {
@@ -524,7 +505,5 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
         {
             new stockOrderHistorey(this, user).Visible = true;
         }
-
-
     }
 }
