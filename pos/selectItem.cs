@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class selectItem : Form
     {
-        SqlConnection conn;
-        SqlDataReader reader;
-        DB db;
-        string idH;
-        invoiceNew homeH;
+        private SqlConnection conn;
+        private SqlDataReader reader;
+        private DB db;
+        private string idH;
+        private invoiceNew homeH;
+
         public selectItem(string iD, invoiceNew home)
         {
             InitializeComponent();
@@ -27,7 +23,7 @@ namespace pos
         {
             this.TopMost = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            
+
             db = new DB();
             dataGridView1.AllowUserToAddRows = false;
             try
@@ -47,41 +43,34 @@ namespace pos
                     dataGridView1.Rows.Add(reader[0] + "", reader[1] + "", reader[2] + "");
                 }
                 conn.Close();
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
-        void save()
-        {
 
+        private void save()
+        {
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             homeH.purchashingPrice = Double.Parse(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-           // homeH.add();
+            // homeH.add();
             this.Close();
-            homeH.Enabled=true;
+            homeH.Enabled = true;
         }
 
         private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyValue==12| e.KeyValue==13)
+            if (e.KeyValue == 12 | e.KeyValue == 13)
             {
-              
             }
         }
 
         private void dataGridView1_Enter(object sender, EventArgs e)
         {
-
-
-
         }
     }
 }

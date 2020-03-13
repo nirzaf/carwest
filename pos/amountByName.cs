@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace pos
+﻿namespace pos
 {
     internal class amountByName
     {

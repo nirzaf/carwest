@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -20,23 +15,26 @@ namespace pos
             formH = home;
             userH = user;
         }
+
         //Variable
-        Form formH;
-        cusOuts pp;
-        DB db, db2;
-        string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
-        SqlConnection conn, conn2;
-        string[] idArray;
-        SqlDataReader reader, reader2;
-        DataTable dt;
-        DataSet ds;
-        ArrayList arrayList;
-        double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
-        Boolean isCompany;
-        DataGridViewButtonColumn btn;
+        private Form formH;
+
+        private cusOuts pp;
+        private DB db, db2;
+        private string userH, queary, userName, comName = "", comAddres = "", comcontact = "", comContact2 = "", comReg = "";
+        private SqlConnection conn, conn2;
+        private string[] idArray;
+        private SqlDataReader reader, reader2;
+        private DataTable dt;
+        private DataSet ds;
+        private ArrayList arrayList;
+        private double amountCost, amountPaid, balance, temp030, temp3060, temp6090, temp90up, a;
+        private Boolean isCompany;
+        private DataGridViewButtonColumn btn;
+
         //
         //++++++ My Method Start+++
-        void setTempDates(Double aH)
+        private void setTempDates(Double aH)
         {
             a = aH;
             temp030 = 0;
@@ -60,7 +58,8 @@ namespace pos
                 temp90up = balance;
             }
         }
-        void loadUser()
+
+        private void loadUser()
         {
             try
             {
@@ -68,13 +67,11 @@ namespace pos
                 reader = new SqlCommand("select * from users where username='" + userH + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     userName = reader.GetString(0).ToUpper();
                     isCompany = reader.GetBoolean(2);
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
@@ -86,7 +83,6 @@ namespace pos
                 reader = new SqlCommand("select * from company ", conn).ExecuteReader();
                 if (reader.Read())
                 {
-
                     comName = reader.GetString(0).ToUpper();
                     comAddres = reader.GetString(1).ToUpper();
                     if (!reader.GetString(2).Equals(""))
@@ -109,15 +105,12 @@ namespace pos
                 }
                 reader.Close();
                 conn.Close();
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
-
         }
-
 
         //
         private void stockReport_Load(object sender, EventArgs e)
@@ -132,14 +125,12 @@ namespace pos
             radioAdvancedSearch.Checked = true;
             radioAllItem.Checked = true;
 
-
             this.TopMost = true;
 
             loadUser();
             comboOrderBY.SelectedIndex = 0;
             comboOrderTO.SelectedIndex = 0;
             ComboCreditTerm.SelectedIndex = 0;
-
 
             btn = new DataGridViewButtonColumn();
             dataGridView2.Columns.Add(btn);
@@ -159,7 +150,6 @@ namespace pos
             reader = new SqlCommand("select * from company ", conn).ExecuteReader();
             if (reader.Read())
             {
-
                 comName = reader.GetString(0).ToUpper();
                 comAddres = reader.GetString(1).ToUpper();
                 if (!reader.GetString(2).Equals(""))
@@ -170,7 +160,6 @@ namespace pos
                 {
                     comcontact = comcontact + "Fax : " + reader[3];
                 }
-
             }
             reader.Close();
             conn.Close();
@@ -180,8 +169,6 @@ namespace pos
 
         private void radioSearchByDate_CheckedChanged(object sender, EventArgs e)
         {
-
-
         }
 
         private void radioAdvancedSearch_CheckedChanged(object sender, EventArgs e)
@@ -193,32 +180,26 @@ namespace pos
 
         private void checkBrand_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkCategory_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkDescription_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void checkQty_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMinValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMaxValue_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
@@ -236,8 +217,8 @@ namespace pos
 
         private void checkQty_CheckStateChanged(object sender, EventArgs e)
         {
-
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -249,7 +230,6 @@ namespace pos
                 {
                     queary = queary + " order by b.Date";
                 }
-
                 else if (comboOrderBY.SelectedIndex == 1)
                 {
                     queary = queary + " order by b.invoiceID";
@@ -306,7 +286,6 @@ namespace pos
                         if (reader.Read())
                         {
                             dataGridView1.Rows.Add(reader[0].ToString().ToUpper() + " " + reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper(), amountCost, amountPaid, Math.Round((amountCost - amountPaid), 2));
-
                         }
                         else
                         {
@@ -315,8 +294,6 @@ namespace pos
                         conn.Close();
                     }
                     conn2.Close();
-
-
                 }
                 else if (radioAdvancedSearch.Checked)
                 {
@@ -358,7 +335,6 @@ namespace pos
                         if (reader.Read())
                         {
                             dataGridView1.Rows.Add(reader[0].ToString().ToUpper() + " " + reader[1].ToString().ToUpper() + " " + reader[2].ToString().ToUpper(), amountCost, amountPaid, Math.Round((amountCost - amountPaid), 2));
-
                         }
                         else
                         {
@@ -382,7 +358,6 @@ namespace pos
                     MessageBox.Show("Succefully Downloaded");
                 }
 
-
                 db.setCursoerDefault();
             }
             catch (Exception a)
@@ -392,20 +367,16 @@ namespace pos
             }
         }
 
-     
         private void searchALL_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void sETTINGSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_KeyDown(object sender, KeyEventArgs e)
@@ -448,7 +419,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -465,30 +435,24 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void brandName_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void name_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void pRINTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void qUICKPRINTToolStripMenuItem_Click(object sender, EventArgs e)
@@ -510,7 +474,6 @@ namespace pos
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     dt.Rows.Add("", dataGridView1.Rows[i].Cells[0].Value, dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value, dataGridView1.Rows[i].Cells[3].Value);
-
                 }
 
                 ds.Tables.Add(dt);
@@ -539,37 +502,30 @@ namespace pos
                 conn.Close();
                 MessageBox.Show(a.Message + "/" + queary);
             }
-
         }
 
         private void pRINTPREVIEWToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioDateCustom_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void itemCode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMin_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioMax_CheckedChanged(object sender, EventArgs e)
@@ -578,24 +534,20 @@ namespace pos
 
         private void radioCustomerID_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioName_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void radioCompany_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void customerID_KeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | customerID.Text.Equals("")))
             {
-
                 db.setList(listBox1, customerID, customerID.Width);
 
                 try
@@ -618,7 +570,6 @@ namespace pos
                     // MessageBox.Show(a.Message);
                     conn.Close();
                 }
-
             }
             if (customerID.Text.Equals(""))
             {
@@ -629,28 +580,25 @@ namespace pos
 
         private void Name_KeyUp_1(object sender, KeyEventArgs e)
         {
-
         }
 
         private void company_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
-        string name;
-        Boolean states;
-        Point p;
+
+        private string name;
+        private Boolean states;
+        private Point p;
+
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (listBox1.SelectedIndex == 0 && e.KeyValue == 38)
             {
-
                 customerID.Focus();
-
             }
             else if (e.KeyValue == 12 | e.KeyValue == 13)
             {
@@ -686,7 +634,6 @@ namespace pos
                     }
                 }
                 customerID.Text = "";
-
             }
         }
 
@@ -784,7 +731,6 @@ namespace pos
                     customerID.Text = "";
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -801,33 +747,29 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
 
         private void customerID_TextChanged(object sender, EventArgs e)
         {
-
         }
-        customerStatement statmentH;
+
+        private customerStatement statmentH;
+
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                 statmentH = new customerStatement(this, userH,true);
+                statmentH = new customerStatement(this, userH, true);
                 statmentH.Visible = true;
                 statmentH.loadBank(DateTime.Now, dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString().Split(' ')[0].ToString());
                 statmentH.Text = "STATEMENT OF " + dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString() + " ABOVE " + DateTime.Now.Year + "/" + db.getMOnthName(DateTime.Now.Month.ToString()).ToUpper();
-
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
             }
-        
         }
-
-
     }
 }

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -17,13 +13,15 @@ namespace pos
             homeH = home;
             userH = user;
         }
-        DB db, db2;
-        Form homeH;
-        string userH;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
-        DataGridViewTextBoxColumn btn;
-        Int32 count;
+
+        private DB db, db2;
+        private Form homeH;
+        private string userH;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+        private DataGridViewTextBoxColumn btn;
+        private Int32 count;
+
         private void timeSheet_Load(object sender, EventArgs e)
         {
             db = new DB();
@@ -37,13 +35,10 @@ namespace pos
             {
                 // MessageBox.Show(db.getMOnthName(DateTime.Now.Month.ToString()));
 
-
                 comboBox1.SelectedItem = db.getMOnthName(DateTime.Now.Month.ToString());
                 this.TopMost = true;
                 year.Format = DateTimePickerFormat.Custom;
                 year.CustomFormat = "yyyy";
-
-
 
                 load();
             }
@@ -52,12 +47,10 @@ namespace pos
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
             // btn.UseColumnTextForButtonValue = true;
-
-
         }
-        void load()
-        {
 
+        private void load()
+        {
             try
             {
                 dataGridView1.Rows.Clear();
@@ -94,7 +87,6 @@ namespace pos
                         count = 0;
                         for (int i = 1; i <= Int32.Parse(db.getLastDate(Int32.Parse(db.getMOnth(comboBox1.SelectedItem.ToString())), year.Value.Year)); i++)
                         {
-
                             conn2.Open();
                             reader2 = new SqlCommand("select inTime,OutTime from Timesheet where id='" + reader[0] + "' and date='" + year.Value.Year + "-" + db.getMOnth(comboBox1.SelectedItem.ToString()) + "-" + i + "'", conn2).ExecuteReader();
                             if (reader2.Read())
@@ -103,7 +95,6 @@ namespace pos
                                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[count].Value = reader2.GetTimeSpan(0).ToString().Split(':')[0] + ":" + reader2.GetTimeSpan(0).ToString().Split(':')[1];
                                 count++;
                                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[count].Value = reader2.GetTimeSpan(1).ToString().Split(':')[0] + ":" + reader2.GetTimeSpan(1).ToString().Split(':')[1];
-
                             }
                             else
                             {
@@ -111,7 +102,6 @@ namespace pos
                                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[count].Value = "00:00";
                                 count++;
                                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[count].Value = "00:00";
-
                             }
                             conn2.Close();
                         }
@@ -123,12 +113,9 @@ namespace pos
                     }
                 }
                 conn.Close();
-
-
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -138,14 +125,16 @@ namespace pos
             homeH.Enabled = true;
             homeH.TopMost = true;
         }
-        bool check;
-        bool checkCell()
+
+        private bool check;
+
+        private bool checkCell()
         {
             check = true;
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-               // MessageBox.Show("1");
+                // MessageBox.Show("1");
                 if (check)
                 {
                     count = 0;
@@ -157,7 +146,7 @@ namespace pos
                             {
                                 count++;
                                 conn.Open();
-                                new SqlCommand("delete from testCell",conn).ExecuteNonQuery();
+                                new SqlCommand("delete from testCell", conn).ExecuteNonQuery();
                                 conn.Close();
 
                                 conn.Open();
@@ -166,7 +155,7 @@ namespace pos
                             }
                             catch (Exception a)
                             {
-                               // MessageBox.Show(a.Message);
+                                // MessageBox.Show(a.Message);
                                 check = false;
                                 conn.Close();
                                 dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Red;
@@ -178,27 +167,30 @@ namespace pos
 
             return check;
         }
-        Int32 present;
-        Int32 getPresent(string inTime, string outTime) {
+
+        private Int32 present;
+
+        private Int32 getPresent(string inTime, string outTime)
+        {
             try
             {
-                present=1;
-                if (TimeSpan.Parse(inTime).Seconds==0 | TimeSpan.Parse(outTime).Seconds==0 )
+                present = 1;
+                if (TimeSpan.Parse(inTime).Seconds == 0 | TimeSpan.Parse(outTime).Seconds == 0)
                 {
-                    present=0;
+                    present = 0;
                 }
-                if (TimeSpan.Parse(inTime).Seconds>TimeSpan.Parse(outTime).Seconds)
+                if (TimeSpan.Parse(inTime).Seconds > TimeSpan.Parse(outTime).Seconds)
                 {
-                    present=0;
+                    present = 0;
                 }
             }
             catch (Exception)
             {
                 present = 0;
-
             }
             return present;
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -224,10 +216,8 @@ namespace pos
                                         var a = dataGridView1.Rows[i].Cells[count].Value;
                                         count++;
                                         var b = dataGridView1.Rows[i].Cells[count].Value;
-                                        new SqlCommand("update timesheet set inTime='" + a + "',outtime='"+b+"',day='"+getPresent(a+"",b+"")+"' where id='" + dataGridView1.Rows[i].Cells[0].Value.ToString().Split(' ')[0] + "' and date='" + year.Value.Year + "-" + db.getMOnth(comboBox1.SelectedItem.ToString()) + "-" + x + "' ", conn).ExecuteNonQuery();
+                                        new SqlCommand("update timesheet set inTime='" + a + "',outtime='" + b + "',day='" + getPresent(a + "", b + "") + "' where id='" + dataGridView1.Rows[i].Cells[0].Value.ToString().Split(' ')[0] + "' and date='" + year.Value.Year + "-" + db.getMOnth(comboBox1.SelectedItem.ToString()) + "-" + x + "' ", conn).ExecuteNonQuery();
                                         conn.Close();
-
-                                       
                                     }
                                     else
                                     {
@@ -240,11 +230,8 @@ namespace pos
                                         var b = dataGridView1.Rows[i].Cells[count].Value;
                                         new SqlCommand("insert into timesheet values('" + dataGridView1.Rows[i].Cells[0].Value.ToString().Split(' ')[0] + "','" + year.Value.Year + "-" + db.getMOnth(comboBox1.SelectedItem.ToString()) + "-" + x + "','" + a + "','" + b + "','" + getPresent(a + "", b + "") + "')", conn).ExecuteNonQuery();
                                         conn.Close();
-
                                     }
                                     conn.Close();
-
-
                                 }
                                 catch (Exception a)
                                 {
@@ -254,23 +241,21 @@ namespace pos
                         }
                         MessageBox.Show("Saved Succefully");
                         load();
-
                     }
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Sorry, you Have Enterd Invalied Time");
                 }
             }
             catch (Exception)
             {
-
                 //  throw;
             }
         }
 
         private void comboBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
         }
 
         private void comboBox1_KeyDown(object sender, KeyEventArgs e)

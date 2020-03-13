@@ -1,34 +1,29 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class salary : Form
     {
-        DB db, db2, db3, db4;
-        SqlDataReader reader, reader2, reader3, reader4;
-        SqlConnection sqlconn, sqlconn2, sqlconn3, sqlconn4;
-        DataSet dataSet;
-        double absentDaysValue;
-        string imagePath = "", imageFullPath = "", attandanceType,userH;
-        string[] readfromAddress;
-        SqlDataAdapter dataAdapter;
+        private DB db, db2, db3, db4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private SqlConnection sqlconn, sqlconn2, sqlconn3, sqlconn4;
+        private DataSet dataSet;
+        private double absentDaysValue;
+        private string imagePath = "", imageFullPath = "", attandanceType, userH;
+        private string[] readfromAddress;
+        private SqlDataAdapter dataAdapter;
+
         public salary(string user)
         {
             InitializeComponent();
 
             deduction_advancedtable.Refresh();
             userH = user;
-
         }
 
         private void salary_Load(object sender, EventArgs e)
@@ -43,7 +38,6 @@ namespace pos
             newAmountMeal.Text = "0.0";
             this.deduction_advancedtable.AllowUserToAddRows = false;
             this.timesheetTable.AllowUserToAddRows = false;
-
 
             ComboBoxYear.Format = DateTimePickerFormat.Custom;
             ComboBoxYear.CustomFormat = "yyyy";
@@ -74,7 +68,6 @@ namespace pos
                     comboBoxEmployeeList.Items.Add(reader.GetInt32(0) + "-" + reader.GetString(1).ToUpper());
                 }
                 sqlconn.Close();
-
             }
             catch (Exception abc)
             {
@@ -88,7 +81,6 @@ namespace pos
 
         private void searchEmployee_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -111,7 +103,6 @@ namespace pos
             }
             else if (radioButtonAdvanced.Checked)
             {
-
                 deduction_advancedtable.Rows.Add("Advanced", reson.Text, amounde.Text, Convert.ToDateTime(dateTimePicker1.Value).ToString("dd-MM-yyyy"));
                 radioButtonDeduction.Checked = true;
                 reson.Text = "";
@@ -126,17 +117,14 @@ namespace pos
                 amounde.Text = "";
                 dateTimePicker1.Value = DateTime.Now;
             }
-
             else
             {
                 MessageBox.Show("Please Select type as Deduction or Advanced");
             }
-
         }
 
         private void amounde_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void amounde_KeyPress(object sender, KeyPressEventArgs e)
@@ -152,7 +140,6 @@ namespace pos
 
         private void deduction_advancedtable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void deduction_advancedtable_DoubleClick(object sender, EventArgs e)
@@ -175,7 +162,6 @@ namespace pos
             //}
             //catch (Exception)
             //{
-
             //    MessageBox.Show("Sorry , You havnet selected any Row to Update");
             //}
         }
@@ -193,7 +179,6 @@ namespace pos
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Sorry , You havnet selected any Row to Delete");
             }
         }
@@ -206,12 +191,10 @@ namespace pos
                 {
                     MessageBox.Show("Please Select Employee");
                 }
-
                 else if ((MessageBox.Show("Are you Sure Save these Deduct Values for Select User", "Confirmation",
     MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
-
                     sqlconn.Open();
                     new SqlCommand("delete from deduct where month='" + ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem + "' and id='" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "'", sqlconn).ExecuteNonQuery();
                     for (int i = 0; i < deduction_advancedtable.RowCount; i++)
@@ -222,10 +205,7 @@ namespace pos
                     sqlconn.Close();
                     MessageBox.Show("Succefully Upated Deduct values");
                     listBox2_Click(sender, e);
-
-
                 }
-
             }
             catch (Exception abc)
             {
@@ -234,18 +214,17 @@ namespace pos
             }
         }
 
-
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
-
-
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show(ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem);
         }
-        Int32 annual = 0, casual = 0, leave = 0;
+
+        private Int32 annual = 0, casual = 0, leave = 0;
+
         private void listBox2_Click(object sender, EventArgs e)
         {
             leave = 0;
@@ -254,7 +233,6 @@ namespace pos
             {
                 db = new DB();
                 Cursor.Current = Cursors.WaitCursor;
-
 
                 if (comboBoxEmployeeList.SelectedIndex == -1)
                 {
@@ -265,20 +243,11 @@ namespace pos
                 {
                     if (listBox2.SelectedIndex != -1)
                     {
-
                         loadTimeSheet();
                         MessageBox.Show("User History Downloaded");
                     }
                     Cursor.Current = Cursors.Default;
-
                 }
-
-
-
-
-
-
-
             }
             catch (Exception abc)
             {
@@ -286,17 +255,16 @@ namespace pos
                 MessageBox.Show("Error. Please Dont contunie, Conatct Administartor" + abc.StackTrace);
             }
         }
-        double workingDaysValue = 0;
 
-        double epfV, epfV_, etfV;
-        void getDateList(string empId, string month, string year, bool oneToEnd, bool pastToPresent)
+        private double workingDaysValue = 0;
+
+        private double epfV, epfV_, etfV;
+
+        private void getDateList(string empId, string month, string year, bool oneToEnd, bool pastToPresent)
         {
-
             try
             {
-
                 dateList = new ArrayList();
-
 
                 if (oneToEnd)
                 {
@@ -327,14 +295,14 @@ namespace pos
                 sqlconn.Close();
             }
         }
-        bool pastToPresent, oneToEnd;
-        int tempMonth;
-        string empid;
-        ArrayList dateList;
+
+        private bool pastToPresent, oneToEnd;
+        private int tempMonth;
+        private string empid;
+        private ArrayList dateList;
+
         private void loadTimeSheet()
         {
-
-
             sqlconn.Open();
             reader = new SqlCommand("select * from deduct where month='" + ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem + "' and id='" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "' ", sqlconn).ExecuteReader();
             deduction_advancedtable.Rows.Clear();
@@ -344,9 +312,6 @@ namespace pos
             }
             sqlconn.Close();
 
-
-
-
             sqlconn.Open();
             reader = new SqlCommand("select * from earning where month='" + ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem + "' and id='" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "' ", sqlconn).ExecuteReader();
             earningTable.Rows.Clear();
@@ -355,7 +320,6 @@ namespace pos
                 earningTable.Rows.Add(reader[1], reader[2], Convert.ToDateTime(reader.GetDateTime(4)).ToString("dd-MM-yyyy"));
             }
             sqlconn.Close();
-
 
             sqlconn.Open();
             reader = new SqlCommand("select epfBasic,type from emp where  empid='" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "' ", sqlconn).ExecuteReader();
@@ -391,18 +355,9 @@ namespace pos
                 else
                 {
                     timesheetTable.Rows.Add(dateList[i] + " " + DateTime.Parse(dateList[i] + "").DayOfWeek, false);
-
                 }
                 sqlconn.Close();
             }
-
-
-
-
-
-
-
-
 
             basic.Text = "";
             workingDays.Text = "";
@@ -446,16 +401,12 @@ namespace pos
                 epf_12.Text = reader.GetDouble(19) + "";
 
                 etf_3.Text = reader.GetDouble(20) + "";
-
-
-
             }
             sqlconn.Close();
 
             dataGridView1.Rows.Clear();
             var year = ComboBoxYear.Value.ToString("d").ToString().Split('/')[2];
             var month = listBox2.SelectedItem.ToString();
-
 
             sqlconn.Open();
             reader = new SqlCommand("select balance from empPay where empid='" + empid + "' and resaon='" + "B/F Balance" + "' and date between '" + dateList[0] + "' and '" + dateList[dateList.Count - 1] + "'", sqlconn).ExecuteReader();
@@ -472,13 +423,13 @@ namespace pos
             {
                 balancePay = balancePay + (reader.GetDouble(3)) - reader.GetDouble(4);
                 dataGridView1.Rows.Add(reader[2], setAmountFormat(reader[3] + ""), setAmountFormat(reader[4] + ""), setAmountFormat(balancePay + ""));
-
             }
             sqlconn.Close();
-
         }
-        double balancePay;
-        string setAmountFormat(string amount)
+
+        private double balancePay;
+
+        private string setAmountFormat(string amount)
         {
             string amountI = (int)Double.Parse(amount) + "";
 
@@ -539,11 +490,13 @@ namespace pos
 
             return amount;
         }
-        double basicSalary, otRate, otRate2, lateRate, lateRate2, offDayRate, offDayRate2;
-        string workingDaysSeconds, workingDaysSeconds2, otSeconds, otSeconds2, lateSeconds, lateSeconds2;
-        int workingDaysDB, workingDaysDB2;
-        bool otpay, otpay2, latededu, latededu2, lateBalance, lateBalance2;
-        void clearValue()
+
+        private double basicSalary, otRate, otRate2, lateRate, lateRate2, offDayRate, offDayRate2;
+        private string workingDaysSeconds, workingDaysSeconds2, otSeconds, otSeconds2, lateSeconds, lateSeconds2;
+        private int workingDaysDB, workingDaysDB2;
+        private bool otpay, otpay2, latededu, latededu2, lateBalance, lateBalance2;
+
+        private void clearValue()
         {
             mealValue.Text = "";
             nm.Text = "0.0";
@@ -579,8 +532,8 @@ namespace pos
             amounde.Text = "";
             dateTimePicker1.Value = DateTime.Now;
             timesheetTable.Rows.Clear();
-
         }
+
         public List<DateTime> AllDatesInAMonth(int month, int year)
         {
             var firstOftargetMonth = new DateTime(year, month, 1);
@@ -598,7 +551,6 @@ namespace pos
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void comboBoxEmployeeList_DropDown(object sender, EventArgs e)
@@ -608,37 +560,30 @@ namespace pos
 
         private void tabControl1_TabIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_TabStopChanged(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_ControlAdded(object sender, ControlEventArgs e)
         {
-
         }
 
         private void tabControl1_ChangeUICues(object sender, UICuesEventArgs e)
         {
-
         }
 
         private void tabControl1_DockChanged(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -666,21 +611,24 @@ namespace pos
 
         private void timesheetTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
-        ArrayList dates = new ArrayList();
+
+        private ArrayList dates = new ArrayList();
+
         private void button4_Click_1(object sender, EventArgs e)
         {
-
         }
-        string a = "b";
+
+        private string a = "b";
+
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
-        bool states, states2;
-        companySalary companySalary;
-        bool checkTimesheetValue(string time)
+
+        private bool states, states2;
+        private companySalary companySalary;
+
+        private bool checkTimesheetValue(string time)
         {
             db = new DB();
             sqlconn2 = db.createSqlConnection();
@@ -719,13 +667,10 @@ namespace pos
             //MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             //MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             //            {
-
-
             //                sqlconn.Open();
             //                reader = new SqlCommand("select * from paysheet where month='" + ComboBoxYear.Value.ToString("d").Split('/')[2] + "/" + listBox2.SelectedItem.ToString() + "'", sqlconn).ExecuteReader();
             //                if (reader.Read())
             //                {
-
             //                    sqlconn.Close();
             //                    process(comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0].ToString(), listBox2.SelectedItem.ToString(), ComboBoxYear.Value.ToString("d").Split('/')[2], true);
             //                    loadTimeSheet();
@@ -753,7 +698,8 @@ namespace pos
             //            MessageBox.Show(ass.StackTrace + "12 " + ass.Message);
             //        }
         }
-        string getMOnth(string y)
+
+        private string getMOnth(string y)
         {
             string month = "";
             if (y.Equals("January"))
@@ -791,23 +737,25 @@ namespace pos
             else if (y.Equals("September"))
             {
                 month = "09";
-            } if (y.Equals("October"))
+            }
+            if (y.Equals("October"))
             {
                 month = "10";
-            } if (y.Equals("November"))
+            }
+            if (y.Equals("November"))
             {
                 month = "11";
-            } if (y.Equals("December"))
+            }
+            if (y.Equals("December"))
             {
                 month = "12";
             }
 
             return month;
-
-
         }
 
-        string lastDate;
+        private string lastDate;
+
         public string getLastDate(int month, int year)
         {
             var firstOftargetMonth = new DateTime(year, month, 1);
@@ -822,6 +770,7 @@ namespace pos
             lastDate = allDates[allDates.Count - 1].ToString().Split(' ')[0].ToString().Split('/')[1];
             return lastDate;
         }
+
         private void button6_Click(object sender, EventArgs e)
         {
             //        try
@@ -838,9 +787,6 @@ namespace pos
             //MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             //MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             //            {
-
-
-
             //                process(comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0].ToString(), listBox2.SelectedItem.ToString(), ComboBoxYear.Value.ToString("d").Split('/')[2], true);
             //                loadTimeSheet();
 
@@ -854,21 +800,20 @@ namespace pos
             //        }
         }
 
-        String workingDaysL, absentDaysL, fixedAllowncesL, otL, fixedDeductionL, advancedL, lateL, offDayL;
+        private String workingDaysL, absentDaysL, fixedAllowncesL, otL, fixedDeductionL, advancedL, lateL, offDayL;
+
         private void listBox2_DoubleClick(object sender, EventArgs e)
         {
-
         }
 
         private void tabPage5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label19_Click(object sender, EventArgs e)
         {
-
         }
+
         public static int diffMonths(DateTime start, DateTime end)
         {
             if (start > end)
@@ -890,56 +835,50 @@ namespace pos
                     return 12 * (3 - (end.Year - start.Year)) + (12 - start.Month) + end.Month;
             }
         }
-        Int32 dayOffCount;
-        double basicEpf, bankingAmount, epf, etf, epf_, basicSalary2, advanced1, advanced2, basicSalary_, basicSalary2_, loan, offDayDeductValue2, absentDaysValue2, workingDaysValue2, earning, earning2, meal, dayOff, dayOffAmount;
-        Boolean otEpfPay;
-        string late1, late2, ot1, ot2, offDay1, offDay2, extraDay1, extraDay2, workDay1, workDay2, extraDayPay1, extraDayPay2, offDayPay1, offDayPay2;
 
+        private Int32 dayOffCount;
+        private double basicEpf, bankingAmount, epf, etf, epf_, basicSalary2, advanced1, advanced2, basicSalary_, basicSalary2_, loan, offDayDeductValue2, absentDaysValue2, workingDaysValue2, earning, earning2, meal, dayOff, dayOffAmount;
+        private Boolean otEpfPay;
+        private string late1, late2, ot1, ot2, offDay1, offDay2, extraDay1, extraDay2, workDay1, workDay2, extraDayPay1, extraDayPay2, offDayPay1, offDayPay2;
 
-        Int32 workingdaysGover, count, maxOTHours;
-        TimeSpan workHours, lateMin, OtMIn, otEpfPayTime;
-        bool sndayOT;
-        Double otepfPayAmount, grossSalary, totalDedution, netSalaryAmOunt, salaryForepf, Meal, Bounes, balance, attendanceAllownce;
+        private Int32 workingdaysGover, count, maxOTHours;
+        private TimeSpan workHours, lateMin, OtMIn, otEpfPayTime;
+        private bool sndayOT;
+        private Double otepfPayAmount, grossSalary, totalDedution, netSalaryAmOunt, salaryForepf, Meal, Bounes, balance, attendanceAllownce;
 
         private void label19_Click_1(object sender, EventArgs e)
         {
-
         }
-        string extraWorkDaysL, extraWorkingDayspayL;
+
+        private string extraWorkDaysL, extraWorkingDayspayL;
+
         private void panel8_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-
             // MessageBox.Show( + "");
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button5_Click_1(object sender, EventArgs e)
@@ -951,9 +890,7 @@ namespace pos
     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
                     new processAllDateSelect().Show();
-
                 }
-
             }
             catch (Exception ass)
             {
@@ -969,19 +906,17 @@ namespace pos
     MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 {
-
                     new processAllDateSelect().Show();
-
-
                 }
-
             }
             catch (Exception ass)
             {
                 MessageBox.Show("Please Select MOnths " + ass.Message + "/" + ass.StackTrace);
             }
         }
-        string[] id;
+
+        private string[] id;
+
         private void button3_Click_1(object sender, EventArgs e)
         {
             if (comboBoxEmployeeList.SelectedIndex == -1)
@@ -997,8 +932,6 @@ namespace pos
                 Cursor.Current = Cursors.WaitCursor;
 
                 Cursor.Current = Cursors.Default;
-
-
             }
         }
 
@@ -1006,7 +939,9 @@ namespace pos
         {
             new UserSelect().Show();
         }
-        string[] IDarray;
+
+        private string[] IDarray;
+
         private void button10_Click_1(object sender, EventArgs e)
         {
             if (comboBoxEmployeeList.SelectedIndex == -1)
@@ -1024,9 +959,7 @@ namespace pos
                 paySheetOffice.setValue(comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0], "single", ComboBoxYear.Value.ToString("d").Split('/')[2] + "/" + listBox2.SelectedItem.ToString(), new string[0]);
                 paySheetOffice.Show();
                 Cursor.Current = Cursors.Default;
-
             }
-
         }
 
         private void button11_Click(object sender, EventArgs e)
@@ -1036,21 +969,14 @@ namespace pos
 
         private void button12_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button4_Click_2(object sender, EventArgs e)
         {
-
-
-
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-
-
-
         }
 
         private void button16_Click(object sender, EventArgs e)
@@ -1073,11 +999,8 @@ namespace pos
             }
             else
             {
-
                 earningTable.Rows.Add(earningResoen.Text, earningAmount.Text, Convert.ToDateTime(earningDate.Value).ToString("dd-MM-yyyy"));
-
             }
-
         }
 
         private void button15_Click(object sender, EventArgs e)
@@ -1093,7 +1016,6 @@ namespace pos
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Sorry , You havnet selected any Row to Delete");
             }
         }
@@ -1106,7 +1028,6 @@ namespace pos
                 {
                     MessageBox.Show("Please Select Employee");
                 }
-
                 else if ((MessageBox.Show("Are you Sure Save these Deduct Values for Select User", "Confirmation",
     MessageBoxButtons.YesNo, MessageBoxIcon.Question,
     MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
@@ -1122,10 +1043,8 @@ namespace pos
                         sqlconn.Close();
                         MessageBox.Show("Succefully Upated Allowances");
                         listBox2_Click(sender, e);
-
                     }
                 }
-
             }
             catch (Exception abc)
             {
@@ -1136,7 +1055,6 @@ namespace pos
 
         private void button17_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button18_Click(object sender, EventArgs e)
@@ -1151,20 +1069,16 @@ namespace pos
             }
             else
             {
-
                 using (sqlconn = db.createSqlConnection())
                 {
                     new SqlCommand("delete from meal where month='" + ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem + "' and empid='" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "'", sqlconn).ExecuteNonQuery();
 
                     new SqlCommand("insert into meal values('" + comboBoxEmployeeList.SelectedItem.ToString().Split('-')[0] + "','" + newAmountMeal.Text + "','" + ComboBoxYear.Value.ToString("d").ToString().Split('/')[2] + "/" + listBox2.SelectedItem + "')", sqlconn).ExecuteNonQuery();
 
-
                     sqlconn.Close();
                     MessageBox.Show("Succefully Upated Meal Value");
                     listBox2_Click(sender, e);
-
                 }
-
             }
         }
 
@@ -1178,15 +1092,15 @@ namespace pos
 
             e.Handled = true;
         }
-        Int32 PERIOD;
+
+        private Int32 PERIOD;
+
         private void button20_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button19_Click(object sender, EventArgs e)
         {
-
         }
 
         private void loanAmount_KeyPress(object sender, KeyPressEventArgs e)
@@ -1207,27 +1121,22 @@ namespace pos
 
         private void button23_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button22_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button22_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void button23_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void amountMultiCompany_KeyPress(object sender, KeyPressEventArgs e)
@@ -1243,52 +1152,42 @@ namespace pos
 
         private void button21_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void reson_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void salary_FormClosing(object sender, FormClosingEventArgs e)
         {
-
         }
 
         private void button24_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button12_Click_1(object sender, EventArgs e)
         {
-
         }
 
         private void earningTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void button27_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button26_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button25_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button28_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button28_Click_1(object sender, EventArgs e)
@@ -1321,25 +1220,20 @@ namespace pos
                 }
                 catch (Exception a)
                 {
-
                     MessageBox.Show(count + "");
                 }
             }
             catch (Exception)
             {
-
-
             }
         }
 
         private void listBox2_ChangeUICues(object sender, UICuesEventArgs e)
         {
-
         }
 
         private void label41_Click(object sender, EventArgs e)
         {
-
         }
 
         private void pAYSHEETToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1381,12 +1275,10 @@ namespace pos
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
         }
 
         private void pROCESSALLToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             {
                 int month = comboBox1.SelectedIndex;
                 month++;
@@ -1414,7 +1306,6 @@ namespace pos
                         {
                             new process().saveSummery2(reader2[0] + "", comboBox1.SelectedItem.ToString(), ComboBoxYear.Value.Year.ToString(), sqlconn, reader, paySalary.Text, payAdvanced.Text, db, db3, sqlconn3, reader3, db4, sqlconn4, reader4);
                             //  getSalaru(tempCustomer, comboBox1.SelectedItem.ToString(), ComboBoxYear.Value.Year.ToString());
-
                         }
                         sqlconn2.Close();
                         MessageBox.Show("Save Succefully");
@@ -1448,10 +1339,11 @@ namespace pos
             //    sqlconn.Close();
             //}
         }
-        string tempCustomer;
+
+        private string tempCustomer;
+
         public Boolean loadCustomer(string id)
         {
-
             try
             {
                 db.setCursoerWait();
@@ -1497,11 +1389,9 @@ namespace pos
                 }
                 else
                 {
-
                     loadCustomer(companyC.Text);
                 }
             }
-
             else if (e.KeyValue == 40)
             {
                 try
@@ -1517,10 +1407,8 @@ namespace pos
                 }
                 catch (Exception)
                 {
-
                 }
             }
-
         }
 
         private void companyC_KeyUp(object sender, KeyEventArgs e)
@@ -1528,7 +1416,6 @@ namespace pos
             tempCustomer = "";
             if (!(e.KeyValue == 12 | e.KeyValue == 13 | companyC.Text.Equals("")))
             {
-
                 db.setList(listBox3, companyC, companyC.Width);
 
                 try
@@ -1536,7 +1423,6 @@ namespace pos
                     listBox3.Items.Clear();
                     sqlconn.Open();
                     reader = new SqlCommand("select empid,name from emp where name like '%" + companyC.Text + "%' and resgin='" + false + "'", sqlconn).ExecuteReader();
-
 
                     while (reader.Read())
                     {
@@ -1551,7 +1437,6 @@ namespace pos
                     MessageBox.Show(a.Message);
                     sqlconn.Close();
                 }
-
             }
             if (companyC.Text.Equals(""))
             {
@@ -1578,13 +1463,11 @@ namespace pos
             listBox3.Visible = false;
 
             loadCustomer(listBox3.SelectedItem.ToString().Split(' ')[0]);
-
         }
 
         private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             companyC.Text = listBox3.SelectedItem.ToString().Split(' ')[1];
-
         }
 
         private void button4_Click_3(object sender, EventArgs e)
@@ -1624,7 +1507,7 @@ namespace pos
             }
         }
 
-        void getSalaru(string id, string month, string year)
+        private void getSalaru(string id, string month, string year)
         {
             try
             {
@@ -1661,7 +1544,6 @@ namespace pos
                     dataGridView3.Rows.Add("NET SALARY", "", "", "", db.setAmountFormat(reader[19] + ""));
                     dataGridView3.Rows.Add("PAY", "", db.setAmountFormat(reader[20] + ""), "", db.setAmountFormat(reader[21] + ""));
                     dataGridView3.Rows.Add("BALANCE TO NEXT MONTH", "", "", "", db.setAmountFormat(reader[21] + ""));
-
                 }
                 else
                 {
@@ -1669,7 +1551,6 @@ namespace pos
                 }
 
                 sqlconn.Close();
-
 
                 dataGridView4.Rows.Clear();
                 sqlconn.Open();
@@ -1686,7 +1567,6 @@ namespace pos
                     dataGridView5.Rows.Add(reader.GetDateTime(2).ToShortDateString(), db.setAmountFormat(reader[1] + ""));
                 }
                 sqlconn.Close();
-
             }
             catch (Exception a)
             {
@@ -1694,14 +1574,13 @@ namespace pos
                 sqlconn.Close();
             }
         }
+
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void button6_Click_1(object sender, EventArgs e)
@@ -1748,7 +1627,6 @@ namespace pos
                     sqlconn.Close();
 
                     //  MessageBox.Show("Saved");
-
                 }
                 catch (Exception a)
                 {
@@ -1788,7 +1666,7 @@ namespace pos
                     }
                     catch (Exception a)
                     {
-                      //  MessageBox.Show(a.Message);
+                        //  MessageBox.Show(a.Message);
                         tempID = 1;
                         sqlconn.Close();
                     }
@@ -1802,10 +1680,7 @@ namespace pos
                     sqlconn2.Close();
                     // new invoicePrint().setprintReceiprt(tempID + "", conn2, reader, userH);
 
-
-
                     //  MessageBox.Show("Saved");
-
                 }
                 catch (Exception a)
                 {
@@ -1836,7 +1711,6 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -1848,7 +1722,6 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 
@@ -1860,13 +1733,11 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
 
         private void pROCESSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button10_Click_3(object sender, EventArgs e)
@@ -1877,7 +1748,6 @@ namespace pos
             }
             catch (Exception)
             {
-
             }
         }
     }

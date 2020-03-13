@@ -1,10 +1,4 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -18,13 +12,14 @@ namespace pos
             userH = user;
             reportH = report;
         }
-        Form formH;
-        supplierReportALL reportH;
-        DB db;
-        string userH, queary, userName;
+
+        private Form formH;
+        private supplierReportALL reportH;
+        private DB db;
+        private string userH, queary, userName;
+
         private void crystalReportViewer1_Load(object sender, EventArgs e)
         {
-            
         }
 
         private void stockReportView_Load(object sender, EventArgs e)

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -15,7 +9,6 @@ namespace pos
 {
     public partial class termXash9 : Form
     {
-
         public termXash9(invoiceCreditPay invoice, Double Amount, string idH, string customer)
         {
             InitializeComponent();
@@ -25,33 +18,30 @@ namespace pos
             invoiceHome = invoice;
             customerH = customer;
             invoice.Enabled = false;
-
         }
 
-
         //My Variable Start+++
-        double sub;
-        String id, customerH;
-        invoiceCreditPay invoiceHome;
-        DB db, db2, db3, db4, db5;
-        SqlDataReader reader, reader2, reader3;
-        SqlConnection conn, conn2, conn3, conn4, conn5;
-        ArrayList arrayList, stockList;
-        string[] idArray;
+        private double sub;
+
+        private String id, customerH;
+        private invoiceCreditPay invoiceHome;
+        private DB db, db2, db3, db4, db5;
+        private SqlDataReader reader, reader2, reader3;
+        private SqlConnection conn, conn2, conn3, conn4, conn5;
+        private ArrayList arrayList, stockList;
+        private string[] idArray;
 
         //My Variable End+++
 
         //My Method Start+++
-        void setTabFouces()
+        private void setTabFouces()
         {
-
         }
-        void loadAutoCompleteAll()
+
+        private void loadAutoCompleteAll()
         {
             try
             {
-
-
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(chequeCodeNo, idArray);
                 conn.Open();
@@ -66,15 +56,12 @@ namespace pos
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(chequeCodeNo, idArray);
                 conn.Close();
-
-
             }
             catch (Exception)
             {
                 conn.Close();
             }
         }
-
 
         //My Method End+++
         private void creditPaid_KeyDown(object sender, KeyEventArgs e)
@@ -95,7 +82,6 @@ namespace pos
 
         private void button5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void creditPaid_KeyPress(object sender, KeyPressEventArgs e)
@@ -111,7 +97,6 @@ namespace pos
 
         private void creditPaid_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void termXash_Load(object sender, EventArgs e)
@@ -152,17 +137,8 @@ namespace pos
                     conn.Close();
                 }
 
-
-
-
                 //  MessageBox.Show(creditB+"/"+creditDetailH.Length);
                 this.TopMost = true;
-
-
-
-
-
-
             }
             catch (Exception a)
             {
@@ -199,7 +175,6 @@ namespace pos
 
         private void chequePaid_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void chequeBalance_KeyDown(object sender, KeyEventArgs e)
@@ -252,13 +227,10 @@ namespace pos
 
         private void button9_Click(object sender, EventArgs e)
         {
-
-
             if (chequeAmount.Text.Equals("") || Double.Parse(chequeAmount.Text) == 0)
             {
                 MessageBox.Show("Sorry , Invalied Cheque Paid Value");
                 chequeAmount.Focus();
-
             }
             else if (chequeNo.Text.Equals(""))
             {
@@ -267,25 +239,19 @@ namespace pos
             }
             else
             {
-
-
-
             }
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-
         }
 
         private void cashPaidCard_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void cashPaidCard_KeyPress(object sender, KeyPressEventArgs e)
@@ -301,8 +267,6 @@ namespace pos
 
         private void cashPaidCard_KeyUp(object sender, KeyEventArgs e)
         {
-
-
         }
 
         private void cardNo_KeyDown(object sender, KeyEventArgs e)
@@ -311,17 +275,14 @@ namespace pos
 
         private void ccv_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void nameonCard_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-
         }
 
         private void termXash_FormClosing(object sender, FormClosingEventArgs e)
@@ -331,7 +292,6 @@ namespace pos
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void creditBalance_KeyPress(object sender, KeyPressEventArgs e)
@@ -360,10 +320,12 @@ namespace pos
                 //  save();
             }
         }
-        Int32 tempcreditPaidID = 0;
-        double amountTemp2, amountTemp;
-        bool states;
-        string tempInvoiceNO;
+
+        private Int32 tempcreditPaidID = 0;
+        private double amountTemp2, amountTemp;
+        private bool states;
+        private string tempInvoiceNO;
+
         private void button3_Click(object sender, EventArgs e)
         {
             try
@@ -374,7 +336,6 @@ namespace pos
                 conn.Open();
                 new SqlCommand("insert into receipt values('" + DateTime.Now + "','" + "" + "','" + customerH + "','" + new amountByName().setAmountName(Double.Parse(chequeAmount.Text) + "") + "','" + chequeAmount.Text + "','" + "" + "','" + "CHEQUE NO-" + chequeNo.Text + " / CHEQUE DATE-" + dateTimePicker1.Value.ToShortDateString() + "','" + "CHEQUE" + "','" + "" + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
                 conn.Close();
-
 
                 conn.Open();
                 reader = new SqlCommand("select max(id) from receipt ", conn).ExecuteReader();
@@ -395,7 +356,6 @@ MessageBoxDefaultButton.Button1);
                     reader2 = new SqlCommand("select invoiceid,balance,amount from creditInvoiceRetail where customerid='" + customerH + "' order by requstdate", conn2).ExecuteReader();
                     while (reader2.Read())
                     {
-
                         if (amountTemp2 != 0)
                         {
                             amountTemp = 0;
@@ -406,7 +366,6 @@ MessageBoxDefaultButton.Button1);
                             {
                                 states = true;
                                 amountTemp = amountTemp + reader.GetDouble(0);
-
                             }
 
                             conn.Close();
@@ -416,7 +375,6 @@ MessageBoxDefaultButton.Button1);
                             }
                             else
                             {
-
                                 amountTemp = reader2.GetDouble(1) - amountTemp;
                             }
 
@@ -437,8 +395,6 @@ MessageBoxDefaultButton.Button1);
                                         tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                     }
 
-
-
                                     amountTemp2 = 0;
                                 }
                                 else
@@ -457,7 +413,6 @@ MessageBoxDefaultButton.Button1);
                                         tempInvoiceNO = tempInvoiceNO + "/R-" + reader2[0];
                                     }
                                     amountTemp2 = amountTemp2 - amountTemp;
-
                                 }
                             }
                         }
@@ -474,21 +429,15 @@ MessageBoxDefaultButton.Button1);
                 else
                 {
                     savesub(amountD, tempInvoiceNO);
-
                 }
 
-
-
                 //+++++++++++++++++++++++++++++++
-
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message + "/" + a.StackTrace);
                 conn.Close();
-
             }
-
         }
 
         public void savesub(double amountD, string tempInvoiceNOS)
@@ -499,15 +448,12 @@ MessageBoxDefaultButton.Button1);
                 new SqlCommand("insert into chequeInvoiceRetail2 values ('" + tempcreditPaidID + "','" + customerH + "','" + amountD + "','" + 0 + "','" + amountD + "','" + chequeNo.Text + "','" + dateTimePicker1.Value + "','" + DateTime.Now + "','" + chequeCodeNo.Text + "','" + true + "')", conn).ExecuteNonQuery();
                 conn.Close();
 
-
                 if (comboChequePayment.Items.Count != 0 && comboChequePayment.SelectedIndex != -1)
                 {
-
                     conn.Open();
 
                     new SqlCommand("insert into bankAccountStatment values('" + comboChequePayment.SelectedItem.ToString().Split('(')[1].Split(')')[0] + "','" + tempInvoiceNOS + "','" + "Invoice-Settelemnt" + "','" + customerH + "','" + "Cheque Payment :Cheque No-" + chequeCodeNo.Text + ",Cheque Date-" + dateTimePicker1.Value + "','" + true + "','" + false + "','" + dateTimePicker1.Value + "','" + amountD + "','" + "" + "','" + "" + "')", conn).ExecuteNonQuery();
                     conn.Close();
-
                 }
                 try
                 {
@@ -518,7 +464,6 @@ MessageBoxDefaultButton.Button1);
                     conn.Open();
                     new SqlCommand("insert into customerStatement values('" + "SETTELE-" + tempcreditPaidID + "','" + "Settelemnt for Invoice -Cheque" + tempInvoiceNOS + "','" + 0 + "','" + amountD + "','" + true + "','" + DateTime.Now + "','" + customerH + "')", conn).ExecuteNonQuery();
                     conn.Close();
-
 
                     if ((MessageBox.Show("Do You want to Print Recepit", "Confirmation",
     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
@@ -550,8 +495,7 @@ MessageBoxDefaultButton.Button1);
             }
             catch (Exception a)
             {
-                MessageBox.Show(a.Message+"/"+a.StackTrace);
-
+                MessageBox.Show(a.Message + "/" + a.StackTrace);
             }
             this.Dispose();
             invoiceHome.Enabled = true;
@@ -560,13 +504,10 @@ MessageBoxDefaultButton.Button1);
 
         private void creditBalance_Layout(object sender, LayoutEventArgs e)
         {
-
         }
 
         private void creditBalance_KeyUp(object sender, KeyEventArgs e)
         {
-
-
         }
 
         private void chequeBalance_KeyPress(object sender, KeyPressEventArgs e)
@@ -582,7 +523,6 @@ MessageBoxDefaultButton.Button1);
 
         private void chequeBalance_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void cardNo_KeyPress(object sender, KeyPressEventArgs e)
@@ -598,27 +538,22 @@ MessageBoxDefaultButton.Button1);
 
         private void cardAmount_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void cardAmount_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tabPage3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)

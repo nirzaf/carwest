@@ -1,17 +1,12 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
 {
     public partial class test2 : Form
     {
-        salarySummery formh;
+        private salarySummery formh;
+
         public test2(salarySummery form)
         {
             InitializeComponent();

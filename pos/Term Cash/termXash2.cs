@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 
 using System.Windows.Forms;
 
@@ -15,7 +10,6 @@ namespace pos
 {
     public partial class termXash2 : Form
     {
-
         public termXash2(invoiceEdit invoice, Double Amount, Double cashPaidH, String[] creditDetail, String[] chequeDetail, String[] cardDetail, bool creditH, bool chequeH, bool cardH)
         {
             InitializeComponent();
@@ -32,28 +26,27 @@ namespace pos
             creditB = creditH;
             chequeB = chequeH;
             cardB = cardH;
-           
         }
 
-
         //My Variable Start+++
-        double amount, sub, credit, cheque, card, balanceF;
-        Boolean creditB, chequeB, cardB;
-        String type, customer, code;
-        invoiceEdit invoiceHome;
-        DB db, db2, db3, db4, db5;
-        SqlDataReader reader, reader2, reader3;
-        SqlConnection conn, conn2, conn3, conn4, conn5;
-        ArrayList arrayList, stockList;
-        string[] idArray, creditDetailH, chequeDetailH, cardDetailH;
-        string brand, description, listBoxType, invoieNoTemp;
-        int count;
-        string tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId;
+        private double amount, sub, credit, cheque, card, balanceF;
+
+        private Boolean creditB, chequeB, cardB;
+        private String type, customer, code;
+        private invoiceEdit invoiceHome;
+        private DB db, db2, db3, db4, db5;
+        private SqlDataReader reader, reader2, reader3;
+        private SqlConnection conn, conn2, conn3, conn4, conn5;
+        private ArrayList arrayList, stockList;
+        private string[] idArray, creditDetailH, chequeDetailH, cardDetailH;
+        private string brand, description, listBoxType, invoieNoTemp;
+        private int count;
+        private string tempChequeAmoun, tempChequeNo, tempChequeCodeNo, tempChequeDate, tempChequeId;
 
         //My Variable End+++
 
         //My Method Start+++
-        void setTabFouces()
+        private void setTabFouces()
         {
             if (tabControl1.SelectedIndex == 0)
             {
@@ -62,15 +55,13 @@ namespace pos
             else if (tabControl1.SelectedIndex == 1)
             {
                 chequeAmount.Focus();
-
             }
         }
-        void loadAutoCompleteAll()
+
+        private void loadAutoCompleteAll()
         {
             try
             {
-
-
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(chequeCodeNo, idArray);
                 conn.Open();
@@ -85,8 +76,6 @@ namespace pos
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(chequeCodeNo, idArray);
                 conn.Close();
-
-                
             }
             catch (Exception)
             {
@@ -94,7 +83,6 @@ namespace pos
             }
         }
 
-        
         //My Method End+++
         private void creditPaid_KeyDown(object sender, KeyEventArgs e)
         {
@@ -114,7 +102,6 @@ namespace pos
 
         private void button5_Click(object sender, EventArgs e)
         {
-
         }
 
         private void creditPaid_KeyPress(object sender, KeyPressEventArgs e)
@@ -132,12 +119,8 @@ namespace pos
         {
             if (!cashPaid.Text.Equals(""))
             {
-
-
-
                 if (Double.Parse(cashPaid.Text) + (credit + cheque + card) > (sub))
                 {
-
                     cashPaid.Focus();
                     cashPaid.Text = "0";
                     balanceF = 0;
@@ -146,14 +129,11 @@ namespace pos
 
                 balanceF = sub - (Double.Parse(cashPaid.Text) + (credit + cheque + card));
 
-
                 balance.Text = balanceF + "";
-
             }
             else
             {
                 balanceF = sub - ((credit + cheque + card));
-
 
                 balance.Text = balanceF + "";
                 cashPaid.Text = "0";
@@ -179,11 +159,7 @@ namespace pos
                 loadAutoCompleteAll();
 
                 dataGridView2.AllowUserToAddRows = false;
-               this.ActiveControl = cashPaid;
-
-
-
-
+                this.ActiveControl = cashPaid;
 
                 //  MessageBox.Show(creditB+"/"+creditDetailH.Length);
                 this.TopMost = true;
@@ -207,16 +183,13 @@ namespace pos
 
                 if (chequeB)
                 {
-
-
                     if (chequeDetailH != null)
                     {
-
                         count = 0;
                         for (int i = 0; i < (chequeDetailH.Length) / 5; i++)
                         {
                             //  MessageBox.Show((chequeDetailH.Length - 2) / 5+"");
-                            cheque = cheque + Double.Parse(chequeDetailH[count]+"");
+                            cheque = cheque + Double.Parse(chequeDetailH[count] + "");
                             tempChequeAmoun = chequeDetailH[count];
                             count++;
                             tempChequeNo = chequeDetailH[count];
@@ -233,11 +206,10 @@ namespace pos
                                 dataGridView2.Rows[dataGridView2.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
                             }
                         }
-
                     }
                 }
-              
-             //   MessageBox.Show(credit+"/"+cheque+"/"+card);
+
+                //   MessageBox.Show(credit+"/"+cheque+"/"+card);
                 balanceF = sub - (Double.Parse(cashPaid.Text) + (credit + cheque + card));
                 balance.Text = balanceF + "";
             }
@@ -276,7 +248,6 @@ namespace pos
 
         private void chequePaid_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void chequeBalance_KeyDown(object sender, KeyEventArgs e)
@@ -329,13 +300,10 @@ namespace pos
 
         private void button9_Click(object sender, EventArgs e)
         {
-
-
             if (chequeAmount.Text.Equals("") || Double.Parse(chequeAmount.Text) == 0)
             {
                 MessageBox.Show("Sorry , Invalied Cheque Paid Value");
                 chequeAmount.Focus();
-
             }
             else if (chequeNo.Text.Equals(""))
             {
@@ -344,7 +312,6 @@ namespace pos
             }
             else
             {
-
                 if (Double.Parse(cashPaid.Text) + (credit + cheque + (Double.Parse(chequeAmount.Text)) + card) > (sub))
                 {
                     MessageBox.Show("Sorry Cheque Value Exit more than Balance Payment");
@@ -352,8 +319,6 @@ namespace pos
                 }
                 else
                 {
-
-
                     if (dataGridView2.Rows.Count == 0)
                     {
                         dataGridView2.Rows.Add(chequeAmount.Text, chequeNo.Text, chequeCodeNo.Text, dateTimePicker1.Value.ToString().Split(' ')[0], "1");
@@ -399,10 +364,7 @@ namespace pos
                             chequeNo.Focus();
                         }
                     }
-
-
                 }
-
             }
         }
 
@@ -417,14 +379,12 @@ namespace pos
             {
                 try
                 {
-
                     var y = dataGridView2.SelectedRows[0].Index;
                     balanceF = balanceF + (Double.Parse(dataGridView2.Rows[y].Cells[0].Value.ToString()));
                     cheque = cheque - Double.Parse(dataGridView2.Rows[y].Cells[0].Value.ToString());
                     dataGridView2.Rows.RemoveAt(y);
-                 
-                    balance.Text = balanceF + "";
 
+                    balance.Text = balanceF + "";
                 }
                 catch (Exception)
                 {
@@ -437,13 +397,11 @@ namespace pos
         {
             try
             {
-
                 chequeDetailH = new string[dataGridView2.Rows.Count * 5];
 
                 count = 0;
                 for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 {
-
                     chequeDetailH[count] = dataGridView2.Rows[i].Cells[0].Value.ToString();
                     count++;
                     chequeDetailH[count] = dataGridView2.Rows[i].Cells[1].Value.ToString();
@@ -454,7 +412,6 @@ namespace pos
                     count++;
                     chequeDetailH[count] = dataGridView2.Rows[i].Cells[4].Value.ToString();
                     count++;
-
                 }
                 this.Dispose();
                 invoiceHome.Enabled = true;
@@ -484,8 +441,6 @@ namespace pos
 
         private void cashPaidCard_KeyUp(object sender, KeyEventArgs e)
         {
-
-
         }
 
         private void cardNo_KeyDown(object sender, KeyEventArgs e)
@@ -494,17 +449,14 @@ namespace pos
 
         private void ccv_KeyDown(object sender, KeyEventArgs e)
         {
-        
         }
 
         private void nameonCard_KeyDown(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-
         }
 
         private void termXash_FormClosing(object sender, FormClosingEventArgs e)
@@ -517,7 +469,6 @@ namespace pos
 
         private void tabPage2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void creditBalance_KeyPress(object sender, KeyPressEventArgs e)
@@ -556,7 +507,6 @@ namespace pos
             }
             else
             {
-
                 try
                 {
                     if (creditAmount.Text.Equals("") || Double.Parse(creditAmount.Text) == 0)
@@ -566,12 +516,10 @@ namespace pos
                     }
                     else
                     {
-
                         creditB = true;
                         creditDetailH = new string[2];
                         creditDetailH[0] = creditAmount.Text;
                         creditDetailH[1] = creditPeriod.Value.ToString();
-
                     }
 
                     if (dataGridView2.Rows.Count == 0)
@@ -587,7 +535,6 @@ namespace pos
                         count = 0;
                         for (int i = 0; i < dataGridView2.Rows.Count; i++)
                         {
-
                             chequeDetailH[count] = dataGridView2.Rows[i].Cells[0].Value.ToString();
                             count++;
                             chequeDetailH[count] = dataGridView2.Rows[i].Cells[1].Value.ToString();
@@ -598,11 +545,8 @@ namespace pos
                             count++;
                             chequeDetailH[count] = dataGridView2.Rows[i].Cells[4].Value.ToString();
                             count++;
-
                         }
-
                     }
-                  
 
                     invoiceHome.creditDetail = creditDetailH;
                     invoiceHome.chequeDetail = chequeDetailH;
@@ -619,23 +563,19 @@ namespace pos
                     invoiceHome.Enabled = true;
                     invoiceHome.setTermBack(true);
                     invoiceHome.TopMost = true;
-
                 }
                 catch (Exception)
                 {
-
                 }
             }
         }
 
-        void save()
+        private void save()
         {
-
         }
 
         private void creditBalance_Layout(object sender, LayoutEventArgs e)
         {
-
         }
 
         private void creditBalance_KeyUp(object sender, KeyEventArgs e)
@@ -645,7 +585,6 @@ namespace pos
                 credit = Double.Parse(creditAmount.Text);
                 if (Double.Parse(cashPaid.Text) + (credit + cheque + card) > (sub))
                 {
-                   
                     creditAmount.Text = "0";
                     credit = 0;
                     creditAmount.SelectAll();
@@ -653,8 +592,6 @@ namespace pos
 
                 balanceF = sub - (Double.Parse(cashPaid.Text) + (credit + cheque + card));
                 balance.Text = balanceF + "";
-
-
             }
             else
             {
@@ -664,8 +601,6 @@ namespace pos
                 creditAmount.Text = "0";
                 creditAmount.SelectAll();
             }
-
-         
         }
 
         private void chequeBalance_KeyPress(object sender, KeyPressEventArgs e)
@@ -683,14 +618,12 @@ namespace pos
         {
             if (!chequeAmount.Text.Equals(""))
             {
-
                 if (Double.Parse(cashPaid.Text) + (credit + cheque + (Double.Parse(chequeAmount.Text)) + card) > (sub))
                 {
-                  //  MessageBox.Show("Sorry, Invalied Cheque Value");
+                    //  MessageBox.Show("Sorry, Invalied Cheque Value");
                     chequeAmount.Focus();
                     chequeAmount.Text = "0";
                     chequeAmount.SelectAll();
-
                 }
                 else
                 {
@@ -699,8 +632,6 @@ namespace pos
                     //balanceF = sub - (Double.Parse(cashPaid.Text) + (credit + cheque + card));
                     //balance.Text = balanceF + "";
                 }
-
-
             }
         }
 
@@ -721,22 +652,18 @@ namespace pos
 
         private void cardAmount_KeyUp(object sender, KeyEventArgs e)
         {
-           
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-           
         }
 
         private void tabPage3_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,11 +1,5 @@
 ﻿using System;
-
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -17,20 +11,21 @@ namespace pos
             InitializeComponent();
             this.home = home;
         }
+
         // My Variable Start
-        DB db, db2;
-        Form home;
-        SqlConnection conn, conn2;
-        SqlDataReader reader, reader2;
+        private DB db, db2;
+
+        private Form home;
+        private SqlConnection conn, conn2;
+        private SqlDataReader reader, reader2;
+
         // my Variable End
         private void label27_Click(object sender, EventArgs e)
         {
-
         }
 
         private void label24_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -196,11 +191,10 @@ namespace pos
                 dataGridView1.Columns[1].Visible = false;
 
                 conn.Close();
-
             }
         }
 
-        void loadUsers()
+        private void loadUsers()
         {
             try
             {
@@ -219,12 +213,10 @@ namespace pos
                 MessageBox.Show(a.Message + "/ " + a.StackTrace);
                 conn.Close();
             }
-
         }
 
-        void clear()
+        private void clear()
         {
-
             name.Text = "";
             password.Text = "";
             password2.Text = "";
@@ -240,9 +232,6 @@ namespace pos
             supplier.Checked = false;
             invoice.Checked = false;
             grn.Checked = false;
-
-
-
 
             stockUpdate.Checked = false;
             payInvoice.Checked = false;
@@ -273,7 +262,6 @@ namespace pos
             }
             else
             {
-
                 try
                 {
                     conn.Open();
@@ -284,7 +272,6 @@ namespace pos
  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
  MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         {
-
                             reader.Close();
                             conn.Close();
                             conn.Open();
@@ -292,7 +279,7 @@ namespace pos
                             conn.Close();
 
                             conn.Open();
-                            new SqlCommand("insert into users values('" + name.Text + "','" + password.Text + "','" + isCompany.Checked + "','" + itemNew.Checked + "','" + itemEdit.Checked + "','" + itemDelete.Checked + "','" + customerNew.Checked + "','" + customerEdit.Checked + "','" + customerDelete.Checked + "','" + supplierNew.Checked + "','" + supplierEdit.Checked + "','" + supplierDelete.Checked + "','" + invoiceNew.Checked + "','" + invoiceEdit.Checked + "','" + invoiceDelete.Checked + "','" + searchInvoice.Checked + "','" + grnNew.Checked + "','" + grnEdit.Checked + "','" + grnDelete.Checked + "','" + searchGrn.Checked + "','" + invoiceReturn.Checked + "','" + grnReturn.Checked + "','" + stockUpdate.Checked + "','" + user.Checked + "','" + payInvoice.Checked + "','" + barcode.Checked + "','"+checkBoxChequeDeposit.Checked+"')", conn).ExecuteNonQuery();
+                            new SqlCommand("insert into users values('" + name.Text + "','" + password.Text + "','" + isCompany.Checked + "','" + itemNew.Checked + "','" + itemEdit.Checked + "','" + itemDelete.Checked + "','" + customerNew.Checked + "','" + customerEdit.Checked + "','" + customerDelete.Checked + "','" + supplierNew.Checked + "','" + supplierEdit.Checked + "','" + supplierDelete.Checked + "','" + invoiceNew.Checked + "','" + invoiceEdit.Checked + "','" + invoiceDelete.Checked + "','" + searchInvoice.Checked + "','" + grnNew.Checked + "','" + grnEdit.Checked + "','" + grnDelete.Checked + "','" + searchGrn.Checked + "','" + invoiceReturn.Checked + "','" + grnReturn.Checked + "','" + stockUpdate.Checked + "','" + user.Checked + "','" + payInvoice.Checked + "','" + barcode.Checked + "','" + checkBoxChequeDeposit.Checked + "')", conn).ExecuteNonQuery();
                             conn.Close();
 
                             loadUsers();
@@ -302,7 +289,6 @@ namespace pos
                     }
                     else
                     {
-
                         reader.Close();
                         conn.Close();
                         conn.Open();
@@ -312,14 +298,12 @@ namespace pos
                         clear();
                         MessageBox.Show("Succesfuly Updated");
                     }
-
                 }
                 catch (Exception a)
                 {
-                    MessageBox.Show(a.Message+"/"+a.StackTrace);
+                    MessageBox.Show(a.Message + "/" + a.StackTrace);
                     conn.Close();
                 }
-
             }
         }
 
