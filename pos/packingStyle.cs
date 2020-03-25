@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace pos
-{
+namespace pos {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -42,7 +41,7 @@ namespace pos
         
         public override string FullResourceName {
             get {
-                return "uniFargo.packingStyle.rpt";
+                return "pos.packingStyle.rpt";
             }
             set {
                 // Do nothing
