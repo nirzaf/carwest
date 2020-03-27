@@ -177,65 +177,6 @@ namespace pos
         }
 
         //++++++ My Method End++++
-        private void code_KeyPress(object sender, KeyPressEventArgs e)
-        {
-        }
-
-        private void code_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void brand_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void category_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void description_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void remark_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void rate_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void code_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void brand_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void category_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void description_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void remark_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void remark_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void rate_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
 
         private void sAVECURRENTITEMToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -255,74 +196,19 @@ namespace pos
         {
             refresh();
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void listBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void listBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void code_Leave(object sender, EventArgs e)
-        {
-        }
-
-        private void itemProfile_MouseHover(object sender, EventArgs e)
-        {
-        }
-
-        private void itemProfile_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void itemProfile_GiveFeedback(object sender, GiveFeedbackEventArgs e)
-        {
-        }
-
+      
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             refresh();
         }
 
-        private void Code_KeyDown_1(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void codeC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void codeC_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void nameC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void nameC_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
+      
         private void companyC_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 12 || e.KeyValue == 13)
             {
                 update();
             }
-        }
-
-        private void companyC_KeyUp(object sender, KeyEventArgs e)
-        {
         }
 
         private void addressC_KeyDown(object sender, KeyEventArgs e)
@@ -348,59 +234,11 @@ namespace pos
             }
         }
 
-        private void mobileNumberC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void landNumberC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void faxNumberC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void emailC_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Dispose();
             home.Enabled = true;
             home.TopMost = true;
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void checkMethod_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-        }
-
-        private void checkChequePaymnet_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void checkCardPayment_CheckedChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void number_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void number_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
-        {
         }
     }
 }

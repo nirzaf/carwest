@@ -24,7 +24,8 @@ namespace pos
             {
                 conn = new SqlConnection();
                 readfromAddress = File.ReadAllLines("C:\\conf\\configSettings.txt");
-                conn.ConnectionString = "User ID='" + readfromAddress[4].Split('/')[0] + "';Password='" + readfromAddress[4].Split('/')[1] + "';data source='" + readfromAddress[4].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
+               // conn.ConnectionString = "User ID='" + readfromAddress[4].Split('/')[0] + "';Password='" + readfromAddress[4].Split('/')[1] + "';data source='" + readfromAddress[4].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
+                conn.ConnectionString = "data source='" + readfromAddress[14].Split('/')[2] + "';" + "Integrated Security=SSPI;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
                 // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2]+ "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
 
                 // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";

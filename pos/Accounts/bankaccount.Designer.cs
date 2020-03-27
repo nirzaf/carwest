@@ -137,7 +137,6 @@
             this.bankName.Size = new System.Drawing.Size(307, 22);
             this.bankName.TabIndex = 65;
             this.bankName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.companyC_KeyDown);
-            this.bankName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.companyC_KeyUp);
             // 
             // label12
             // 
@@ -179,18 +178,13 @@
             this.Deactivate += new System.EventHandler(this.itemProfile_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.itemProfile_FormClosing);
             this.Load += new System.EventHandler(this.itemProfile_Load);
-            this.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.itemProfile_GiveFeedback);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.itemProfile_MouseClick);
-            this.MouseHover += new System.EventHandler(this.itemProfile_MouseHover);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
-
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem iTEMToolStripMenuItem;
