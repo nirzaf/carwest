@@ -12,29 +12,19 @@ namespace pos
     internal class DB
     {
         public home home;
-        public itemProfile itemProfile;
-        private SqlConnection conn, conn2, conn3, conn4, conn5;
-        private SqlDataReader reader, reader2, reader3, reader4, reader5;
-        private DB db, db2, db3, db4, db5;
+        private SqlConnection conn, conn2, conn3, conn4;
+        private SqlDataReader reader, reader2, reader3, reader4;
+        private DB db, db2, db3, db4;
         private string[] readfromAddress;
+        public string Path = @"C:\conf\configSettings.txt";
 
         public SqlConnection createSqlConnection2()
         {
             try
             {
                 conn = new SqlConnection();
-                readfromAddress = File.ReadAllLines("C:\\conf\\configSettings.txt");
-               // conn.ConnectionString = "User ID='" + readfromAddress[4].Split('/')[0] + "';Password='" + readfromAddress[4].Split('/')[1] + "';data source='" + readfromAddress[4].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
+                readfromAddress = File.ReadAllLines(Path);
                 conn.ConnectionString = "data source='" + readfromAddress[14].Split('/')[2] + "';" + "Integrated Security=SSPI;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
-                // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2]+ "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
-
-                // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
-
-                //    conn.ConnectionString = "integrated security=SSPI;User ID=Mahe;Password=123;data source=Mahe;" + "persist security info=true;initial catalog=RasaBojun";
-                //   conn.ConnectionString = "User ID='" + "Mahe" + "';Password='" + "456" + "';data source='" + "456" + "';" + "persist security info=true;initial catalog='" + "RasaBojun" + "';Connect Timeout=30";
-
-                // conn.Open();
-
                 return conn;
             }
             catch (Exception abc)
@@ -83,10 +73,7 @@ namespace pos
                 db4 = new DB();
                 conn4 = db4.createSqlConnection();
 
-                db5 = new DB();
-                conn5 = db5.createSqlConnection();
                 db.setCursoerWait();
-                //  MessageBox.Show("1");
                 tempTOtalSale = 0;
                 tempCredistSale = 0;
                 tempChequeSale = 0;
@@ -210,13 +197,13 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-                                                    tempTOtalSale = tempTOtalSale + reader.GetDouble(2);
-                                                    tempCashSale = tempCashSale + reader.GetDouble(2);
+                                                    tempTOtalSale += reader.GetDouble(2);
+                                                    tempCashSale += reader.GetDouble(2);
                                                 }
                                                 else
                                                 {
-                                                    tempTOtalSale = tempTOtalSale + reader.GetDouble(2);
-                                                    tempCashSale = tempCashSale + reader.GetDouble(2);
+                                                    tempTOtalSale += reader.GetDouble(2);
+                                                    tempCashSale += reader.GetDouble(2);
                                                 }
                                                 conn4.Close();
                                             }
@@ -225,11 +212,13 @@ namespace pos
                                         conn3.Close();
                                     }
                                 }
-                                catch (Exception a)
+                                catch (Exception ex)
                                 {
-                                    tempTOtalSale = tempTOtalSale + reader.GetDouble(2);
-                                    tempCashSale = tempCashSale + reader.GetDouble(2);
-                                    //  MessageBox.Show(a.Message+"/"+a.StackTrace);
+                                    tempTOtalSale += reader.GetDouble(2);
+                                    tempCashSale += reader.GetDouble(2);
+                                }
+                                finally
+                                {
                                     conn2.Close();
                                 }
                             }
@@ -246,11 +235,11 @@ namespace pos
                             if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid"))
                             {
                                 amount = amount + reader.GetDouble(2);
-                                tempCashRecevied = tempCashRecevied + reader.GetDouble(2);
+                                tempCashRecevied += reader.GetDouble(2);
                             }
                             else if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid Card"))
                             {
-                                amount = amount + reader.GetDouble(2);
+                                amount += reader.GetDouble(2);
                             }
                         }
                         catch (Exception)
@@ -316,13 +305,14 @@ namespace pos
                         tempCashPaidReturn = tempCashPaidReturn + reader.GetDouble(2);
                     }
                     conn.Close();
-                    //  conn.Open();
-
                     db.setCursoerDefault();
                 }
                 catch (Exception a)
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
+                }
+                finally
+                {
                     conn.Close();
                 }
 
@@ -337,15 +327,12 @@ namespace pos
                     conn.Close();
                 }
                 conn.Open();
-
                 conn.Close();
-
                 db.setCursoerDefault();
             }
             catch (Exception s)
             {
                 MessageBox.Show("aaaaaaaaaaaaaaaaaa " + s.StackTrace + "//" + s.Message);
-                // throw;
             }
         }
 
@@ -412,7 +399,7 @@ namespace pos
             try
             {
                 conn = new SqlConnection();
-                string[] readfromAddress = File.ReadAllLines("D:\\configSettings.txt");
+                string[] readfromAddress = File.ReadAllLines(Path);
                 conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
                 // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2]  + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
 
