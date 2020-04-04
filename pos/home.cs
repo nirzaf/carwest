@@ -82,9 +82,9 @@ namespace pos
             db2 = new DB();
             db3 = new DB();
             db.home = this;
-            conn = db.createSqlConnection2();
+            conn = db.createSqlConnection();
 
-            conn2 = db2.createSqlConnection2();
+            conn2 = db2.createSqlConnection();
             conn3 = db3.createSqlConnection();
             loadUser();
 

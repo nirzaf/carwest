@@ -649,9 +649,9 @@ namespace pos
             btn.UseColumnTextForButtonValue = true;
 
             db = new DB();
-            conn = db.createSqlConnection2();
+            conn = db.createSqlConnection();
             db2 = new DB();
-            conn2 = db2.createSqlConnection2();
+            conn2 = db2.createSqlConnection();
             clear();
 
             customer.CharacterCasing = CharacterCasing.Upper;

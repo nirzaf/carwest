@@ -146,7 +146,7 @@ namespace pos
             db2 = new DB();
             conn2 = db2.createSqlConnection();
             db3 = new DB();
-            conn3 = db3.createSqlConnection2();
+            conn3 = db3.createSqlConnection();
             this.ActiveControl = name;
             radioSearchByDate.Checked = true;
             radioAdvancedSearch.Checked = true;

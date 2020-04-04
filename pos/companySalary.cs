@@ -23,11 +23,11 @@ namespace pos
                 db5 = new DB();
                 sqlconn5 = db5.createSqlConnection();
                 db = new DB();
-                sqlconn = db.createSqlConnection2();
+                sqlconn = db.createSqlConnection();
                 db4 = new DB();
-                sqlconn4 = db4.createSqlConnection2();
+                sqlconn4 = db4.createSqlConnection();
                 db6 = new DB();
-                sqlconn6 = db6.createSqlConnection2();
+                sqlconn6 = db6.createSqlConnection();
                 sqlconn4.Open();
                 reader4 = new SqlCommand("select * from deleteattandance ", sqlconn4).ExecuteReader();
                 while (reader4.Read())

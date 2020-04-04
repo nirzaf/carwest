@@ -15,26 +15,24 @@ namespace pos
         private SqlConnection conn, conn2, conn3, conn4;
         private SqlDataReader reader, reader2, reader3, reader4;
         private DB db, db2, db3, db4;
-        private string[] readfromAddress;
-        public string Path = @"C:\conf\configSettings.txt";
-
-        public SqlConnection createSqlConnection2()
+        public SqlConnection createSqlConnection()
         {
             try
             {
                 conn = new SqlConnection();
-                readfromAddress = File.ReadAllLines(Path);
-                conn.ConnectionString = "data source='" + readfromAddress[14].Split('/')[2] + "';" + "Integrated Security=SSPI;initial catalog='" + readfromAddress[4].Split('/')[3] + "';Connect Timeout=30";
+                string server = @"VL2\SQLEXPRESS";
+                string dbName= "pos2";
+                conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName +"; Integrated Security=true";
                 return conn;
             }
             catch (Exception abc)
             {
-                MessageBox.Show(abc.Message + "/" + abc.StackTrace + "/" + readfromAddress[4]);
+                MessageBox.Show(abc.Message + "/" + abc.StackTrace );
                 return conn;
             }
         }
 
-        private Double cashOut_, cashBf, invest, amount, total, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
+        private Double cashOut_, cashBf, invest, amount, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
 
         public string setItemDescriptionCusSupp(TextBox[] textBox)
         {
@@ -95,15 +93,15 @@ namespace pos
                     if (reader.Read())
                     {
                         cashBf = reader.GetDouble(1);
-                        amount = amount + reader.GetDouble(1);
+                        amount += reader.GetDouble(1);
                     }
                     conn.Close();
                     conn.Open();
                     reader = new SqlCommand("select * from cashSummery where date='" + date + "' and remark='" + "INVEST-MANUAL" + "'", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        amount = amount + reader.GetDouble(2);
-                        invest = invest + reader.GetDouble(2);
+                        amount += reader.GetDouble(2);
+                        invest += reader.GetDouble(2);
                     }
                     conn.Close();
 
@@ -118,11 +116,11 @@ namespace pos
                             conn3.Close();
                             if (reader.GetString(0).Equals("New Invoice"))
                             {
-                                amount = amount + reader.GetDouble(2);
+                                amount += reader.GetDouble(2);
                                 try
                                 {
                                     conn3.Open();
-                                    //          MessageBox.Show("A"+reader[1].ToString().Split('-')[1]+"A");
+                                    //  MessageBox.Show("A"+reader[1].ToString().Split('-')[1]+"A");
                                     reader3 = new SqlCommand("select * from invoiceTerm where invoiceid='" + reader[1].ToString().Split('-')[1] + "'  ", conn3).ExecuteReader();
                                     if (reader3.Read())
                                     {
@@ -138,9 +136,9 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-                                                    tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
-                                                    tempChequeSale = tempChequeSale + reader2.GetDouble(0);
-                                                    tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
+                                                    tempTOtalSale += reader2.GetDouble(1);
+                                                    tempChequeSale += reader2.GetDouble(0);
+                                                    tempCashSale += (reader2.GetDouble(1) - reader2.GetDouble(0));
                                                 }
                                                 conn4.Close();
                                             }
@@ -157,10 +155,9 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-                                                    tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
-                                                    tempCardSale = tempCardSale + reader2.GetDouble(0);
-                                                    tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
-                                                    //  MessageBox.Show((reader2.GetDouble(1) - reader2.GetDouble(0))+"");
+                                                    tempTOtalSale += reader2.GetDouble(1);
+                                                    tempCardSale += reader2.GetDouble(0);
+                                                    tempCashSale += (reader2.GetDouble(1) - reader2.GetDouble(0));
                                                 }
                                                 conn4.Close();
                                             }
@@ -177,10 +174,9 @@ namespace pos
                                                 reader4 = new SqlCommand("select company from customer where id='" + reader2[2] + "'", conn4).ExecuteReader();
                                                 if (reader4.Read())
                                                 {
-                                                    tempTOtalSale = tempTOtalSale + reader2.GetDouble(1);
-                                                    tempCredistSale = tempCredistSale + reader2.GetDouble(0);
-                                                    tempCashSale = tempCashSale + (reader2.GetDouble(1) - reader2.GetDouble(0));
-                                                    //  MessageBox.Show((reader2.GetDouble(1) - reader2.GetDouble(0))+"");
+                                                    tempTOtalSale += reader2.GetDouble(1);
+                                                    tempCredistSale += reader2.GetDouble(0);
+                                                    tempCashSale += (reader2.GetDouble(1) - reader2.GetDouble(0));
                                                 }
                                                 conn4.Close();
                                             }
@@ -234,7 +230,7 @@ namespace pos
                         {
                             if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid"))
                             {
-                                amount = amount + reader.GetDouble(2);
+                                amount += reader.GetDouble(2);
                                 tempCashRecevied += reader.GetDouble(2);
                             }
                             else if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid Card"))
@@ -255,7 +251,7 @@ namespace pos
                         {
                             if (reader.GetString(0).Split('-')[0].ToString().Equals("Invoice Credit Paid Cheque"))
                             {
-                                amount = amount + reader.GetDouble(2);
+                                amount += reader.GetDouble(2);
                             }
                         }
                         catch (Exception)
@@ -271,8 +267,8 @@ namespace pos
                         {
                             if (reader.GetString(0).Split('-')[0].ToString().Equals("GRN Credit Paid"))
                             {
-                                amount = amount - reader.GetDouble(2);
-                                tempCashGiven = tempCashGiven + reader.GetDouble(2);
+                                amount -= reader.GetDouble(2);
+                                tempCashGiven += reader.GetDouble(2);
                             }
                         }
                         catch (Exception)
@@ -284,16 +280,16 @@ namespace pos
                     reader = new SqlCommand("select * from cashSummery where date='" + date + "' and remark='" + "EXPENCES-MANUAL" + "'", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        amount = amount - reader.GetDouble(2);
-                        tempExpen = tempExpen + reader.GetDouble(2);
+                        amount -= reader.GetDouble(2);
+                        tempExpen += reader.GetDouble(2);
                     }
                     conn.Close();
                     conn.Open();
                     reader = new SqlCommand("select * from cashSummery where date='" + date + "' and remark='" + "CASH OUT" + "'", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        amount = amount - reader.GetDouble(2);
-                        cashOut_ = cashOut_ + reader.GetDouble(2);
+                        amount -= reader.GetDouble(2);
+                        cashOut_ += reader.GetDouble(2);
                     }
                     conn.Close();
 
@@ -301,8 +297,8 @@ namespace pos
                     reader = new SqlCommand("select * from cashSummery where date='" + date + "' and reason='" + "CASH PAID" + "'", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        amount = amount - reader.GetDouble(2);
-                        tempCashPaidReturn = tempCashPaidReturn + reader.GetDouble(2);
+                        amount -= reader.GetDouble(2);
+                        tempCashPaidReturn += reader.GetDouble(2);
                     }
                     conn.Close();
                     db.setCursoerDefault();
@@ -394,30 +390,21 @@ namespace pos
             }
         }
 
-        public SqlConnection createSqlConnection()
-        {
-            try
-            {
-                conn = new SqlConnection();
-                string[] readfromAddress = File.ReadAllLines(Path);
-                conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2] + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
-                // conn.ConnectionString = "User ID='" + readfromAddress[0].Split('/')[0] + "';Password='" + readfromAddress[0].Split('/')[1] + "';data source='" + readfromAddress[0].Split('/')[2]  + "';" + "persist security info=true;initial catalog='" + readfromAddress[0].Split('/')[3] + "';Connect Timeout=0";
+        //public SqlConnection createSqlConnection()
+        //{
+        //    try
+        //    {
+        //        conn = new SqlConnection();
+        //        return conn;
+        //    }
+        //    catch (Exception a)
+        //    {
+        //        MessageBox.Show(a.Message + "/" + a.StackTrace);
 
-                //    conn.ConnectionString = "integrated secuDity=SSPI;User ID=Mahe;Password=123;data source=Mahe;" + "persist security info=true;initial catalog=RasaBojun";
-                //   conn.ConnectionString = "User ID='" + "Mahe" + "';Password='" + "456" + "';data source='" + "456" + "';" + "persist security info=true;initial catalog='" + "RasaBojun" + "';Connect Timeout=30";
-
-                //conn.Open();
-
-                return conn;
-            }
-            catch (Exception a)
-            {
-                MessageBox.Show(a.Message + "/" + a.StackTrace);
-
-                //throw;
-                return conn;
-            }
-        }
+        //        //throw;
+        //        return conn;
+        //    }
+        //}
 
         private Point p;
         private String itemDescriptionName;

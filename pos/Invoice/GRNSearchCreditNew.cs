@@ -102,13 +102,13 @@ namespace pos
         {
             //MessageBox.Show("sa");
             db = new DB();
-            conn = db.createSqlConnection2();
+            conn = db.createSqlConnection();
             db2 = new DB();
-            conn2 = db2.createSqlConnection2();
+            conn2 = db2.createSqlConnection();
             db3 = new DB();
-            conn3 = db3.createSqlConnection2();
+            conn3 = db3.createSqlConnection();
             db4 = new DB();
-            conn4 = db4.createSqlConnection2();
+            conn4 = db4.createSqlConnection();
 
             dataGridView1.AllowUserToAddRows = false;
             btn = new DataGridViewButtonColumn();
