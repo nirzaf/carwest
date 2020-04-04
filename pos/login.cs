@@ -37,15 +37,11 @@ namespace pos
 
         private void loginC()
         {
-            /// MessageBox.Show("1");
-            //  MessageBox.Show("1");
             conn.Open();
-            // MessageBox.Show("2");
-            ///MessageBox.Show("2");
             reader = new SqlCommand("select username,password from users where username='" + userName.Text + "' and password='" + password.Text + "'", conn).ExecuteReader();
             if (reader.Read())
             {
-                this.Hide();
+                Hide();
                 new invoiceNew(this, reader[0].ToString(), "CASH").Visible = true;
             }
             else
