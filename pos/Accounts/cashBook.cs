@@ -9,7 +9,7 @@ namespace pos
 {
     public partial class cashBook : Form
     {
-        public cashBook(Form form, String user)
+        public cashBook(Form form, string user)
         {
             InitializeComponent();
             homeH = form;
@@ -22,15 +22,11 @@ namespace pos
         private DB db, db2, db3, db4, db5;
         private SqlConnection conn, conn2, conn3, conn4, conn5;
         private SqlDataReader reader, reader2, reader3, reader4, reader5;
-        private Double cashBf, invest, amount, total, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
-        private string idB, userH, nameB;
+        private double cashBf, invest, amount, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
+        private string idB, userH;
         public bool statese, isLoadSaleAll, isLoadSale;
-        private Int32 yearB, monthB, index;
-        private DateTime dateSearchB;
-
-        private string cus = "";
-        private string[] array;
-
+        private int yearB, monthB;
+        private readonly DateTime dateSearchB;
         private DataSet ds;
         private DataTable dt;
 

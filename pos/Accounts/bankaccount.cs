@@ -9,7 +9,7 @@ namespace pos
 {
     public partial class bankaccount : Form
     {
-        public bankaccount(Form home, String user)
+        public bankaccount(Form home, string user)
         {
             InitializeComponent();
             this.home = home;
@@ -17,29 +17,26 @@ namespace pos
         }
 
         // My Variable Start
-        private DB db, db2;
+        private DB db;
 
-        private Form home;
-        private SqlConnection conn, conn2;
-        private SqlDataReader reader, reader2;
+        private readonly Form home;
+        private SqlConnection conn;
+        private SqlDataReader reader;
         private ArrayList arrayList;
-        private string[] idArray, nameArray, addressArray, mobileNoArray, LandNoArray, emailArray, companyArray;
+        private string[] idArray;
+        private readonly string user;
 
-        private Boolean check, checkListBox, states;
-        private string user, listBoxType;
 
         // my Variable End
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
+            TopMost = true;
             db = new DB();
             conn = db.createSqlConnection();
-            db2 = new DB();
-            conn2 = db2.createSqlConnection();
             loadAutoComplete();
-
             bankName.CharacterCasing = CharacterCasing.Upper;
+            loadUser();
         }
 
         private void loadUser()
@@ -100,14 +97,6 @@ namespace pos
             }
         }
 
-        private void itemProfile_Activated(object sender, EventArgs e)
-        {
-        }
-
-        private void itemProfile_Deactivate(object sender, EventArgs e)
-        {
-        }
-
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Dispose();
@@ -122,17 +111,7 @@ namespace pos
 
         private void aDDNEWITEMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            button1_Click(sender, e);
-        }
-
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private string subAcount;
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+            //button1_Click(sender, e);
         }
 
         //++++++ My Method Start+++
@@ -170,7 +149,7 @@ namespace pos
                 db.setTextBoxDefault(new TextBox[] { bankName, acountNo });
                 // id = "0";
             }
-            catch (Exception a)
+            catch
             {
                 MessageBox.Show("1");
             }
@@ -183,13 +162,9 @@ namespace pos
             button2_Click(sender, e);
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-        }
-
         private void dELETECURRENTITEMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            button3_Click(sender, e);
+           // button3_Click(sender, e);
         }
 
         private void rEFRESHToolStripMenuItem_Click(object sender, EventArgs e)

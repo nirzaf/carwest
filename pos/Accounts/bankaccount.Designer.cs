@@ -174,8 +174,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "bankaccount";
             this.Text = "BANK ACCOUNT\'S";
-            this.Activated += new System.EventHandler(this.itemProfile_Activated);
-            this.Deactivate += new System.EventHandler(this.itemProfile_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.itemProfile_FormClosing);
             this.Load += new System.EventHandler(this.itemProfile_Load);
             this.menuStrip1.ResumeLayout(false);

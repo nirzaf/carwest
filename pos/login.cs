@@ -12,16 +12,9 @@ namespace pos
         }
 
         // My Variable Start
-        private DB db, db2;
-
-        private Form home;
-        private SqlConnection conn, conn2;
-        private SqlDataReader reader, reader2;
-
-        // my Variable End
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
+        private DB db;
+        private SqlConnection conn;
+        private SqlDataReader reader;
 
         private void login_Load(object sender, EventArgs e)
         {
