@@ -16,19 +16,14 @@ namespace pos
             this.user = user;
         }
 
-        // My Variable Start
         private DB db, db2;
-
         private invoiceNew home;
         private SqlConnection conn, conn2;
         private SqlDataReader reader, reader2;
         private ArrayList arrayList;
         private string[] mobileNoArray, LandNoArray, emailArray, companyArray;
-
-        private Boolean states;
+        private bool states;
         private string user, codeC;
-
-        // my Variable End
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
@@ -49,49 +44,25 @@ namespace pos
             maxOt.Format = DateTimePickerFormat.Custom;
             maxOt.CustomFormat = "HH:mm"; // Only use hours and minutes
             maxOt.ShowUpDown = true;
-
-            this.TopMost = true;
+            TopMost = true;
             db = new DB();
             conn = db.createSqlConnection();
             db2 = new DB();
             conn2 = db2.createSqlConnection();
             loadAutoComplete();
-            this.ActiveControl = companyC;
+            ActiveControl = companyC;
             companyC.Focus();
             addressC.CharacterCasing = CharacterCasing.Upper;
             addressS.CharacterCasing = CharacterCasing.Upper;
             companyS.CharacterCasing = CharacterCasing.Upper;
             companyC.CharacterCasing = CharacterCasing.Upper;
-
             code.CharacterCasing = CharacterCasing.Upper;
             brand.CharacterCasing = CharacterCasing.Upper;
             description.CharacterCasing = CharacterCasing.Upper;
-
             companyCo.CharacterCasing = CharacterCasing.Upper;
             addressCo.CharacterCasing = CharacterCasing.Upper;
             dataGridView1.AllowUserToAddRows = false;
-
             getID();
-
-            //if (user.Equals("rasika") || user.Equals("basnayake"))
-            //{
-            //    sellingPrice.Enabled = true;
-            //    costPrice.Enabled = true;
-            //    discount.Enabled = true;
-            //    button3.Enabled = true;
-            //    allowances.Enabled = true;
-            //    salary.Enabled = true;
-
-            //}
-            //else
-            //{
-            //    sellingPrice.Enabled = false;
-            //    costPrice.Enabled = false;
-            //    discount.Enabled = false;
-            //    button3.Enabled = false;
-            //    allowances.Enabled = false;
-            //    salary.Enabled = false;
-            //}
             getStaff();
         }
 
@@ -119,7 +90,7 @@ namespace pos
 
         private string tempCustomer;
 
-        public Boolean loadCustomer(string id)
+        public bool loadCustomer(string id)
         {
             try
             {
@@ -129,16 +100,10 @@ namespace pos
                 if (reader.Read())
                 {
                     states = true;
-                    //  codeC = id;
                     companyC.Text = reader.GetString(2);
-                    //  nameC.Text = reader.GetString(1);
                     addressC.Text = reader.GetString(3);
                     mobileNumberC.Text = reader.GetString(4);
-                    //  dayLimitValue.Text = reader[10] + "";
-                    // checkBox2.Checked = reader.GetBoolean(11);
-                    // creditPeriod.Text = reader[12] + "";
                     tempCustomer = reader[0] + "";
-                    //addressC.SelectionLength = addressC.TextLength;
                     contat1Name.Text = reader[13] + "";
                     contact2Name.Text = reader[14] + "";
                     contact3Name.Text = reader[15] + "";
@@ -164,7 +129,7 @@ namespace pos
             return states;
         }
 
-        public Boolean loadCompany(string id)
+        public bool loadCompany(string id)
         {
             try
             {
@@ -174,18 +139,14 @@ namespace pos
                 if (reader.Read())
                 {
                     states = true;
-                    // code = id;
                     companyCo.Text = reader.GetString(2);
-                    //  nameC.Text = reader.GetString(1);
                     addressCo.Text = reader.GetString(3);
                     mobileCo.Text = reader.GetString(4);
                     tempCustomer = reader[0] + "";
-                    //addressC.SelectionLength = addressC.TextLength;
                     db.ToTitleCase(new TextBox[] { companyCo, addressCo, mobileNumberC, addressCo });
                 }
                 else
                 {
-                    // MessageBox.Show(id);
                     states = false;
                     tempCustomer = "";
                 }
@@ -202,21 +163,17 @@ namespace pos
             return states;
         }
 
-        public Boolean loadStaff(string id)
+        public bool loadStaff(string id)
         {
             try
             {
                 db.setCursoerWait();
-                // refresh();
                 conn.Open();
-
                 reader = new SqlCommand("select empid,name,residentialAddress,mobileNUmber,type,epfbasic,bankingAmount,epf,etf,epf12,resgin,incentive,allowances,meal,gross,resgin,bouns,punish,holiday,advanced,NIC,isEpf,isExecutive,epfNO from emp where empid='" + id + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
                     states = true;
-                    // codeC = id;
                     companyS.Text = reader.GetString(1);
-                    //  nameC.Text = reader.GetString(1);
                     addressS.Text = reader.GetString(2);
                     mobileS.Text = reader.GetString(3);
                     salary.Text = reader[5] + "";
@@ -234,14 +191,10 @@ namespace pos
                     comboHoliday.SelectedItem = reader.GetString(18);
                     category.Text = "";
                     advanced.Text = reader[19] + "";
-                    //  loan.Text = reader[20] + "";
                     nic.Text = reader[20] + "";
-
                     checkBoxEpfPay.Checked = reader.GetBoolean(21);
                     checkBoxeXCECUTIVE.Checked = reader.GetBoolean(22);
                     epfNo.Text = reader[23] + "";
-                    //  nicName.Text=reader[22]+"";
-                    //addressC.SelectionLength = addressC.TextLength;
                     db.ToTitleCase(new TextBox[] { companyS, addressS, mobileS });
                 }
                 else
@@ -262,7 +215,7 @@ namespace pos
             return states;
         }
 
-        public Boolean loadItem(string id)
+        public bool loadItem(string id)
         {
             try
             {
@@ -317,23 +270,15 @@ namespace pos
                         MessageBox.Show("Please Enter Name for a Customer");
                         companyC.Focus();
                     }
-                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    else if (MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                     {
-                        //  MessageBox.Show(tempCustomer);
-
-                        // conn.Open();
                         new SqlCommand("delete from customer where id='" + "C-" + ID.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
-
                         conn.Open();
                         new SqlCommand("insert into customer values ('" + "C-" + ID.Text + "','" + "" + "','" + companyC.Text + "','" + addressC.Text + "','" + mobileNumberC.Text + "','" + "" + "','" + companyC.Text + " " + mobileNumberC.Text + "','" + "" + "','" + "" + "','" + checkBoxEpfPay.Checked + "','" + checkBoxeXCECUTIVE.Checked + "','" + epfNo.Text + "','" + contat1Name.Text + "','" + contact2Name.Text + "','" + contact3Name.Text + "','" + contact2.Text + "','" + contact3.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
                         ID.Focus();
                         cutomerID = "C-" + ID.Text;
-
                         getID();
                     }
                 }
@@ -344,9 +289,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         MessageBox.Show("Please Enter Name for a Staff Member");
                         companyS.Focus();
                     }
-                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    else if (MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                     {
                         new SqlCommand("delete from emp where empid='" + attendanceNo.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
@@ -365,9 +308,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         MessageBox.Show("Please Enter Name for a Company");
                         companyCo.Focus();
                     }
-                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    else if (MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                     {
                         new SqlCommand("delete from supplier where id='" + "S-" + IDS.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
@@ -387,9 +328,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         MessageBox.Show("Please Enter Code");
                         code.Focus();
                     }
-                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes))
                     {
                         reader = new SqlCommand("select * from item where code='" + code.Text + "'", conn).ExecuteReader();
                         if (reader.Read())
@@ -417,9 +356,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                         MessageBox.Show("Please Enter Account Number");
                         accountNumber.Focus();
                     }
-                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    else if ((MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes))
                     {
                         reader = new SqlCommand("select * from bank where bankCode='" + accountNumber.Text + "'", conn).ExecuteReader();
                         if (reader.Read())
@@ -441,10 +378,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else if (tabControl1.SelectedIndex == 5)
                 {
-                    // MessageBox.Show("sa");
-                    if ((MessageBox.Show("Are You Sure ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                    if ((MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes))
                     {
                         conn.Close();
                         conn.Open();
@@ -463,17 +397,9 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             }
         }
 
-        private void itemProfile_Activated(object sender, EventArgs e)
-        {
-        }
-
-        private void itemProfile_Deactivate(object sender, EventArgs e)
-        {
-        }
-
         private void itemProfile_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Dispose();
+            Dispose();
             home.Enabled = true;
             home.TopMost = true;
             home.cutomerID = cutomerID;
@@ -490,11 +416,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             button1_Click(sender, e);
         }
 
-        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
-        {
-        }
-
-        private Int32 idTemp = 0;
+        private int idTemp = 0;
 
         private void getID()
         {
