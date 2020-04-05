@@ -20,7 +20,7 @@ namespace pos
         {
             db = new DB();
             conn = db.createSqlConnection();
-            this.ActiveControl = userName;
+            ActiveControl = userName;
         }
 
         private void userName_KeyDown(object sender, KeyEventArgs e)
