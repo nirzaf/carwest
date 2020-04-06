@@ -96,7 +96,7 @@ namespace pos
                 invoieNoTemp = invoiceNo.Text.ToString().Split('-')[1].ToString();
 
                 conn.Open();
-                reader = new SqlCommand("select a.id,a.retail,a.subTotal,a.date,a.payType,a.customerId,a.pono from " + query + " as a  where a.id = '" + invoieNoTemp + "' ", conn).ExecuteReader();
+                reader = new SqlCommand("select a.id, a.retail, a.subTotal, a.date, a.payType, a.customerId, a.pono from " + query + " as a where a.id = '" + invoieNoTemp + "'", conn).ExecuteReader();
                 if (reader.Read())
                 {
                     conn2.Open();
@@ -214,26 +214,12 @@ namespace pos
                 arrayList = new ArrayList();
                 while (reader.Read())
                 {
-                    // MessageBox.Show("m");
                     arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
                 }
                 reader.Close();
                 idArray = arrayList.ToArray(typeof(string)) as string[];
                 db.setAutoComplete(vehicleNO, idArray);
                 conn.Close();
-
-                //conn.Open();
-                //reader = new SqlCommand("select customerid from " + query + " ", conn).ExecuteReader();
-                //arrayList = new ArrayList();
-                //while (reader.Read())
-                //{
-                //    // MessageBox.Show("m");
-                //    arrayList.Add(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(reader[0].ToString().ToLower()) + "");
-                //}
-                //reader.Close();
-                //idArray = arrayList.ToArray(typeof(string)) as string[];
-                //db.setAutoComplete(cutomerUnSaved, idArray);
-                //conn.Close();
             }
             catch (Exception a)
             {

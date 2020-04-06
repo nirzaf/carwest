@@ -23,15 +23,12 @@ namespace pos
         private SqlConnection conn, conn2, conn3, conn4;
         private SqlDataReader reader, reader2, reader3, reader4;
         private ArrayList arrayList, stockList;
-        private Boolean check, checkListBox, states, item, checkStock;
+        private bool check, checkListBox, states, item, checkStock;
         private string user, type, cutomerID = "", description, invoieNoTemp;
-        private String[] idArray;
+        private string[] idArray;
         private DataGridViewButtonColumn btn;
-        private Int32 invoiceMaxNo, rowCount;
-        private Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
-        //+++++++++My Variable End
-
-        //++My Method Start
+        private int invoiceMaxNo, rowCount;
+        private double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
 
         private void loadInvoiceByID()
         {
@@ -253,7 +250,7 @@ namespace pos
                 }
                 else
                 {
-                   // //MessageBox.Show("Data Downloaded Succesfully");
+                   //MessageBox.Show("Data Downloaded Succesfully");
                 }
                 reader.Close();
                 conn.Close();
@@ -275,7 +272,6 @@ namespace pos
             {
                 dataGridView1.Rows.Clear();
                 db.setCursoerWait();
-                // MessageBox.Show(from.Value.ToShortDateString());
 
                 if (checkBox1.Checked)
                 {
@@ -283,7 +279,6 @@ namespace pos
                     reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' and a.supplierid = '" + customer.Text + "' ", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        // MessageBox.Show(reader[0] + " " + reader4[0]);
                         conn2.Open();
                         reader2 = new SqlCommand("select * from grn as a  where a.id='" + reader[0] + "'", conn2).ExecuteReader();
                         if (reader2.Read())
@@ -345,7 +340,7 @@ namespace pos
                 }
                 else
                 {
-                   // //MessageBox.Show("Data Downloaded Succesfully ");
+                   //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -354,7 +349,6 @@ namespace pos
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
-                // throw;
                 conn.Close(); conn2.Close(); conn3.Close(); conn4.Close();
             }
         }
@@ -368,9 +362,7 @@ namespace pos
             }
             else if (e.ColumnIndex == 6)
             {
-                if ((MessageBox.Show("Are you Sure, Delete ?", "Confirmation",
-MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                if ((MessageBox.Show("Are you Sure, Delete ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes))
                 {
                     db.setCursoerWait();
                     try
@@ -440,8 +432,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 catch (Exception a)
                 {
                     MessageBox.Show(a.Message + "/" + a.StackTrace);
-
-                    // throw;
                 }
             }
         }
@@ -484,7 +474,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
 
         private string tempCustomer;
 
-        public Boolean loadCustomer(string id)
+        public bool loadCustomer(string id)
         {
             try
             {
@@ -494,14 +484,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 if (reader.Read())
                 {
                     states = true;
-                    //  codeC = id;
                     customer.Text = reader.GetString(2);
-                    //  nameC.Text = reader.GetString(1);
-                    //  a//ddressC.Text = reader.GetString(3);
-                    // mobileNumberC.Text = reader.GetString(4);
                     tempCustomer = reader[0] + "";
-                    //addressC.SelectionLength = addressC.TextLength;
-                    //  db.ToTitleCase(new TextBox[] { companyC, addressC, mobileNumberC });
                 }
                 else
                 {
@@ -511,7 +495,6 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 reader.Close();
                 conn.Close();
                 db.setCursoerDefault();
-                //  addressC.Focus();
             }
             catch (Exception a)
             {
@@ -527,13 +510,10 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 dataGridView1.Rows.Clear();
                 db.setCursoerWait();
-                // MessageBox.Show(from.Value.ToShortDateString());
-
                 conn.Open();
                 reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where a.date between '" + from.Value.ToShortDateString() + "' and '" + toDate.Value.ToShortDateString() + "' ", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    // MessageBox.Show(reader[0] + " " + reader4[0]);
                     conn2.Open();
                     reader2 = new SqlCommand("select * from grn as a  where a.id='" + reader[0] + "'", conn2).ExecuteReader();
                     if (reader2.Read())
@@ -564,7 +544,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-                    ////MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -573,30 +553,8 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
-                // throw;
                 conn.Close(); conn2.Close(); conn3.Close(); conn4.Close();
             }
-        }
-
-        private void cutomerUnSaved_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void cutomerUnSaved_KeyUp(object sender, KeyEventArgs e)
-        {
-            //
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
-        private void cutomerUnSaved_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void customer_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void customer_KeyUp(object sender, KeyEventArgs e)
@@ -622,14 +580,13 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                     conn.Close();
                 }
                 catch (Exception a)
-                {//
-                    // MessageBox.Show(a.Message);
+                {
+                    MessageBox.Show(a.Message);
                     conn.Close();
                 }
             }
             if (customer.Text.Equals(""))
             {
-                //   MessageBox.Show("2");
                 listBox1.Visible = false;
             }
         }
