@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -434,7 +430,7 @@ namespace pos
         {
             code.Text = "";
             unitPrice.Text = "0.0";
-           
+
             qtyIn.Text = "";
             discount.Text = "0";
             code.Focus();
@@ -443,7 +439,7 @@ namespace pos
         }
         void loadItem(string codeValue)
         {
-          
+
         }
         Int16 itemCount = 0;
         string uom;
@@ -544,7 +540,7 @@ namespace pos
                 {
                     item = true;
 
-                 ///   tempDesc.Text = reader[1] + "";
+                    ///   tempDesc.Text = reader[1] + "";
                     uom = reader[4] + "";
 
                     var ab = reader.GetString(1).ToUpper().Split(' ');
@@ -1091,7 +1087,7 @@ namespace pos
                     try
                     {
                         conn.Open();
-                        new SqlCommand("delete from cusBalance where customer='"+cutomerID+"'",conn).ExecuteNonQuery();
+                        new SqlCommand("delete from cusBalance where customer='" + cutomerID + "'", conn).ExecuteNonQuery();
                         conn.Close();
                         conn.Open();
                         new SqlCommand("insert into cusBalance values ('" + cutomerID + "','" + code.Text + "','" + DateTime.Now + "')", conn).ExecuteNonQuery();
@@ -2050,7 +2046,7 @@ namespace pos
                             conn.Close();
 
                             conn.Open();
-                            new SqlCommand("insert into itemStatement values('" + "RE-" + invoieNoTemp + "','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + false + "','" + Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) + "','" + DateTime.Now + "','" + "RETURN GOOD" + "','" + user + "','"+0+"')", conn).ExecuteNonQuery();
+                            new SqlCommand("insert into itemStatement values('" + "RE-" + invoieNoTemp + "','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + false + "','" + Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) + "','" + DateTime.Now + "','" + "RETURN GOOD" + "','" + user + "','" + 0 + "')", conn).ExecuteNonQuery();
 
                             conn.Close();
                             conn2.Open();
@@ -2065,7 +2061,7 @@ namespace pos
                             conn.Close();
 
                             conn.Open();
-                            new SqlCommand("insert into itemStatement values('" + "RE-" + invoieNoTemp + "','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + true + "','" + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()) + "','" + DateTime.Now + "','" + "RETURN GOOD" + "','" + user + "','"+0+"')", conn).ExecuteNonQuery();
+                            new SqlCommand("insert into itemStatement values('" + "RE-" + invoieNoTemp + "','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + true + "','" + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString()) + "','" + DateTime.Now + "','" + "RETURN GOOD" + "','" + user + "','" + 0 + "')", conn).ExecuteNonQuery();
 
                             conn.Close();
                             conn2.Open();
@@ -2081,7 +2077,8 @@ namespace pos
 
 
 
-                    } MessageBox.Show("Saved Succefully");
+                    }
+                    MessageBox.Show("Saved Succefully");
 
 
                     //++++++++++++++++++++Tax Inoice End

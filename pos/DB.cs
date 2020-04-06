@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Windows.Forms;
 
 namespace pos
@@ -21,16 +20,16 @@ namespace pos
             {
                 conn = new SqlConnection();
                 string server = @"CARWEST-PC";
-                string dbName= "pos2";
+                string dbName = "pos2";
                 string UserId = "admin";
                 string Password = "admin";
-                conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName +"; User Id="+ UserId + ";Password = " + Password ;
+                conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName + "; User Id=" + UserId + ";Password = " + Password;
                 //conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName +"; Integrated Security = true";
                 return conn;
             }
             catch (Exception abc)
             {
-                MessageBox.Show(abc.Message + "/" + abc.StackTrace );
+                MessageBox.Show(abc.Message + "/" + abc.StackTrace);
                 return conn;
             }
         }

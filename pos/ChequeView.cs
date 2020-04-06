@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Globalization;
-
-using System.Text;
 using System.Windows.Forms;
 
 namespace pos
@@ -177,11 +172,11 @@ namespace pos
             {
                 MessageBox.Show("Invalied Date");
             }
-           
+
             else
             {
                 sqlconn.Open();
-               
+
                 {
                     sqlconn.Close();
                     Cursor.Current = Cursors.WaitCursor;
@@ -225,7 +220,7 @@ namespace pos
                         {
                             if (!crossed.Checked)
                             {
-                                states = new printCheque().setprintCheque(date, amount, "CASH",radioButton1.Checked);
+                                states = new printCheque().setprintCheque(date, amount, "CASH", radioButton1.Checked);
 
                             }
                             else
@@ -237,7 +232,7 @@ namespace pos
 
                         }
                         depositC = true;
-                       // saveInvoice2();
+                        // saveInvoice2();
                     }
                     if (radioDeposit.Checked)
                     {
@@ -247,7 +242,7 @@ namespace pos
                     if (states.Equals(""))
                     {
                         sqlconn.Open();
-                    //    new SqlCommand("insert into chequeSummery values('" + bankName.Text + "','" + branch.Text + "','" + acNo.Text + "','" + radioRecivd.Checked + "','" + radioDeposit.Checked + "','" + radioSend.Checked + "','" + amountByNumber.Text + "','" + comboBox1.SelectedItem.ToString().Split('-')[1] + "','" + chqueNumber.Text + "','" + dateTimePicker1.Value + "','" + false + "','" + depositC + "','" + cutomerID + "')", sqlconn).ExecuteNonQuery();
+                        //    new SqlCommand("insert into chequeSummery values('" + bankName.Text + "','" + branch.Text + "','" + acNo.Text + "','" + radioRecivd.Checked + "','" + radioDeposit.Checked + "','" + radioSend.Checked + "','" + amountByNumber.Text + "','" + comboBox1.SelectedItem.ToString().Split('-')[1] + "','" + chqueNumber.Text + "','" + dateTimePicker1.Value + "','" + false + "','" + depositC + "','" + cutomerID + "')", sqlconn).ExecuteNonQuery();
                         sqlconn.Close();
                         MessageBox.Show("Cheque Send to Printer to Print Succefully");
                         payName.Text = "";
@@ -767,7 +762,7 @@ namespace pos
                     states = true;
                     while (reader.Read())
                     {
-                        listBox1.Items.Add( reader[1].ToString().ToUpper());
+                        listBox1.Items.Add(reader[1].ToString().ToUpper());
                         states = false;
                     }
                     reader.Close();

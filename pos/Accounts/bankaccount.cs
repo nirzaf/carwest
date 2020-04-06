@@ -164,20 +164,20 @@ namespace pos
 
         private void dELETECURRENTITEMToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           // button3_Click(sender, e);
+            // button3_Click(sender, e);
         }
 
         private void rEFRESHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             refresh();
         }
-      
+
         private void rEFRESHToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             refresh();
         }
 
-      
+
         private void companyC_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 12 || e.KeyValue == 13)
