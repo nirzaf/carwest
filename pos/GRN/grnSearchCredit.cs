@@ -73,7 +73,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -127,7 +127,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -205,7 +205,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -283,7 +283,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -541,7 +541,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();

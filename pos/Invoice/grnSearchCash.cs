@@ -287,7 +287,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
 
@@ -636,7 +636,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();

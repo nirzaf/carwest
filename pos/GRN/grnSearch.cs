@@ -66,7 +66,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    ////MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -253,7 +253,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                   // //MessageBox.Show("Data Downloaded Succesfully");
                 }
                 reader.Close();
                 conn.Close();
@@ -314,7 +314,6 @@ namespace pos
                     reader = new SqlCommand("select DISTINCT a.id from grn as a ,supplier as b where  a.supplierid = '" + customer.Text + "' ", conn).ExecuteReader();
                     while (reader.Read())
                     {
-                        // MessageBox.Show(reader[0] + " " + reader4[0]);
                         conn2.Open();
                         reader2 = new SqlCommand("select * from grn as a  where a.id='" + reader[0] + "'", conn2).ExecuteReader();
                         if (reader2.Read())
@@ -346,7 +345,7 @@ namespace pos
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                   // //MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
@@ -565,7 +564,7 @@ MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
                 }
                 else
                 {
-                    MessageBox.Show("Data Downloaded Succesfully ");
+                    ////MessageBox.Show("Data Downloaded Succesfully ");
                 }
                 reader.Close();
                 conn.Close();
