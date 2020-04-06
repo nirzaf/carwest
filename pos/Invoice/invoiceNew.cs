@@ -9,7 +9,7 @@ namespace pos
 {
     public partial class invoiceNew : Form
     {
-        public invoiceNew(Form form, String user, string invoiceType)
+        public invoiceNew(Form form, string user, string invoiceType)
         {
             InitializeComponent();
             home = form;
