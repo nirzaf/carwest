@@ -35,7 +35,7 @@ namespace pos
             }
         }
 
-        private Double cashOut_, cashBf, invest, amount, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
+        private double cashOut_, cashBf, invest, amount, tempTOtalSale, tempCredistSale, tempChequeSale, tempCardSale, tempCashSale, tempExpen, tempCashRecevied, tempCashGiven, tempCashPaidReturn;
 
         public string setItemDescriptionCusSupp(TextBox[] textBox)
         {
