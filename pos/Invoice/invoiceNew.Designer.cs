@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.quickPanel = new System.Windows.Forms.Panel();
+            this.button59 = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.passwordText = new System.Windows.Forms.TextBox();
             this.button32 = new System.Windows.Forms.Button();
@@ -278,7 +279,6 @@
             this.label53 = new System.Windows.Forms.Label();
             this.button30 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
-            this.button59 = new System.Windows.Forms.Button();
             this.quickPanel.SuspendLayout();
             this.panel7.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -318,6 +318,16 @@
             this.quickPanel.Size = new System.Drawing.Size(1068, 142);
             this.quickPanel.TabIndex = 0;
             this.quickPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.quickPanel_Paint);
+            // 
+            // button59
+            // 
+            this.button59.Location = new System.Drawing.Point(398, 32);
+            this.button59.Name = "button59";
+            this.button59.Size = new System.Drawing.Size(116, 23);
+            this.button59.TabIndex = 51;
+            this.button59.Text = "LOAD INVOICE";
+            this.button59.UseVisualStyleBackColor = true;
+            this.button59.Click += new System.EventHandler(this.button59_Click);
             // 
             // label19
             // 
@@ -706,7 +716,7 @@
             // 
             this.cREATEINVOIToolStripMenuItem.Name = "cREATEINVOIToolStripMenuItem";
             this.cREATEINVOIToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Space)));
-            this.cREATEINVOIToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.cREATEINVOIToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.cREATEINVOIToolStripMenuItem.Text = "CREATE INVOICE";
             this.cREATEINVOIToolStripMenuItem.Click += new System.EventHandler(this.cREATEINVOIToolStripMenuItem_Click);
             // 
@@ -714,7 +724,7 @@
             // 
             this.gENARATEToolStripMenuItem.Name = "gENARATEToolStripMenuItem";
             this.gENARATEToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.gENARATEToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.gENARATEToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.gENARATEToolStripMenuItem.Text = "GENARATE";
             // 
             // cOMPANYKISTToolStripMenuItem
@@ -722,7 +732,7 @@
             this.cOMPANYKISTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboCompany});
             this.cOMPANYKISTToolStripMenuItem.Name = "cOMPANYKISTToolStripMenuItem";
-            this.cOMPANYKISTToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.cOMPANYKISTToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.cOMPANYKISTToolStripMenuItem.Text = "COMPANY LIST";
             // 
             // comboCompany
@@ -739,7 +749,7 @@
             this.sALEACCONToolStripMenuItem,
             this.cREDITCARDPAYMENTToolStripMenuItem});
             this.aCCOUNTLISTToolStripMenuItem.Name = "aCCOUNTLISTToolStripMenuItem";
-            this.aCCOUNTLISTToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.aCCOUNTLISTToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.aCCOUNTLISTToolStripMenuItem.Text = "ACCOUNT LIST";
             // 
             // cHEQUEPAYMENTToolStripMenuItem
@@ -747,7 +757,7 @@
             this.cHEQUEPAYMENTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboChequePayment});
             this.cHEQUEPAYMENTToolStripMenuItem.Name = "cHEQUEPAYMENTToolStripMenuItem";
-            this.cHEQUEPAYMENTToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.cHEQUEPAYMENTToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.cHEQUEPAYMENTToolStripMenuItem.Text = "CHEQUE PAYMENT";
             // 
             // comboChequePayment
@@ -761,7 +771,7 @@
             this.sALEACCONToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboSaleAccount});
             this.sALEACCONToolStripMenuItem.Name = "sALEACCONToolStripMenuItem";
-            this.sALEACCONToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.sALEACCONToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.sALEACCONToolStripMenuItem.Text = "SALE ACCOUNT";
             // 
             // comboSaleAccount
@@ -776,7 +786,7 @@
             this.cREDITCARDPAYMENTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboCardPayment});
             this.cREDITCARDPAYMENTToolStripMenuItem.Name = "cREDITCARDPAYMENTToolStripMenuItem";
-            this.cREDITCARDPAYMENTToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.cREDITCARDPAYMENTToolStripMenuItem.Size = new System.Drawing.Size(238, 24);
             this.cREDITCARDPAYMENTToolStripMenuItem.Text = "CREDIT CARD PAYMENT";
             // 
             // comboCardPayment
@@ -791,7 +801,7 @@
             this.pRINTERSELECTToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboPrinter});
             this.pRINTERSELECTToolStripMenuItem.Name = "pRINTERSELECTToolStripMenuItem";
-            this.pRINTERSELECTToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.pRINTERSELECTToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.pRINTERSELECTToolStripMenuItem.Text = "PRINTER SELECT";
             // 
             // comboPrinter
@@ -807,7 +817,7 @@
             this.dISCOUNTTYPEToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboDiscount});
             this.dISCOUNTTYPEToolStripMenuItem.Name = "dISCOUNTTYPEToolStripMenuItem";
-            this.dISCOUNTTYPEToolStripMenuItem.Size = new System.Drawing.Size(272, 24);
+            this.dISCOUNTTYPEToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
             this.dISCOUNTTYPEToolStripMenuItem.Text = "DISCOUNT TYPE";
             // 
             // comboDiscount
@@ -861,7 +871,7 @@
             // 
             this.cASHBILLToolStripMenuItem.Name = "cASHBILLToolStripMenuItem";
             this.cASHBILLToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.cASHBILLToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cASHBILLToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cASHBILLToolStripMenuItem.Text = "CASH BILL";
             this.cASHBILLToolStripMenuItem.Click += new System.EventHandler(this.cASHBILLToolStripMenuItem_Click);
             // 
@@ -869,7 +879,7 @@
             // 
             this.cHEQUEBILLToolStripMenuItem.Name = "cHEQUEBILLToolStripMenuItem";
             this.cHEQUEBILLToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.cHEQUEBILLToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cHEQUEBILLToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cHEQUEBILLToolStripMenuItem.Text = "CHEQUE BILL";
             this.cHEQUEBILLToolStripMenuItem.Click += new System.EventHandler(this.cHEQUEBILLToolStripMenuItem_Click);
             // 
@@ -877,7 +887,7 @@
             // 
             this.cREDITBILLToolStripMenuItem.Name = "cREDITBILLToolStripMenuItem";
             this.cREDITBILLToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.cREDITBILLToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cREDITBILLToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cREDITBILLToolStripMenuItem.Text = "CREDIT BILL";
             this.cREDITBILLToolStripMenuItem.Click += new System.EventHandler(this.cREDITBILLToolStripMenuItem_Click);
             // 
@@ -885,7 +895,7 @@
             // 
             this.cARDBILLToolStripMenuItem.Name = "cARDBILLToolStripMenuItem";
             this.cARDBILLToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.cARDBILLToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cARDBILLToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cARDBILLToolStripMenuItem.Text = "CARD BILL";
             this.cARDBILLToolStripMenuItem.Click += new System.EventHandler(this.cARDBILLToolStripMenuItem_Click);
             // 
@@ -893,7 +903,7 @@
             // 
             this.eXPENSESToolStripMenuItem.Name = "eXPENSESToolStripMenuItem";
             this.eXPENSESToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.eXPENSESToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.eXPENSESToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.eXPENSESToolStripMenuItem.Text = "EXPENSES";
             this.eXPENSESToolStripMenuItem.Click += new System.EventHandler(this.eXPENSESToolStripMenuItem_Click);
             // 
@@ -901,7 +911,7 @@
             // 
             this.pURCHASINGBILLToolStripMenuItem.Name = "pURCHASINGBILLToolStripMenuItem";
             this.pURCHASINGBILLToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.pURCHASINGBILLToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.pURCHASINGBILLToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.pURCHASINGBILLToolStripMenuItem.Text = "PURCHASING BILL";
             this.pURCHASINGBILLToolStripMenuItem.Click += new System.EventHandler(this.pURCHASINGBILLToolStripMenuItem_Click);
             // 
@@ -909,7 +919,7 @@
             // 
             this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.Name = "pURCHASINGPAIDBILLPAIDToolStripMenuItem";
             this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.Text = "PURCHASING PAID BILL-PAID";
             this.pURCHASINGPAIDBILLPAIDToolStripMenuItem.Click += new System.EventHandler(this.pURCHASINGPAIDBILLPAIDToolStripMenuItem_Click);
             // 
@@ -917,7 +927,7 @@
             // 
             this.rETURNGODDSToolStripMenuItem.Name = "rETURNGODDSToolStripMenuItem";
             this.rETURNGODDSToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.rETURNGODDSToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.rETURNGODDSToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.rETURNGODDSToolStripMenuItem.Text = "RETURN GODDS";
             this.rETURNGODDSToolStripMenuItem.Click += new System.EventHandler(this.rETURNGODDSToolStripMenuItem_Click);
             // 
@@ -925,7 +935,7 @@
             // 
             this.rEGISTERToolStripMenuItem.Name = "rEGISTERToolStripMenuItem";
             this.rEGISTERToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
-            this.rEGISTERToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.rEGISTERToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.rEGISTERToolStripMenuItem.Text = "REGISTER";
             this.rEGISTERToolStripMenuItem.Click += new System.EventHandler(this.rEGISTERToolStripMenuItem_Click);
             // 
@@ -933,7 +943,7 @@
             // 
             this.pRICELISTToolStripMenuItem.Name = "pRICELISTToolStripMenuItem";
             this.pRICELISTToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10;
-            this.pRICELISTToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.pRICELISTToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.pRICELISTToolStripMenuItem.Text = "PRICE LIST";
             this.pRICELISTToolStripMenuItem.Click += new System.EventHandler(this.pRICELISTToolStripMenuItem_Click);
             // 
@@ -941,49 +951,49 @@
             // 
             this.qUICKITEMToolStripMenuItem.Name = "qUICKITEMToolStripMenuItem";
             this.qUICKITEMToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F11;
-            this.qUICKITEMToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.qUICKITEMToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.qUICKITEMToolStripMenuItem.Text = "QUICK ITEM";
             // 
             // qUATATIONToolStripMenuItem
             // 
             this.qUATATIONToolStripMenuItem.Name = "qUATATIONToolStripMenuItem";
             this.qUATATIONToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F12;
-            this.qUATATIONToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.qUATATIONToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.qUATATIONToolStripMenuItem.Text = "QUATATION";
             // 
             // bANKToolStripMenuItem
             // 
             this.bANKToolStripMenuItem.Name = "bANKToolStripMenuItem";
             this.bANKToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F1)));
-            this.bANKToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.bANKToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.bANKToolStripMenuItem.Text = "BANK";
             // 
             // sALARYToolStripMenuItem
             // 
             this.sALARYToolStripMenuItem.Name = "sALARYToolStripMenuItem";
             this.sALARYToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F2)));
-            this.sALARYToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.sALARYToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.sALARYToolStripMenuItem.Text = "SALARY";
             // 
             // ePFETFToolStripMenuItem
             // 
             this.ePFETFToolStripMenuItem.Name = "ePFETFToolStripMenuItem";
             this.ePFETFToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F3)));
-            this.ePFETFToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.ePFETFToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.ePFETFToolStripMenuItem.Text = "EPF/ ETF";
             // 
             // cASHBOOKToolStripMenuItem
             // 
             this.cASHBOOKToolStripMenuItem.Name = "cASHBOOKToolStripMenuItem";
             this.cASHBOOKToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Shift | System.Windows.Forms.Keys.F4)));
-            this.cASHBOOKToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cASHBOOKToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cASHBOOKToolStripMenuItem.Text = "CASH BOOK";
             // 
             // cREATEPENDINGToolStripMenuItem
             // 
             this.cREATEPENDINGToolStripMenuItem.Name = "cREATEPENDINGToolStripMenuItem";
             this.cREATEPENDINGToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.cREATEPENDINGToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cREATEPENDINGToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cREATEPENDINGToolStripMenuItem.Text = "CREATE PENDING";
             this.cREATEPENDINGToolStripMenuItem.Click += new System.EventHandler(this.cREATEPENDINGToolStripMenuItem_Click);
             // 
@@ -991,7 +1001,7 @@
             // 
             this.cRETAEINVOICEToolStripMenuItem.Name = "cRETAEINVOICEToolStripMenuItem";
             this.cRETAEINVOICEToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cRETAEINVOICEToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cRETAEINVOICEToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cRETAEINVOICEToolStripMenuItem.Text = "CRETAE INVOICE";
             this.cRETAEINVOICEToolStripMenuItem.Click += new System.EventHandler(this.cRETAEINVOICEToolStripMenuItem_Click);
             // 
@@ -999,7 +1009,7 @@
             // 
             this.cLEARToolStripMenuItem.Name = "cLEARToolStripMenuItem";
             this.cLEARToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.cLEARToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.cLEARToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.cLEARToolStripMenuItem.Text = "CLEAR";
             this.cLEARToolStripMenuItem.Click += new System.EventHandler(this.cLEARToolStripMenuItem_Click);
             // 
@@ -1007,7 +1017,7 @@
             // 
             this.iTEMADDToolStripMenuItem.Name = "iTEMADDToolStripMenuItem";
             this.iTEMADDToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.iTEMADDToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.iTEMADDToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.iTEMADDToolStripMenuItem.Text = "ITEM ADD";
             this.iTEMADDToolStripMenuItem.Click += new System.EventHandler(this.iTEMADDToolStripMenuItem_Click);
             // 
@@ -1015,7 +1025,7 @@
             // 
             this.vEHICLEADDToolStripMenuItem.Name = "vEHICLEADDToolStripMenuItem";
             this.vEHICLEADDToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.vEHICLEADDToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.vEHICLEADDToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.vEHICLEADDToolStripMenuItem.Text = "VEHICLE ADD";
             this.vEHICLEADDToolStripMenuItem.Click += new System.EventHandler(this.vEHICLEADDToolStripMenuItem_Click);
             // 
@@ -1023,7 +1033,7 @@
             // 
             this.sEARCHToolStripMenuItem.Name = "sEARCHToolStripMenuItem";
             this.sEARCHToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.sEARCHToolStripMenuItem.Size = new System.Drawing.Size(299, 24);
+            this.sEARCHToolStripMenuItem.Size = new System.Drawing.Size(297, 24);
             this.sEARCHToolStripMenuItem.Text = "SEARCH";
             this.sEARCHToolStripMenuItem.Click += new System.EventHandler(this.sEARCHToolStripMenuItem_Click);
             // 
@@ -1037,14 +1047,14 @@
             // cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem
             // 
             this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem.Name = "cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem";
-            this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem.Size = new System.Drawing.Size(271, 24);
+            this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem.Size = new System.Drawing.Size(269, 24);
             this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem.Text = "CUSTOMER OUTSTANDING BALANCE";
             this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem.Click += new System.EventHandler(this.cUSTOMEROUTSTANDINGBALANCEToolStripMenuItem_Click);
             // 
             // aTTENDANCEToolStripMenuItem
             // 
             this.aTTENDANCEToolStripMenuItem.Name = "aTTENDANCEToolStripMenuItem";
-            this.aTTENDANCEToolStripMenuItem.Size = new System.Drawing.Size(115, 24);
+            this.aTTENDANCEToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
             this.aTTENDANCEToolStripMenuItem.Text = "ATTENDANCE";
             this.aTTENDANCEToolStripMenuItem.Click += new System.EventHandler(this.aTTENDANCEToolStripMenuItem_Click);
             // 
@@ -1065,7 +1075,7 @@
             // sETqTYToolStripMenuItem
             // 
             this.sETqTYToolStripMenuItem.Name = "sETqTYToolStripMenuItem";
-            this.sETqTYToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
+            this.sETqTYToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
             this.sETqTYToolStripMenuItem.Text = "SETqTY";
             this.sETqTYToolStripMenuItem.Click += new System.EventHandler(this.sETqTYToolStripMenuItem_Click);
             // 
@@ -2848,21 +2858,11 @@
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
-            // button59
-            // 
-            this.button59.Location = new System.Drawing.Point(398, 32);
-            this.button59.Name = "button59";
-            this.button59.Size = new System.Drawing.Size(116, 23);
-            this.button59.TabIndex = 51;
-            this.button59.Text = "LOAD INVOICE";
-            this.button59.UseVisualStyleBackColor = true;
-            this.button59.Click += new System.EventHandler(this.button59_Click);
-            // 
             // invoiceNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1274, 749);
+            this.ClientSize = new System.Drawing.Size(1274, 733);
             this.Controls.Add(this.button17);
             this.Controls.Add(this.button30);
             this.Controls.Add(this.label53);
@@ -2892,7 +2892,7 @@
             this.panel7.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-         //   ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
+           // ((System.ComponentModel.ISupportInitialize)(this.performanceCounter1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

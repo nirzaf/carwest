@@ -21,9 +21,9 @@ namespace pos
         private SqlConnection conn, conn2;
         private SqlDataReader reader, reader2;
         private ArrayList arrayList;
-        private string[] mobileNoArray, LandNoArray, emailArray, companyArray;
+        private string[] mobileNoArray;
         private bool states;
-        private string user, codeC;
+        private string user;
 
         private void itemProfile_Load(object sender, EventArgs e)
         {
@@ -262,7 +262,6 @@ namespace pos
             try
             {
                 conn.Open();
-
                 if (tabControl1.SelectedIndex == 0)
                 {
                     if (companyC.Text.Equals(""))
@@ -270,13 +269,15 @@ namespace pos
                         MessageBox.Show("Please Enter Name for a Customer");
                         companyC.Focus();
                     }
-                    else if (MessageBox.Show("Are You Sure ?", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                    else if (MessageBox.Show("Are You Sure? ", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                     {
                         new SqlCommand("delete from customer where id='" + "C-" + ID.Text + "'", conn).ExecuteNonQuery();
                         conn.Close();
                         conn.Open();
                         new SqlCommand("insert into customer values ('" + "C-" + ID.Text + "','" + "" + "','" + companyC.Text + "','" + addressC.Text + "','" + mobileNumberC.Text + "','" + "" + "','" + companyC.Text + " " + mobileNumberC.Text + "','" + "" + "','" + "" + "','" + checkBoxEpfPay.Checked + "','" + checkBoxeXCECUTIVE.Checked + "','" + epfNo.Text + "','" + contat1Name.Text + "','" + contact2Name.Text + "','" + contact3Name.Text + "','" + contact2.Text + "','" + contact3.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
+                        string message = "Greetings " + companyC.Text.Trim() + ", Welcome to the Car West Auto Service.";
+                        SMSSender.SendWebRequest(mobileNumberC.Text.Trim(), message);
                         ID.Focus();
                         cutomerID = "C-" + ID.Text;
                         getID();

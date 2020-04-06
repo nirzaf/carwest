@@ -3396,8 +3396,6 @@ namespace pos
                     }
                     reader.Close();
                     conn.Close();
-                    var cashPaid = 0.0;
-
                     conn.Open();
                     new SqlCommand("delete from customerStatement where reason='" + "R-" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                     conn.Close();
@@ -3416,7 +3414,6 @@ namespace pos
                     conn.Open();
                     new SqlCommand("delete from cashInvoiceRetail where invoiceid='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                     conn.Close();
-
                     conn.Open();
                     new SqlCommand("delete from companyInvoice where id='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                     conn.Close();
@@ -3440,7 +3437,6 @@ namespace pos
                     conn.Open();
                     new SqlCommand("delete from incomeAccountStatement where invoiceID='" + "R-" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                     conn.Close();
-
                     conn.Open();
                     new SqlCommand("delete   from cashSummery  where  remark='" + "Invoice No-" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                     conn.Close();
@@ -3456,26 +3452,17 @@ namespace pos
 
         private void button10_Click(object sender, EventArgs e)
         {
-            //if (!invoiceNo.ToString().Equals(""))
-            //{
-            //    MessageBox.Show("Sorry , You Have No Permission to Edit Past Invoice");
-            //}
-            //else
             {
                 invoiceDate = DateTime.Now;
                 if (cashPaid.Text.Equals(""))
                 {
                     cashPaid.Text = "0";
                 }
-
                 if (dataGridView1.Rows.Count == 0)
                 {
                     MessageBox.Show("Sorry Emprt Data for Generate Invoice");
                     code.Focus();
                 }
-                //else if (LOADcHECK)
-                //{
-                //}
                 else if (!checkTerm())
                 {
                     MessageBox.Show("Please Enter Pay Detail on Term Section Before Genarate Invoice");
@@ -3487,9 +3474,7 @@ namespace pos
                     MessageBox.Show("Please Enter a Registerd Customer for a Credit Invoice");
                     customer.Focus();
                 }
-                else if ((MessageBox.Show("Generate Invoice ?", "Confirmation",
-    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-    MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+                else if (MessageBox.Show("Generate Invoice? ", "Confirmation", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
                     db.setCursoerWait();
                     try
@@ -3497,48 +3482,49 @@ namespace pos
                         if (invoiceNo.ToString().Equals(""))
                         {
                             loadInvoiceNoRetail();
+                            if (!string.IsNullOrWhiteSpace(mobileNumber.Text.Trim()))
+                            {
+                                if (invoiceTypeDB != "CREDIT")
+                                {
+                                    string Message = "Thank you for choosing Car West Auto Service. Your total bill amount is Rs." + total.Text.Trim() + " Thank you, Come Again.";
+                                    SMSSender.SendWebRequest(mobileNumber.Text.Trim(), Message);
+                                }
+                                else
+                                {
+                                    string Message = "Thank you for choosing Car West Auto Service. Your pending outstanding balance amount is Rs." + total.Text.Trim() + " Please pay your due as soon as possible";
+                                    SMSSender.SendWebRequest(mobileNumber.Text.Trim(), Message);
+                                }
+                            }
                         }
-                        else
-                        {
-                        }
-
-                        //
-                        // invoiceNo = "R-16985";
                         invoieNoTemp = invoiceNo.ToString().Split('-')[1].ToString();
-                        // invoieNoTemp = "14182";
                         clearIN();
-                        //+++++Intial OLD INVOice++++
                         conn.Open();
                         new SqlCommand("delete from itemStatement where invoiceid= '" + "R-" + invoieNoTemp + "'", conn).ExecuteNonQuery();
-
                         conn.Close();
                         conn.Open();
                         new SqlCommand("delete from fullService where invoiceID='" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                         conn.Close();
                         conn.Open();
-                        //    MessageBox.Show(checkDF.Checked+"");
                         new SqlCommand("insert into fullservice values('" + invoieNoTemp + "','" + checkDF.Checked + "','" + checkOF.Checked + "','" + checkEO.Checked + "','" + checkGO.Checked + "','" + checkAF.Checked + "','" + checkGreesen.Checked + "','" + sendPeriod.Text + "','" + messege.Text + "')", conn).ExecuteNonQuery();
                         conn.Close();
-
                         conn.Open();
                         new SqlCommand("delete from invoiceRetailDetail where invoiceID='" + invoieNoTemp + "' and pc='" + false + "'", conn).ExecuteNonQuery();
                         conn.Close();
                         conn.Open();
                         new SqlCommand("delete from cashSummery where reason='" + "New Invoice" + "' and remark='" + "Invoice No-" + invoieNoTemp + "'", conn).ExecuteNonQuery();
                         conn.Close();
-
                         amount = 0;
                         profit = 0;
                         profitTotal = 0;
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
-                            amount = amount + Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                            amount += double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
                             //  profit = profit + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                         }
 
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
-                            qtyTemp = Double.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                            qtyTemp = double.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
 
                             if (dataGridView1.Rows[i].Cells[1].Value.ToString().Equals("#"))
                             {
@@ -4378,7 +4364,7 @@ namespace pos
         {
             if ((MessageBox.Show(" Do You want to Print it", "Confirmation",
          MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,
-         MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+         MessageBoxDefaultButton.Button1) == DialogResult.Yes))
             {
                 bool cashDetailB;
                 if (!creditDetailB & !chequeDetailB & !cardDetailB)
@@ -4390,7 +4376,7 @@ namespace pos
                     cashDetailB = false;
                 }
 
-                var aa = "";
+                string aa = string.Empty;
                 if (cashDetailB)
                 {
                     aa = "CASH MEMO";
@@ -4399,7 +4385,7 @@ namespace pos
                 {
                     aa = "CREDIT MEMO";
                 }
-                if (balance.Text.Equals("0") || Double.Parse(balance.Text) == 0)
+                if (balance.Text.Equals("0") || double.Parse(balance.Text) == 0)
                 {
                     new invoicePrint().setprintHalfInvoiceService("RA/" + DateTime.Now.Year + DateTime.Now.Month + "R-" + invoieNoTemp, cutomerID, aa, dataGridView1, total.Text, cashPaid.Text, Double.Parse(total.Text) - Double.Parse(cashPaid.Text) + "", DateTime.Now, conn, reader, user, vehicleNumber.Text, vehicleDescrition.Text, metreNow.Text, metreNext.Text);
                 }
@@ -4407,9 +4393,6 @@ namespace pos
                 {
                     new invoicePrint().setprintHalfInvoiceService("RA/" + DateTime.Now.Year + DateTime.Now.Month + "R-" + invoieNoTemp, cutomerID, aa, dataGridView1, total.Text, cashPaid.Text, balance.Text, DateTime.Now, conn, reader, user, vehicleNumber.Text, vehicleDescrition.Text, metreNow.Text, metreNext.Text);
                 }
-
-                // conn.Close();
-                //  a.Visible = true;
             }
         }
 

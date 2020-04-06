@@ -46,6 +46,9 @@
             this.mobileNumberC = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.contact3Name = new System.Windows.Forms.TextBox();
+            this.contact2Name = new System.Windows.Forms.TextBox();
+            this.contat1Name = new System.Windows.Forms.TextBox();
             this.contact3 = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
             this.contact2 = new System.Windows.Forms.TextBox();
@@ -159,9 +162,6 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.contact3Name = new System.Windows.Forms.TextBox();
-            this.contact2Name = new System.Windows.Forms.TextBox();
-            this.contat1Name = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -176,9 +176,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(600, 248);
+            this.button2.Location = new System.Drawing.Point(600, 258);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(107, 52);
+            this.button2.Size = new System.Drawing.Size(111, 52);
             this.button2.TabIndex = 13;
             this.button2.Text = "SAVE";
             this.button2.UseVisualStyleBackColor = true;
@@ -188,7 +188,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(600, 316);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(110, 52);
+            this.button3.Size = new System.Drawing.Size(111, 52);
             this.button3.TabIndex = 14;
             this.button3.Text = "DELETE";
             this.button3.UseVisualStyleBackColor = true;
@@ -386,6 +386,33 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "CUSTOMER";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // contact3Name
+            // 
+            this.contact3Name.AllowDrop = true;
+            this.contact3Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contact3Name.Location = new System.Drawing.Point(278, 202);
+            this.contact3Name.Name = "contact3Name";
+            this.contact3Name.Size = new System.Drawing.Size(137, 22);
+            this.contact3Name.TabIndex = 83;
+            // 
+            // contact2Name
+            // 
+            this.contact2Name.AllowDrop = true;
+            this.contact2Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contact2Name.Location = new System.Drawing.Point(278, 177);
+            this.contact2Name.Name = "contact2Name";
+            this.contact2Name.Size = new System.Drawing.Size(137, 22);
+            this.contact2Name.TabIndex = 82;
+            // 
+            // contat1Name
+            // 
+            this.contat1Name.AllowDrop = true;
+            this.contat1Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contat1Name.Location = new System.Drawing.Point(278, 149);
+            this.contat1Name.Name = "contat1Name";
+            this.contat1Name.Size = new System.Drawing.Size(137, 22);
+            this.contat1Name.TabIndex = 81;
             // 
             // contact3
             // 
@@ -1717,33 +1744,6 @@
             this.textBox1.TabIndex = 43;
             this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
-            // contact3Name
-            // 
-            this.contact3Name.AllowDrop = true;
-            this.contact3Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contact3Name.Location = new System.Drawing.Point(278, 202);
-            this.contact3Name.Name = "contact3Name";
-            this.contact3Name.Size = new System.Drawing.Size(137, 22);
-            this.contact3Name.TabIndex = 83;
-            // 
-            // contact2Name
-            // 
-            this.contact2Name.AllowDrop = true;
-            this.contact2Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contact2Name.Location = new System.Drawing.Point(278, 177);
-            this.contact2Name.Name = "contact2Name";
-            this.contact2Name.Size = new System.Drawing.Size(137, 22);
-            this.contact2Name.TabIndex = 82;
-            // 
-            // contat1Name
-            // 
-            this.contat1Name.AllowDrop = true;
-            this.contat1Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.contat1Name.Location = new System.Drawing.Point(278, 149);
-            this.contat1Name.Name = "contat1Name";
-            this.contat1Name.Size = new System.Drawing.Size(137, 22);
-            this.contat1Name.TabIndex = 81;
-            // 
             // customerProfile2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1756,8 +1756,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "customerProfile2";
             this.Text = "REGISTAION";
-            this.Activated += new System.EventHandler(this.itemProfile_Activated);
-            this.Deactivate += new System.EventHandler(this.itemProfile_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.itemProfile_FormClosing);
             this.Load += new System.EventHandler(this.itemProfile_Load);
             this.GiveFeedback += new System.Windows.Forms.GiveFeedbackEventHandler(this.itemProfile_GiveFeedback);

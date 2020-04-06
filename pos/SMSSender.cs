@@ -12,6 +12,7 @@ namespace pos
         public static void SendWebRequest(string DNumber, string Message)
         {
             string request = "https://bulksms2.etisalat.lk/sendsmsmultimask.php?";
+            DNumber = "94" + DNumber;
             var postData = "USER=" + HttpUtility.UrlPathEncode(username) + "&PWD=" + HttpUtility.UrlPathEncode(password) + "&MASK=" + HttpUtility.UrlPathEncode(callerId) + "&NUM=" + HttpUtility.UrlPathEncode(DNumber) + "&MSG=" + HttpUtility.UrlDecode(Message);
 
             using (var web = new WebClient())
