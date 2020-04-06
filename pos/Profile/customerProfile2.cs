@@ -435,10 +435,11 @@ namespace pos
                 ID.Text = idTemp + "";
                 companyC.Focus();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 idTemp = 1;
                 conn2.Close();
+                MessageBox.Show(ex.Message);
             }
         }
 
