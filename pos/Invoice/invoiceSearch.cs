@@ -8,7 +8,7 @@ namespace pos
 {
     public partial class invoiceSearch : Form
     {
-        public invoiceSearch(Form form, String user)
+        public invoiceSearch(Form form, string user)
         {
             InitializeComponent();
             this.user = user;
@@ -20,14 +20,12 @@ namespace pos
 
         private Form home;
         private SqlConnection conn, conn2, conn3, conn4;
-        private SqlDataReader reader, reader2, reader3, reader4;
-        private ArrayList arrayList, stockList;
-        private Boolean check, checkListBox, states, item, checkStock, isCompany;
-        private string user, type, cutomerID = "", description, invoieNoTemp, query;
-        private String[] idArray;
+        private SqlDataReader reader, reader2, reader3;
+        private ArrayList arrayList;
+        private bool states, isCompany;
+        private string user, invoieNoTemp, query;
+        private string[] idArray;
         private DataGridViewButtonColumn btn;
-        private Int32 invoiceMaxNo, rowCount;
-        private Double amount, purchashingPrice, qtyTemp, amountTemp, profit, profitTotal;
         //+++++++++My Variable End
 
         //++My Method Start

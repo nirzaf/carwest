@@ -91,7 +91,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(796, 372);
             this.dataGridView1.TabIndex = 41;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label2
             // 
@@ -234,7 +233,6 @@
             this.customer.Size = new System.Drawing.Size(287, 22);
             this.customer.TabIndex = 33;
             this.customer.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.customer.TextChanged += new System.EventHandler(this.customer_TextChanged);
             this.customer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.customer_KeyDown);
             this.customer.KeyUp += new System.Windows.Forms.KeyEventHandler(this.customer_KeyUp);
             // 

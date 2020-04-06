@@ -452,11 +452,11 @@ namespace pos
             }
             else
             {
-                dataGridView1.Rows.Add(dataGridView1.Rows.Count, dataGridView1.Rows[index].Cells[1].Value, "", dataGridView1.Rows[index].Cells[3].Value, dataGridView1.Rows[index].Cells[4].Value, dataGridView1.Rows[index].Cells[5].Value, qty, (Double.Parse(dataGridView1.Rows[index].Cells[4].Value.ToString()) - Double.Parse(dataGridView1.Rows[index].Cells[5].Value.ToString())) * Double.Parse(qty), "true");
+                dataGridView1.Rows.Add(dataGridView1.Rows.Count, dataGridView1.Rows[index].Cells[1].Value, "", dataGridView1.Rows[index].Cells[3].Value, dataGridView1.Rows[index].Cells[4].Value, dataGridView1.Rows[index].Cells[5].Value, qty, (double.Parse(dataGridView1.Rows[index].Cells[4].Value.ToString()) - double.Parse(dataGridView1.Rows[index].Cells[5].Value.ToString())) * double.Parse(qty), "true");
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Silver;
 
-                dataGridView1.Rows[index].Cells[6].Value = Double.Parse(dataGridView1.Rows[index].Cells[6].Value.ToString()) - Double.Parse(qty + "") + "";
-                dataGridView1.Rows[index].Cells[7].Value = (Double.Parse(dataGridView1.Rows[index].Cells[4].Value.ToString()) - Double.Parse(dataGridView1.Rows[index].Cells[5].Value.ToString())) * Double.Parse(dataGridView1.Rows[index].Cells[6].Value.ToString());
+                dataGridView1.Rows[index].Cells[6].Value = double.Parse(dataGridView1.Rows[index].Cells[6].Value.ToString()) - double.Parse(qty + "") + "";
+                dataGridView1.Rows[index].Cells[7].Value = (double.Parse(dataGridView1.Rows[index].Cells[4].Value.ToString()) - double.Parse(dataGridView1.Rows[index].Cells[5].Value.ToString())) * double.Parse(dataGridView1.Rows[index].Cells[6].Value.ToString());
             }
 
             amountTrue = 0.0;
@@ -465,16 +465,15 @@ namespace pos
             {
                 if (dataGridView1.Rows[i].Cells[8].Value.ToString().Equals("false"))
                 {
-                    amountFalse = amountFalse + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    amountFalse = amountFalse + double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                 }
                 else
                 {
-                    amountTrue = amountTrue + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                    amountTrue = amountTrue + double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                 }
                 dataGridView1.Rows[i].Cells[0].Value = ++i;
                 i--;
             }
-            //   subTotal.Text = amountFalse + amountTrue + "";
             returnAmount.Text = amountTrue + "";
         }
 
@@ -490,11 +489,9 @@ namespace pos
                 reader = new SqlCommand("select name,istax,taxpre,isNBT,nbtPre,defa,id from company ", conn).ExecuteReader();
                 while (reader.Read())
                 {
-                    //   MessageBox.Show("1");
                     comboCompany.Items.Add(reader[6] + "-" + reader.GetString(0).ToUpper());
                     if (reader.GetBoolean(5))
                     {
-                        //   MessageBox.Show("2");
                         isNBT = reader.GetBoolean(3);
                         isTax = reader.GetBoolean(1);
                         taxpre = reader.GetDouble(2);
@@ -609,29 +606,23 @@ namespace pos
         //   my Method End+++++++++
         private void invoiceNew_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
+            TopMost = true;
             dataGridView1.AllowUserToAddRows = false;
-            this.WindowState = FormWindowState.Normal;
-            this.ControlBox = false;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
-
+            WindowState = FormWindowState.Normal;
+            ControlBox = false;
+            Bounds = Screen.PrimaryScreen.Bounds;
             int height = Screen.PrimaryScreen.Bounds.Height;
             int width = Screen.PrimaryScreen.Bounds.Width;
             quickPanel.Width = width;
-            //   dataGridView1.Width = width - 370;
             dataGridView1.Height = height - quickPanel.Height - 100;
-
             dataGridView1.Columns[3].Width = dataGridView1.Width - 680;
             Point p = new Point();
             p = panel1.Location;
             p.X = quickPanel.Width - panel1.Width - 35;
             panel1.Location = p;
-            //panel1.Width = dataGridView1.Width;
-
             p.X = width - panel4.Width - 30;
             p.Y = height - panel4.Height - 60;
             panel4.Location = p;
-
             p = panelTax.Location;
             p.X = panel1.Location.X;
             panelTax.Location = p;
@@ -640,20 +631,16 @@ namespace pos
             btn.Width = 60;
             btn.Text = "REMOVE";
             btn.UseColumnTextForButtonValue = true;
-
             btn = new DataGridViewButtonColumn();
             dataGridView1.Columns.Add(btn);
             btn.Width = 60;
             btn.Text = "RETURN";
-
             btn.UseColumnTextForButtonValue = true;
-
             db = new DB();
             conn = db.createSqlConnection();
             db2 = new DB();
             conn2 = db2.createSqlConnection();
             clear();
-
             customer.CharacterCasing = CharacterCasing.Upper;
 
             try
@@ -679,44 +666,26 @@ namespace pos
             loadCompany();
             loadAccountList();
             saleRef.Cursor = null;
-
             loadInvoice(invoiceino);
         }
 
         private void invoiceNew_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Dispose();
+            Dispose();
             home.Enabled = true;
             home.TopMost = true;
         }
 
         private void eXITToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            Dispose();
             home.Enabled = true;
             home.TopMost = true;
-        }
-
-        private void quickPanel_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void button1_MouseHover(object sender, EventArgs e)
-        {
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //  new cusomerQuick2(this).Visible = true;
         }
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
         {
             customer.SelectAll();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -725,8 +694,6 @@ namespace pos
             {
                 if (e.ColumnIndex == 12)
                 {
-                    //     MessageBox.Show((e.RowIndex + 1) + "  Row  " + (e.ColumnIndex + 1) + "  Column button clicked ");
-                    // MessageBox.Show(dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString());
                     if (dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString().Equals("false"))
                     {
                         MessageBox.Show("Sorry, Cant Edit Invoice Row Data On Retuen Note Function");
@@ -741,7 +708,6 @@ namespace pos
                         var qty = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
                         var tAmount = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
                         check = false;
-                        // MessageBox.Show(code + "/" + dataGridView1.Rows[e.RowIndex].Cells[8].Value);
                         for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
                             if (!check)
@@ -754,13 +720,12 @@ namespace pos
                                     if (code.ToUpper().Equals(dataGridView1.Rows[i].Cells[1].Value.ToString().ToUpper()) & dataGridView1.Rows[i].Cells[8].Value.ToString().Equals("false"))
                                     {
                                         check = true;
-                                        dataGridView1.Rows[i].Cells[6].Value = Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) + Double.Parse(qty);
-                                        dataGridView1.Rows[i].Cells[7].Value = (Double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString()) - Double.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString())) * Double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                                        dataGridView1.Rows[i].Cells[6].Value = double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString()) + double.Parse(qty);
+                                        dataGridView1.Rows[i].Cells[7].Value = (double.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString()) - double.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString())) * double.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
                                     }
                                 }
                             }
                         }
-                        //MessageBox.Show(check+"");
                         if (!check)
                         {
                             dataGridView1.Rows.Add(dataGridView1.Rows.Count, code, warrenty, des, uPrice, disc, qty, tAmount, "false");
@@ -773,19 +738,16 @@ namespace pos
                         {
                             if (dataGridView1.Rows[i].Cells[8].Value.ToString().Equals("false"))
                             {
-                                amountFalse = amountFalse + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                                amountFalse = amountFalse + double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                             }
                             else
                             {
-                                amountTrue = amountTrue + Double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                                amountTrue = amountTrue + double.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
                             }
                             dataGridView1.Rows[i].Cells[0].Value = ++i;
                             i--;
                         }
-                        //  subTotal.Text = amountFalse + amountTrue + "";
                         returnAmount.Text = amountTrue + "";
-                        // cashPaid.Text = "0";
-                        // balance.Text = "0.0";
                     }
                 }
                 else if (e.ColumnIndex == 13)
@@ -806,54 +768,9 @@ namespace pos
             }
         }
 
-        private void rEFRESHToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         private void bILLTOAREAToolStripMenuItem_Click(object sender, EventArgs e)
         {
             customer.Focus();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void term_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void pAYMENTToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ///cashPaid.Focus();
-        }
-
-        private void aDDITEMTOINVOICEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void code_ImeModeChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void code_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void code_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void unitPrice_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void discount_KeyDown(object sender, KeyEventArgs e)
-        {
         }
 
         private void unitPrice_KeyPress(object sender, KeyPressEventArgs e)
@@ -878,54 +795,7 @@ namespace pos
             e.Handled = true;
         }
 
-        private void qty_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void availebleQty_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void panel2_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void listBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void listBox1_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void listBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void warrentyCode_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void warrentyCode_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void cashPaid_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
+       
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.Rows.Count == 0)

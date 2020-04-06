@@ -104,7 +104,6 @@
             this.quickPanel.Name = "quickPanel";
             this.quickPanel.Size = new System.Drawing.Size(1324, 153);
             this.quickPanel.TabIndex = 0;
-            this.quickPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.quickPanel_Paint);
             // 
             // panel1
             // 
@@ -237,7 +236,6 @@
             this.customer.Size = new System.Drawing.Size(412, 93);
             this.customer.TabIndex = 3;
             this.customer.Text = "[ CASH CUSTOMER ] ";
-            this.customer.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.customer.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
             // 
             // returnAmount

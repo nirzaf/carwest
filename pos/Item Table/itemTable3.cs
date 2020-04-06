@@ -21,20 +21,20 @@ namespace pos
 
         private void save()
         {
-            if (qty.Text.Equals("") || Double.Parse(qty.Text) == 0)
+            if (qty.Text.Equals("") || double.Parse(qty.Text) == 0)
             {
-                MessageBox.Show("Please Eneter Valied qty");
+                MessageBox.Show("Please Eneter Valid qty");
                 qty.Focus();
             }
-            else if (Double.Parse(qtyN) < Double.Parse(qty.Text))
+            else if (double.Parse(qtyN) < double.Parse(qty.Text))
             {
-                MessageBox.Show("Sorry, Invalied Qty For Return");
+                MessageBox.Show("Sorry, Invalid Qty For Return");
             }
             else
             {
-                formH.updateTableItem(qty.Text, Int32.Parse(indexH));
+                formH.updateTableItem(qty.Text, int.Parse(indexH));
                 formH.Enabled = true;
-                this.Dispose();
+                Dispose();
             }
         }
 
