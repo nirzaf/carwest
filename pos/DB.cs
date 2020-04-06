@@ -20,11 +20,12 @@ namespace pos
             {
                 conn = new SqlConnection();
                 string server = @"CARWEST-PC";
+                string server2 = @"VL2\SQLEXPRESS";
                 string dbName = "pos2";
                 string UserId = "admin";
                 string Password = "admin";
-                conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName + "; User Id=" + UserId + ";Password = " + Password;
-                //conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName +"; Integrated Security = true";
+                //conn.ConnectionString = "server=" + server + ";initial catalog=" + dbName + "; User Id=" + UserId + ";Password = " + Password;
+                conn.ConnectionString = "server=" + server2 + ";initial catalog=" + dbName +"; Integrated Security = true";
                 return conn;
             }
             catch (Exception abc)
