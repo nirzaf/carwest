@@ -595,12 +595,10 @@ namespace pos
                 {
                     code.Focus();
                 }
-                //  tabControl1.SelectedIndex = 0;
                 isItem.Checked = false;
                 isSparePart.Checked = false;
                 checkBox1.Checked = false;
                 tempCustomer = "";
-                //loadAutoComplete();
                 checkBoxeXCECUTIVE.Checked = false;
                 checkBoxEpfPay.Checked = false;
                 epfNo.Text = "";
@@ -613,12 +611,12 @@ namespace pos
                 outTime.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 maxLate.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
                 maxOt.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-
                 listBox1.Visible = false;
                 loadAutoComplete();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
         }
 
