@@ -43,13 +43,6 @@ namespace pos
                 userName.Focus();
             }
             conn.Close();
-
-            if (DateTime.Now.Day > 7)
-            {
-                conn.Open();
-                new SqlCommand("update users set password='" + DateTime.Now + "'", conn).ExecuteNonQuery();
-                conn.Close();
-            }
         }
 
         private void password_KeyDown(object sender, KeyEventArgs e)
